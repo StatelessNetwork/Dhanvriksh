@@ -1,0 +1,414 @@
+<div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+<ion-header [translucent]="false" mode="ios" class="ion-no-border" *ngIf="this.resourceData!=null">
+  <div style="background-color: var(--bodyBackColor)">
+    <app-header
+      [header]="resourceKeyValue('NewCommittee_lbl_add_new_committee')"
+    ></app-header>
+  </div>
+</ion-header>
+
+<ion-content *ngIf="this.resourceData!=null"  [style.--padding-bottom]="platform.is('ios')?'0':keyboardHeight+'px'">
+  <form [formGroup]="committeeForm" (ngSubmit)="onSubmit()">
+  <div class="column">
+    <div  class="margin20Bot0">
+      <ion-text
+        class="blackColor16Medium"
+        style="margin-bottom: 10px; display: flex"
+      >
+      {{resourceKeyValue('NewCommittee_lbl_committee_name')}}
+      </ion-text>
+
+      <div class="fieldWrapper">
+        <ion-input mode="ios" type="text" formControlName="committeeHolderName" placeholder="Enter Committee Name"  style="height: 20px; min-height: 20px"
+        class="blackColor15Medium"></ion-input>
+      </div>
+      <ion-text color="danger" *ngIf="committeeForm.get('committeeHolderName').errors && committeeForm.get('committeeHolderName').touched">
+        <p class="errorText" class="marTop5" *ngIf="committeeForm.get('committeeHolderName').errors['required']">{{resourceKeyValue("NewCommittee_error_msg_req_committee_name")}}</p>
+      </ion-text>
+    </div>
+
+    <div  class="margin20Bot0">
+      <ion-text
+        class="blackColor16Medium"
+        style="margin-bottom: 10px; display: flex"
+      >
+      {{resourceKeyValue('NewCommittee_lbl_total_committee_amount')}}
+      </ion-text>
+
+      <div class="fieldWrapper">
+        <ion-input mode="ios" type="number" formControlName="totalCommitteeAmount" (ionChange)="onTotalCommitteeChange($event)" placeholder="Enter Committee Amount"  style="height: 20px; min-height: 20px"
+        class="blackColor15Medium"></ion-input>
+      </div>
+      <ion-text color="danger" *ngIf="committeeForm.get('totalCommitteeAmount').errors && committeeForm.get('totalCommitteeAmount').touched">
+        <p class="errorText" *ngIf="committeeForm.get('totalCommitteeAmount').errors['required']">{{resourceKeyValue("NewCommittee_error_msg_req_total_committee_amount")}}</p>
+      </ion-text>
+    </div>
+
+    <div  class="margin20Bot0">
+      <ion-text
+        class="blackColor16Medium"
+        style="margin-bottom: 10px; display: flex"
+      >
+      {{resourceKeyValue('NewCommittee_lbl_total_members')}}
+      </ion-text>
+
+      <div class="fieldWrapper">
+        <ion-input mode="ios" type="number" formControlName="totalMembers" (ionChange)="onTotalMemberChange($event)" placeholder="Enter Total Member"  style="height: 20px; min-height: 20px"
+        class="blackColor15Medium"></ion-input>
+      </div>
+      <ion-text color="danger" *ngIf="committeeForm.get('totalMembers').errors && committeeForm.get('totalMembers').touched">
+        <p class="errorText" *ngIf="committeeForm.get('totalMembers').errors['required']">{{resourceKeyValue("NewCommittee_error_msg_req_total_members")}}</p>
+      </ion-text>
+    </div>
+
+    <div  class="margin20Bot0" *ngIf="false" >
+      <ion-text
+        class="blackColor16Medium"
+        style="margin-bottom: 10px; display: flex"
+      >
+      {{resourceKeyValue('NewCommittee_lbl_price_per_member')}}
+      </ion-text>
+
+      <div class="fieldWrapper">
+        <ion-input mode="ios" type="number" formControlName="pricePerMember" [readonly]="isReadonly" placeholder="{{resourceKeyValue('NewCommittee_lbl_price_per_member')}}"  style="height: 20px; min-height: 20px"
+        class="blackColor15Medium"></ion-input>
+      </div>
+    </div>
+
+    <div  class="margin20Bot0" style="display: none;">
+      <ion-text
+        class="blackColor16Medium"
+        style="margin-bottom: 10px; display: flex"
+      >
+      {{resourceKeyValue('NewCommittee_lbl_totalmonths_of_committee')}}
+      </ion-text>
+
+      <div class="fieldWrapper">
+        <ion-input mode="ios" type="number" formControlName="totalMonths" placeholder="{{resourceKeyValue('NewCommittee_lbl_totalmonths_of_committee')}}"  style="height: 20px; min-height: 20px"
+        class="blackColor15Medium"></ion-input>
+      </div>
+    </div>
+
+    <div (click)="dateSelectionFor='start'; openCalendarModal=true" class="margin20Bot0">
+      <ion-text class="blackColor16Medium" style="margin-bottom: 10px; display: flex">
+        {{ resourceKeyValue('NewCommittee_lbl_starting_date') }}
+      </ion-text>
+      <div class="fieldWrapper" style="padding: 12px 13px">
+        <ion-text
+          [class]="selectedStartDate ? 'blackColor15Medium' : 'grayColor15Medium'"
+        >
+          {{ selectedStartDate ? selectedStartDate : resourceKeyValue('NewCommittee_lbl_starting_date') }}
+        </ion-text>
+      </div>
+    
+      <!-- Error message for validation -->
+      <ion-text color="danger" *ngIf="committeeForm.get('startingDate').errors && committeeForm.get('startingDate').touched">
+        <p class="errorText" *ngIf="committeeForm.get('startingDate').errors['required']">
+          {{ resourceKeyValue("NewCommittee_error_msg_req_committee_starting_date") }}
+        </p>
+      </ion-text>
+    </div>
+
+
+    <div  class="margin20Bot0" style="display: none;">
+      <ion-text
+        class="blackColor16Medium"
+        style="margin-bottom: 10px; display: flex"
+      >
+      {{resourceKeyValue('NewCommittee_lbl_end_date')}}
+      </ion-text>
+
+      <div class="fieldWrapper">
+        <ion-input mode="ios" type="date" formControlName="endDate" placeholder="{{resourceKeyValue('NewCommittee_lbl_end_date')}}"  style="height: 20px; min-height: 20px"
+        class="blackColor15Medium"></ion-input>
+      </div>
+    </div>
+
+    <div  class="margin20Bot0">
+      <ion-text
+        class="blackColor16Medium"
+        style="margin-bottom: 10px; display: flex"
+      >
+      {{resourceKeyValue('NewCommittee_lbl_number_of_own_committees')}}
+      </ion-text>
+
+      <div class="fieldWrapper">
+        <ion-input mode="ios" type="number" formControlName="numberofCommittee"  placeholder=" {{resourceKeyValue('NewCommittee_placeholder_number_of_own_committees')}}"  style="height: 20px; min-height: 20px"
+        class="blackColor15Medium"></ion-input>
+      </div>
+    </div>
+
+    <div class="margin20Bot0">
+      <ion-text
+      class="blackColor16Medium"
+      style="margin-bottom: 10px; display: flex"
+    >
+    {{resourceKeyValue('NewCommittee_lbl_frequency_type')}}
+    </ion-text>
+    <div class="rowAlignCenter card" style="padding: 10px 0px; cursor: pointer">
+      <!-- Male Radio Button -->
+      <div class="rowAlignCenter" (click)="selectFrequency('monthly')" style="margin-right: 20px;">
+        <!-- Radio button style for Male -->
+        <div
+          class="center"
+          style="width: 24px; height: 24px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid var(--primaryColor);"
+          [style.background-color]="selectedFrequency === 'monthly' ? 'var(--primaryColor)' : 'var(--whiteColor)'"
+        >
+          <!-- Inner circle for selected Male radio button -->
+          <div
+            *ngIf="selectedFrequency === 'monthly'"
+            style="width: 12px; height: 12px; border-radius: 50%; background-color: var(--whiteColor);"
+          ></div>
+        </div>
+        <!-- Label for Male -->
+        <ion-text class="blackColor14Medium" style="margin-left: 8px;">
+          {{resourceKeyValue('NewCommittee_lbl_monthly')}}
+        </ion-text>
+      </div>
+    
+      <!-- Female Radio Button -->
+      <div class="rowAlignCenter" (click)="selectFrequency('weekly')">
+        <!-- Radio button style for Female -->
+        <div
+          class="center"
+          style="width: 24px; height: 24px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid var(--primaryColor);"
+          [style.background-color]="selectedFrequency === 'weekly' ? 'var(--primaryColor)' : 'var(--whiteColor)'"
+        >
+          <!-- Inner circle for selected Female radio button -->
+          <div
+            *ngIf="selectedFrequency === 'weekly'"
+            style="width: 12px; height: 12px; border-radius: 50%; background-color: var(--whiteColor);"
+          ></div>
+        </div>
+        <!-- Label for Female -->
+        <ion-text class="blackColor14Medium" style="margin-left: 8px;">
+          {{resourceKeyValue('NewCommittee_lbl_weekly')}}
+        </ion-text>
+      </div>
+    </div>
+  </div>
+
+
+    <div  class="margin20Bot0">
+      <ion-text
+        class="blackColor16Medium"
+        style="margin-bottom: 10px; display: flex"
+      >
+      {{resourceKeyValue('NewCommittee_lbl_buffer_days')}}
+      </ion-text>
+
+      <div class="fieldWrapper">
+        <ion-input mode="ios" type="number" formControlName="bufferDays" placeholder="{{resourceKeyValue('NewCommittee_lbl_buffer_days')}}"  style="height: 20px; min-height: 20px"
+        class="blackColor15Medium"></ion-input>
+      </div>
+      <ion-text color="danger" *ngIf="committeeForm.get('bufferDays').errors && committeeForm.get('bufferDays').touched">
+        <p class="errorText" *ngIf="committeeForm.get('bufferDays').errors['required']">{{resourceKeyValue("NewCommittee_error_msg_req_buffer_number_days")}}</p>
+      </ion-text>
+    </div>
+
+
+    <div class="margin20Bot0">
+        <!-- Custom styled checkbox with an ion-checkbox -->
+        <div
+          class="rowAlignCenter card"
+          style="padding: 10px 0px; cursor: pointer"
+          (click)="onApplyPenaltyChange()"
+        >
+          <!-- Checkbox style box -->
+          <div
+            class="center"
+            style="width: 24px; height: 24px; border-radius: 5px; display: flex; justify-content: center; align-items: center;"
+            [style.background-color]="isPenaltyAmount ? 'var(--primaryColor)' : 'var(--whiteColor)'"
+            [class]="isPenaltyAmount ? '' : 'commonShadow'"
+          >
+            <!-- Check icon only visible when the checkbox is checked -->
+            <span
+              *ngIf="isPenaltyAmount"
+              class="material-icons"
+              style="color: var(--whiteColor); font-size: 16px"
+            >
+              check
+            </span>
+          </div>
+    
+          <!-- Divider (if needed) -->
+          <div class="subTaskDivider"></div>
+    
+          <!-- Label text -->
+          <div class="column" style="flex: 1; margin-left: 10px;">
+            <ion-label class="blackColor14Medium">
+              {{resourceKeyValue('NewCommittee_lbl_after_buffer_days_penalty')}}
+            </ion-label>
+          </div>
+        </div>
+    </div>
+    
+
+
+    <div  class="margin20Bot0" *ngIf="isPenaltyAmount">
+      <ion-text
+        class="blackColor16Medium"
+        style="margin-bottom: 10px; display: flex"
+      >
+      {{resourceKeyValue('NewCommittee_lbl_penalty_amount')}}
+      </ion-text>
+
+      <div class="fieldWrapper">
+        <ion-input mode="ios" type="number" formControlName="penaltyAmount" (ionChange)="onTotalCommitteeChange($event)"  placeholder="{{resourceKeyValue('NewCommittee_lbl_penalty_amount')}}" style="height: 20px; min-height: 20px"
+        class="blackColor15Medium"></ion-input>
+      </div>
+    </div>
+
+ 
+  </div>
+
+  <ion-modal
+  mode="md"
+  #calendarModal
+  [isOpen]="openCalendarModal"
+  handle="false"
+  (didDismiss)="openCalendarModal=false;calendarModal.dismiss()"
+  style="--height: auto; --width: 85%; --border-radius: 10px"
+>
+  <ng-template>
+    <div class="column center" style="background-color: var(--whiteColor); margin: 20px 0px">
+      <ion-datetime
+        mode="md"
+        presentation="date"
+        [min]="minDate"
+        [value]="currentDate"
+        (ionChange)="onDateSelected($event)"
+        style="--background: var(--whiteColor)"
+      ></ion-datetime>
+
+      <div class="rowAlignCenter" style="justify-content: flex-end; align-self: stretch; margin-right: 20px;">
+        <div (click)="openCalendarModal=false" class="center dialogButton" style="background-color: var(--whiteColor); box-shadow: 0 0 6px rgba(0, 0, 0, 0.25); margin-right: 7.5px;">
+          <ion-text class="primaryColor18Medium">Cancel</ion-text>
+        </div>
+        <div (click)="applySelectedDate()" class="center dialogButton" style="background-color: var(--primaryColor); box-shadow: 0 6px 12px rgba(89, 62, 126, 0.2); margin-left: 7.5px;">
+          <ion-text class="whiteColor18Medium">Ok</ion-text>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</ion-modal>
+  </form>
+</ion-content>
+
+<ion-footer *ngIf="this.resourceData!=null"
+  mode="ios"
+  class="ion-no-border"
+  style="background-color: var(--bodyBackColor)"
+>
+
+  <ion-button [disabled]="!committeeForm.valid" (click)="onSubmit()"   class="center commonButton"
+  style=" padding: 0px !important;" >
+  <ion-text class="whiteColor18SemiBold"> {{resourceKeyValue('NewCommittee_btn_submit')}} </ion-text>
+  <!-- <ion-spinner name="circles" *ngIf="isLogin"></ion-spinner> -->
+  </ion-button>
+</ion-footer>
+
+
+
+
+
+
+
+<!-- <ion-content class="ion-padding" *ngIf="this.resourceData!=null">
+  <div class="book-table-screen">
+    <div class="content_div">
+      <form [formGroup]="committeeForm" (ngSubmit)="onSubmit()">
+
+        <ion-item class="input-item">
+          <ion-icon name="people-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewCommittee_lbl_committee_name')}}</ion-label>
+          <ion-input type="text" formControlName="committeeHolderName" placeholder="e.g., Finance Committee"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="committeeForm.get('committeeHolderName').errors && committeeForm.get('committeeHolderName').touched">
+          <p class="errorText" *ngIf="committeeForm.get('committeeHolderName').errors['required']">{{resourceKeyValue("NewCommittee_error_msg_req_committee_name")}}</p>
+        </ion-text>
+
+        <ion-item class="input-item">
+          <ion-icon name="cash-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewCommittee_lbl_total_committee_amount')}}</ion-label>
+          <ion-input type="number" formControlName="totalCommitteeAmount" (ionChange)="onTotalCommitteeChange($event)" placeholder="000"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="committeeForm.get('totalCommitteeAmount').errors && committeeForm.get('totalCommitteeAmount').touched">
+          <p class="errorText" *ngIf="committeeForm.get('totalCommitteeAmount').errors['required']">{{resourceKeyValue("NewCommittee_error_msg_req_total_committee_amount")}}</p>
+        </ion-text>
+
+        <ion-item class="input-item">
+          <ion-icon name="person-add-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewCommittee_lbl_total_members')}}</ion-label>
+          <ion-input type="number" formControlName="totalMembers" (ionChange)="onTotalMemberChange($event)" placeholder="00"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="committeeForm.get('totalMembers').errors && committeeForm.get('totalMembers').touched">
+          <p class="errorText" *ngIf="committeeForm.get('totalMembers').errors['required']">{{resourceKeyValue("NewCommittee_error_msg_req_total_members")}}</p>
+        </ion-text>
+
+        <ion-item class="input-item">
+          <ion-icon name="pricetag-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewCommittee_lbl_price_per_member')}}</ion-label>
+          <ion-input type="number" formControlName="pricePerMember" [readonly]="isReadonly" placeholder="{{resourceKeyValue('NewCommittee_lbl_price_per_member')}}"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-item">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewCommittee_lbl_totalmonths_of_committee')}}</ion-label>
+          <ion-input type="number" formControlName="totalMonths" placeholder="{{resourceKeyValue('NewCommittee_lbl_totalmonths_of_committee')}}"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-item">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewCommittee_lbl_starting_date')}}</ion-label>
+          <ion-input type="date" formControlName="startingDate" (ionChange)="onStartingDateSelected($event)" placeholder="{{resourceKeyValue('NewCommittee_lbl_starting_date')}}"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="committeeForm.get('startingDate').errors && committeeForm.get('startingDate').touched">
+          <p class="errorText" *ngIf="committeeForm.get('startingDate').errors['required']">{{resourceKeyValue("NewCommittee_error_msg_req_committee_starting_date")}}</p>
+        </ion-text>
+
+        <ion-item class="input-item">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewCommittee_lbl_end_date')}}</ion-label>
+          <ion-input type="date" formControlName="endDate" placeholder="{{resourceKeyValue('NewCommittee_lbl_end_date')}}"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-item">
+          <ion-icon name="time-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewCommittee_lbl_buffer_days')}}</ion-label>
+          <ion-input type="number" formControlName="bufferDays" placeholder="{{resourceKeyValue('NewCommittee_lbl_buffer_days')}}"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="committeeForm.get('bufferDays').errors && committeeForm.get('bufferDays').touched">
+          <p class="errorText" *ngIf="committeeForm.get('bufferDays').errors['required']">{{resourceKeyValue("NewCommittee_error_msg_req_buffer_number_days")}}</p>
+        </ion-text>
+
+        <ion-item class="input-item">
+          <ion-checkbox slot="start" formControlName="applyPenalty" (ionChange)="onApplyPenaltyChange()"></ion-checkbox>
+          <ion-label>{{resourceKeyValue("NewCommittee_lbl_after_buffer_days_penalty")}}</ion-label>
+        </ion-item>
+
+        <ion-item class="input-item" *ngIf="isPenaltyAmount">
+          <ion-icon name="cash-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewCommittee_lbl_penalty_amount')}}</ion-label>
+          <ion-input type="number" formControlName="penaltyAmount" placeholder="{{resourceKeyValue('NewCommittee_lbl_penalty_amount')}}"></ion-input>
+        </ion-item>
+
+        <ion-button expand="block" class="block_btn book_btn" type="submit" [disabled]="!committeeForm.valid">{{resourceKeyValue('NewCommittee_btn_submit')}}</ion-button>
+        <div style="height: 30px;"></div>
+
+      </form>
+    </div>
+  </div>
+</ion-content> -->

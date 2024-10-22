@@ -1,0 +1,129 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Payment Schedule</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+    <!-- Loader -->
+    <div *ngIf="isLoading" class="loading-container">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Loading payment schedule...</p>
+    </div>
+  
+    <!-- No data found message -->
+    <div *ngIf="!isLoading && paymentSchedule.length === 0" class="no-data-container">
+      <p class="no-data-message">No payment schedule found</p>
+    </div>
+
+    
+  <ion-card *ngIf="!isLoading && loanDetails" class="custom-card">
+    <ion-card-header class="custom-card-header">
+      <ion-card-title class="ion-text-center custom-card-title">Loan Information</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <p class="detail-label">Loan ID:</p>
+            <p class="detail-value">{{ loanDetails.loanId }}</p>
+          </ion-col>
+          <ion-col size="6">
+            <p class="detail-label">Loan Amount:</p>
+            <p class="detail-value">{{ loanDetails.LoanAmount | currency }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <p class="detail-label">Interest Rate:</p>
+            <p class="detail-value">{{ loanDetails.InterestRate }}%</p>
+          </ion-col>
+          <ion-col size="6">
+            <p class="detail-label">EMI Type:</p>
+            <p class="detail-value">{{ loanDetails.EMIType }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <p class="detail-label">Status:</p>
+            <p class="detail-value">{{ loanDetails.LoanStatus }}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="paymentSchedule != null && paymentSchedule.length > 0">
+    <ion-item *ngFor="let payment of paymentSchedule" lines="none" class="payment-item">
+      <ion-label>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6" class="payment-col">
+              <p class="detail-label">Due Date:</p>
+              <p class="detail-value">{{ payment.DueDate | date: 'mediumDate' }}</p>
+            </ion-col>
+            <ion-col size="6" class="payment-col">
+              <p class="detail-label">Amount Due:</p>
+              <p class="detail-value">{{ payment.AmountDue | currency }}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6" class="payment-col">
+              <p class="detail-label">Amount Paid:</p>
+              <p class="detail-value">{{ payment.AmountPaid | currency }}</p>
+            </ion-col>
+            <ion-col size="6" class="payment-col">
+              <p class="detail-label">Balance Remaining:</p>
+              <p class="detail-value">{{ payment.BalanceRemaining | currency }}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6" class="payment-col">
+              <p class="detail-label">Status:</p>
+              <ion-badge color="success" *ngIf="payment.Status === 'Paid'">{{ payment.Status }}</ion-badge>
+              <ion-badge color="danger" *ngIf="payment.Status === 'Pending'">{{ payment.Status }}</ion-badge>
+              <ion-badge color="warning" *ngIf="payment.Status === 'Partial'">{{ payment.Status }}</ion-badge>
+            </ion-col>
+            <ion-col size="6" class="payment-col">
+              <p class="detail-label">Interest Accrued:</p>
+              <p class="detail-value">{{ payment.InterestAccrued | currency }}</p>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="6" class="payment-col" *ngIf="payment.Status !== 'Paid' && !payment.RescheduleRequest && payment.NextPaymentDate">
+              <p class="detail-label">Next Committment Payement Date:</p>
+              <p class="detail-value">{{ payment.NextPaymentDate | date }}</p>
+            </ion-col>
+            <ion-col size="6" class="payment-col" *ngIf="payment.Remarks!=null">
+              <p class="detail-label">Remarks:</p>
+              <p class="detail-value">{{ payment.Remarks }}</p>
+            </ion-col>
+          </ion-row>
+
+          <!-- Options for Update Payment and Payment History -->
+          <ion-row>
+            <!-- Update Payment button (shown if payment is not fully paid) -->
+            <ion-col *ngIf="loanDetails.LoanStatus=='Active' &&  this.userId==loanDetails.EncyptCreatedBy &&  payment.Status !== 'Paid' && !payment.RescheduleRequest && payment.IsCurrentPending=='Yes'">
+              <ion-button color="primary" (click)="updatePayment(payment)">Update Payment</ion-button>
+            </ion-col>
+
+            <!-- Payment History button (shown if any payment has been made) -->
+            <ion-col *ngIf="payment.AmountPaid > 0">
+              <ion-button color="secondary" (click)="viewPaymentHistory(payment)">Payment History</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+

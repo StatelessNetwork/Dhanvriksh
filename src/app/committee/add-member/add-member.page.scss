@@ -1,0 +1,40 @@
+ion-content {
+    .committee-title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+      font-weight: bold;
+      color: linear-gradient(135deg, #97144d, #d9534f);
+    }
+  
+    .input-item {
+      margin-bottom: 15px;
+  
+      ion-icon {
+        color: linear-gradient(135deg, #97144d, #d9534f);
+        margin-top: 30px;
+      }
+  
+      ion-label {
+        color: #000;
+        height: 30px; /* Ensure the label text is fully visible */
+        padding-top: 5px; /* Adjust padding if necessary */
+      }
+  
+      ion-input {
+        --padding-start: 10px;
+      }
+  
+      ion-select {
+        --padding-start: 10px;
+      }
+    }
+  
+    .block_btn {
+      margin-top: 20px;
+      --background: linear-gradient(135deg, #97144d, #d9534f);
+      --color: #fff;
+      --border-radius: 20px;
+    }
+  }
+  

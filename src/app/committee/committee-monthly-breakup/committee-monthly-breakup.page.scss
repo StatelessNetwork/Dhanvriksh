@@ -1,0 +1,107 @@
+// h2{
+//     margin-top: -15px;
+//     margin-bottom: 12px;
+//     text-align: center;
+//     font-weight: 800;
+//     font-size: 18px !important;
+// }
+
+// ion-badge.ios.hydrated {
+//     margin-top: 3px;
+//     padding-bottom: 7px;
+//     padding-top: 6px;
+// }
+ion-content {
+  --background: #f3f4f6;
+
+  .committee-name {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: bold;
+  }
+
+  .payment-screen {
+    ion-card {
+      --background: #fff;
+      --border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+
+      ion-card-header {
+        background: linear-gradient(135deg, #97144d, #d9534f);
+        color: white;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding: 10px;
+
+        ion-card-title {
+          font-size: 15px; /* Updated font size */
+          font-weight: bold;
+          color: #fff;
+        }
+      }
+
+      ion-card-content {
+        padding: 10px;
+
+        ion-item {
+          --background: transparent;
+          --min-height: 30px; /* Reduced min-height */
+          color: #444;
+
+          ion-label {
+            margin-left: 10px;
+            color: #444;
+          }
+
+          ion-note {
+            font-size: 14px;
+            color: #666;
+          }
+        }
+
+        ion-badge {
+          font-size: 14px;
+          padding: 5px 10px;
+          border-radius: 12px;
+        }
+      }
+    }
+  }
+
+  .statusPending {
+    background-color: #ffc107;
+    color: white;
+  }
+
+  .statusActive {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .statusOther {
+    background-color: #dc3545;
+    color: white;
+  }
+}
+
+ion-header {
+  --background: linear-gradient(135deg, #97144d, #d9534f);
+
+  ion-toolbar {
+    color: white;
+
+    ion-title {
+      font-weight: bold;
+    }
+
+    ion-button {
+      color: white;
+    }
+
+    ion-icon {
+      color: white;
+    }
+  }
+}

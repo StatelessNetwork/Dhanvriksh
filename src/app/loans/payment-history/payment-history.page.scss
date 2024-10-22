@@ -1,0 +1,32 @@
+.custom-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+  }
+  
+  .custom-card-header {
+    background-color: #3880ff; /* Use primary color */
+    border-radius: 15px 15px 0 0;
+    padding: 15px;
+  }
+  
+  .detail-label {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  .detail-value {
+    font-size: 1.1em;
+    color: #333;
+  }
+  
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #555;
+  }
+  

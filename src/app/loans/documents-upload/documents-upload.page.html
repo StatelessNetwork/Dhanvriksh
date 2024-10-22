@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Upload Documents</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button expand="full" (click)="captureImage()">Capture Image</ion-button>
+  <div class="file-upload-wrapper">
+    <ion-button expand="full" color="secondary" (click)="fileInput.click()">Select Files</ion-button>
+    <input type="file" #fileInput (change)="selectFile($event)" multiple />
+  </div>
+
+   <!-- Display selected file names -->
+   <div *ngIf="files.length > 0">
+    <h2>Selected Files:</h2>
+    <ion-list>
+      <ion-item *ngFor="let file of files">
+        <p>{{ file.name }}</p>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div *ngIf="uploadedFileUrls.length > 0">
+    <h2>Uploaded Files:</h2>
+    <ion-list>
+      <ion-item *ngFor="let url of uploadedFileUrls">
+        <a [href]="url" target="_blank">{{ url }}</a>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <ion-button expand="block" color="primary" (click)="uploadFiles()">Upload Files</ion-button>
+</ion-content>
+

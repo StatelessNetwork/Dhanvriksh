@@ -1,0 +1,41 @@
+ion-content {
+    .input-item {
+      margin-bottom: 15px;
+      ion-icon {
+        color: #97144d;
+        margin-top: 30px;
+      }
+      ion-label {
+        color: #000;
+        height: 30px; /* Ensure the label text is fully visible */
+        padding-top: 5px; /* Adjust padding if necessary */
+      }
+      ion-input {
+        --padding-start: 10px;
+      }
+    }
+  
+    .block_btn {
+      margin-top: 20px;
+      --background: #97144d;
+      --color: #fff;
+      --border-radius: 20px;
+    }
+  
+    .add_list {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      ion-label {
+        margin: 0;
+      }
+      .simp_lbl {
+        color: #666;
+      }
+      .bold_lbl {
+        font-weight: bold;
+        color: #000;
+      }
+    }
+  }
+  

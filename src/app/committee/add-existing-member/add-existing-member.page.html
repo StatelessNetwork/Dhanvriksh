@@ -1,0 +1,248 @@
+<!-- <div class="ion-padding" *ngIf="this.resourceData==null || committeeDetails==null || filteredMembers==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%;height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+  </div>
+
+
+<ion-header [translucent]="true"  *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{resourceKeyValue('ExistingMember_lbl_add_existing_member')}}</ion-title>
+  </ion-toolbar>
+  <ion-searchbar mode="ios" [placeholder]="util.translate('Search Member')" [(ngModel)]="searchText" (ionChange)="filterMembers()" type="text" 
+  [debounce]="250">
+</ion-searchbar>
+<div *ngIf="committeeId==null">
+<form [formGroup]="existingMemberForm">
+  <ion-select  formControlName="committee" (ionChange)="onCommitteeChange()">
+    <ion-select-option value="">Select Committee</ion-select-option>
+    <ion-select-option *ngFor="let committee of committeeList;"  value="{{committee.EncyptID}}">{{committee.Name}}</ion-select-option>          
+  </ion-select>
+</form>
+</div>
+</ion-header>
+
+<ion-content class="ion-padding"  *ngIf="this.resourceData!=null">
+
+  <div class="payment-screen">
+  <div class="shadow_card price_div"  *ngIf="committeeDetails!=null && committeeDetails.length>0">
+
+    <ion-label class="title_lbl">{{ committeeDetails[0].holderName }}</ion-label>
+
+    <div class="add_list">
+      <ion-label class="simp_lbl">{{resourceKeyValue('ExistingMember_lbl_total_member_required')}}</ion-label>
+      <ion-label class="bold_lbl">
+        <span> {{ committeeDetails[0].totalMember}}</span>
+      </ion-label>
+    </div>
+
+    <div class="add_list">
+      <ion-label class="simp_lbl">{{resourceKeyValue('ExistingMember_lbl_total_member_added')}}</ion-label>
+      <ion-label class="simp_lbl">
+        <span>{{ committeeDetails[0].totalMemberAdded }}</span>
+      </ion-label>
+    </div>
+
+    <div class="add_list">
+      <ion-label class="simp_lbl">{{resourceKeyValue('ExistingMember_lbl_total_member_slot_available')}}</ion-label>
+      <ion-label class="simp_lbl">
+        <span>{{ committeeDetails[0].totalSlotAvailable  }}</span>
+      </ion-label>
+    </div>
+
+    <div class="add_list">
+      <ion-label class="simp_lbl">{{resourceKeyValue('ExistingMember_lbl_check_all')}}</ion-label>
+      <ion-label class="simp_lbl"><ion-checkbox [(ngModel)]="selectAll" (ionChange)="toggleSelectAll()"></ion-checkbox>
+      </ion-label>
+    </div>
+
+  </div>
+</div>
+
+  <div class="payment-screen" *ngIf="committeeDetails!=null && committeeDetails[0].totalSlotAvailable>0 && memberList!=null && memberList.length>0">
+
+    <div  *ngIf="filteredMembers!=null && filteredMembers.length>0">
+    <div class="shadow_card price_div"  *ngFor="let member of filteredMembers; let  i = index">
+
+      <ion-label class="title_lbl"><ion-checkbox [(ngModel)]="member.isSelected" (ionChange)="selectMember($event,member)"></ion-checkbox> # {{i+1}} {{ member.firstName }} {{ member.lastName }}</ion-label>
+      <ion-label class="time_lbl">{{ member.mobileNumber }}</ion-label>
+      <ion-label class="price_lbl"> {{ member.emailId }} </ion-label>
+      <ion-label class="price_lbl"> {{ member.address }}, {{ member.pincode }}, {{ member.cityName }}, {{ member.stateName }},  {{ member.countryName }}  </ion-label>
+
+    </div>
+
+    <ion-button expand="block" class="block_btn book_btn" type="button" (click)="addMemberWithCommittee()">{{resourceKeyValue("ExistingMember_lbl__submit")}}
+    </ion-button>
+    <div style="height: 30px;"></div>
+
+  </div>
+
+    
+  </div>
+
+  <div class="payment-screen"   *ngIf="mappingOutPut!=null && mappingOutPut.length>0">    
+    <div class="shadow_card price_div" *ngFor="let map of mappingOutPut">
+
+      <ion-label class="title_lbl">{{ map.firstName }} {{ map.lastName }}</ion-label>
+  
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('ExistingMember_lbl_email_address')}}</ion-label>
+        <ion-label class="bold_lbl">
+          <span> {{ map.emailId }}</span>
+        </ion-label>
+      </div>
+  
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('ExistingMember_lbl_mobile_number')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ map.mobileNumber }}</span>
+        </ion-label>
+      </div>
+  
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('ExistingMember_lbl_status')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span><ion-badge>{{ map.result==1?"Success":"Failed" }}</ion-badge></span>
+        </ion-label>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="committeeDetails!=null && committeeDetails[0].totalSlotAvailable==0">
+    {{resourceKeyValue('ExistingMember_lbl_all_slot_booked')}}
+ </div>
+ 
+</ion-content> -->
+
+
+
+<div class="ion-padding" *ngIf="this.resourceData==null || committeeDetails==null || filteredMembers==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+<ion-header [translucent]="true" *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{resourceKeyValue('ExistingMember_lbl_add_existing_member')}}</ion-title>
+  </ion-toolbar>
+  <ion-searchbar mode="ios" [placeholder]="util.translate('Search Member')" [(ngModel)]="searchText" (ionChange)="filterMembers()" type="text" [debounce]="250">
+  </ion-searchbar>
+  <div *ngIf="committeeId==null">
+    <form [formGroup]="existingMemberForm">
+      <ion-select formControlName="committee" (ionChange)="onCommitteeChange()">
+        <ion-select-option value="">Select Committee</ion-select-option>
+        <ion-select-option *ngFor="let committee of committeeList;" value="{{committee.EncyptID}}">{{committee.Name}}</ion-select-option>          
+      </ion-select>
+    </form>
+  </div>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="this.resourceData!=null">
+  <div class="committee-details" *ngIf="committeeDetails!=null && committeeDetails.length>0">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ committeeDetails[0].holderName }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-label class="label">{{resourceKeyValue('ExistingMember_lbl_total_member_required')}}</ion-label>
+          <ion-note slot="end">{{ committeeDetails[0].totalMember }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="label">{{resourceKeyValue('ExistingMember_lbl_total_member_added')}}</ion-label>
+          <ion-note slot="end">{{ committeeDetails[0].totalMemberAdded }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="label">{{resourceKeyValue('ExistingMember_lbl_total_member_slot_available')}}</ion-label>
+          <ion-note slot="end">{{ committeeDetails[0].totalSlotAvailable }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="label">{{resourceKeyValue('ExistingMember_lbl_check_all')}}</ion-label>
+          <ion-checkbox slot="end" [(ngModel)]="selectAll" (ionChange)="toggleSelectAll()"></ion-checkbox>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="member-list" *ngIf="committeeDetails!=null && committeeDetails[0].totalSlotAvailable>0 && memberList!=null && memberList.length>0">
+    <ion-card *ngFor="let member of filteredMembers; let i = index">
+      <ion-item lines="full">
+        <ion-checkbox slot="start" [(ngModel)]="member.isSelected" (ionChange)="selectMember($event, member)"></ion-checkbox>
+        <ion-label>
+          # {{i+1}} {{ member.firstName }} {{ member.lastName }}
+        </ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-icon name="call-outline" slot="start"></ion-icon>
+        <ion-label>{{ member.mobileNumber }}</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-label>{{ member.emailId }}</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-icon name="location-outline" slot="start"></ion-icon>
+        <ion-label>{{ member.address }}, {{ member.pincode }}, {{ member.cityName }}, {{ member.stateName }}, {{ member.countryName }}</ion-label>
+      </ion-item>
+    </ion-card>
+
+    <ion-button expand="block" class="block_btn" type="button" (click)="addMemberWithCommittee()">{{resourceKeyValue("ExistingMember_lbl__submit")}}</ion-button>
+    <div style="height: 30px;"></div>
+  </div>
+
+  <div class="mapping-output" *ngIf="mappingOutPut!=null && mappingOutPut.length>0">
+    <ion-card *ngFor="let map of mappingOutPut">
+      <ion-card-header>
+        <ion-card-title>{{ map.firstName }} {{ map.lastName }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-label class="label">{{resourceKeyValue('ExistingMember_lbl_email_address')}}</ion-label>
+          <ion-note slot="end">{{ map.emailId }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="label">{{resourceKeyValue('ExistingMember_lbl_mobile_number')}}</ion-label>
+          <ion-note slot="end">{{ map.mobileNumber }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="label">{{resourceKeyValue('ExistingMember_lbl_status')}}</ion-label>
+          <ion-note slot="end">
+            <ion-badge>{{ map.result==1?"Success":"Failed" }}</ion-badge>
+          </ion-note>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="committeeDetails!=null && committeeDetails[0].totalSlotAvailable==0">
+    {{resourceKeyValue('ExistingMember_lbl_all_slot_booked')}}
+  </div>
+</ion-content>
+
+

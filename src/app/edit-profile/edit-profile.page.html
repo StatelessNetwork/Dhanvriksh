@@ -1,0 +1,132 @@
+<div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%;height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+  </div>
+
+  <ion-header *ngIf="this.resourceData!=null">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="util.openMenu()">
+          <ion-icon slot="icon-only" name="reorder-three-outline" color="light"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title> {{resourceKeyValue('EditProfile_lbl_edit_profile')}} </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+<ion-content class="ion-padding" *ngIf="this.resourceData!=null">
+
+  <div class="payment-screen">
+    <div class="shadow_card price_div">
+  
+      <form [formGroup]="userForm" novalidate>
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-input placeholder="{{resourceKeyValue('AddUserDetails_lbl_first_name')}}" spellcheck="false"
+          autocapitalize="off" type="text"  formControlName="firstName"   placeholder="abc" ></ion-input>
+        </div>
+        <ion-text color="danger" *ngIf="userForm.get('firstName').errors && userForm.get('firstName').touched">
+          <p  *ngIf="userForm.get('firstName').errors['required']">
+            {{resourceKeyValue('AddUserDetails_error_msg_req_first_name')}}
+          </p>
+        </ion-text>
+
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-input placeholder="{{resourceKeyValue('AddUserDetails_lbl_last_name')}}" type="text"  spellcheck="false"
+          autocapitalize="off" formControlName="lastName"   placeholder="kumar" ></ion-input>
+        </div>
+        <ion-text color="danger" *ngIf="userForm.get('lastName').errors && userForm.get('lastName').touched">
+          <p  *ngIf="userForm.get('lastName').errors['required']">
+            {{resourceKeyValue('AddUserDetails_error_msg_req_last_name')}}
+          </p>
+        </ion-text>
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-input placeholder="{{resourceKeyValue('AddUserDetails_lbl_email_address')}}" type="email"  formControlName="emailAddress"  spellcheck="false"
+          autocapitalize="off" placeholder="abc@gmail.com" ></ion-input>
+        </div>
+        <ion-text color="danger" *ngIf="userForm.get('emailAddress').errors && userForm.get('emailAddress').touched">
+          <p  *ngIf="userForm.get('emailAddress').errors['required']">
+            {{resourceKeyValue("AddUserDetails_error_msg_req_email_address")}}
+          </p>
+          <p  *ngIf="userForm.get('emailAddress').errors['pattern']">
+            {{resourceKeyValue("AddUserDetails_error_msg_pattern_email_address")}}
+          </p>
+          </ion-text>
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-input placeholder="{{resourceKeyValue('AddUserDetails_lbl_address')}}" type="text"  formControlName="address" spellcheck="false"
+          autocapitalize="off"></ion-input>
+        </div>
+        <ion-text color="danger" *ngIf="userForm.get('address').errors && userForm.get('address').touched">
+          <p  *ngIf="userForm.get('address').errors['required']">
+            {{resourceKeyValue('AddUserDetails_error_msg_req_address')}}
+          </p>
+        </ion-text>
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-select multiple="false" interface="popover" mode="ios" formControlName="country"
+          [placeholder]="resourceKeyValue('AddUserDetails_lbl_country')" id="country">
+          <ion-select-option [value]="country.EncyptID" *ngFor="let country of countryList">{{country.Name}} </ion-select-option>
+        </ion-select>
+        </div>
+        <ion-text color="danger" *ngIf="userForm.get('country').errors && userForm.get('country').touched">
+          <p  *ngIf="userForm.get('country').errors['required']">
+            {{resourceKeyValue("AddUserDetails_error_msg_req_country")}}
+          </p>
+        </ion-text>
+
+
+        <ion-list>
+        <ion-radio-group   formControlName="gender">
+          <ion-item  class="list" lines="none">
+            <ion-label class="title">{{resourceKeyValue("AddUserDetails_lbl_gender_male")}}</ion-label>
+            <ion-radio value="male" slot="end" mode="md"></ion-radio>
+          </ion-item>
+          <ion-item  class="list" lines="none">
+            <ion-label class="title">{{resourceKeyValue("AddUserDetails_lbl_gender_female")}}</ion-label>
+            <ion-radio value="female" slot="end" mode="md"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+      <ion-text color="danger" *ngIf="userForm.get('gender').errors && userForm.get('gender').touched">
+        <p  *ngIf="userForm.get('gender').errors['required']">
+          {{resourceKeyValue("AddUserDetails_error_msg_req_gender")}}
+        </p>
+      </ion-text>
+
+      <div class="shadow_card card_box">
+        <ion-select multiple="false" interface="popover" mode="ios" formControlName="preferredlanguage"
+        placeholder="resourceKeyValue('AddUserDetails_placeholder_select_preferred_language')" id="preferredlanguage">
+        <ion-select-option  value="en">English</ion-select-option>          
+        <ion-select-option  value="hi">Hindi</ion-select-option> 
+      </ion-select>
+      </div>
+
+        <div style="text-align: center;margin: 30px 0px;">
+          <ion-button  class="block_btn" [disabled]="isLogin || !userForm.valid" (click)="submitForm()">
+            <span *ngIf="!isLogin"> {{resourceKeyValue("EditProfile_lbl_update_profile")}}</span>
+            <ion-spinner name="circles" *ngIf="isLogin"></ion-spinner>
+          </ion-button>
+        </div>
+
+        
+
+    </form>
+
+    </div>
+
+    <div style="height: 30px;"></div>
+  </div>
+
+
+</ion-content>

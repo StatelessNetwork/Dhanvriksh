@@ -1,0 +1,392 @@
+<ion-header [translucent]="false" mode="ios" class="ion-no-border">
+  <div style="background-color: var(--bodyBackColor)">
+    <div class="topBgImage">
+      <span (click)="back()" 
+      class="material-icons"
+      style="color: var(--whiteColor); font-size: 24px;margin-left:15px"
+    >
+      arrow_back
+    </span>
+      <div class="rowAlignCenter" style="padding: 0 20px">
+        <div class="column" style="flex: 1">
+          <ion-text class="whiteColor22SemiBold"> Profile </ion-text>
+          <ion-text *ngIf="loginUserData!=null"
+            class="whiteColor16Medium ellipseText"
+            style="opacity: 0.8; -webkit-line-clamp: 1"
+          >
+            Hello {{loginUserData.firstName +" "+loginUserData.lastName}}
+          </ion-text>
+        </div>
+        <img
+          src="../../../assets/images/working_boy.png"
+          style="width: 110px; height: 80px; object-fit: fill"
+        />
+      </div>
+    </div>
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="rowAlignCenter margin20">
+    <img
+      src="../../../assets/images/users/user1.jpeg"
+      class="imageOverflow"
+      style="width: 70px; height: 70px; border-radius: 35px"
+    />
+    <div class="column" style="flex: 1; margin: 0 15px">
+      <ion-text *ngIf="loginUserData!=null"
+        class="blackColor16SemiBold ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+      {{loginUserData.firstName +" "+loginUserData.lastName}}
+      </ion-text>
+      <ion-text
+        class="grayColor14SemiBold ellipseText"
+        style="-webkit-line-clamp: 1; margin: 2px 0"
+      >
+        20 task/10 completed
+      </ion-text>
+      <ion-text
+        class="grayColor14SemiBold ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+        Developer
+      </ion-text>
+    </div>
+    <circle-progress
+      [percent]="40"
+      [radius]="27"
+      [outerStrokeWidth]="7"
+      [outerStrokeColor]="'var(--primaryColor)'"
+      [animation]="true"
+      [animationDuration]="300"
+      [showInnerStroke]="false"
+      [showTitle]="true"
+      [showSubtitle]="false"
+      [showUnits]="true"
+      unitsFontSize="15px"
+      unitsFontWeight="500"
+      [unitsColor]="'var(--primaryColor)'"
+      [titleColor]="'var(--primaryColor)'"
+      titleFontSize="15px"
+      titleFontWeight="500"
+      [backgroundStroke]="'#DCD4F3'"
+      [backgroundStrokeWidth]="7"
+      [backgroundPadding]="-3"
+    ></circle-progress>
+  </div>
+
+  <div class="column optionsWrapper">'
+    <div *ngFor="let p of appPages; let i = index">
+    <div 
+      class="rowAlignCenter"
+      style="margin: 15px 10px" (click)="onPageChange(p,i)"
+    >
+      <ion-icon
+        name="{{p.icn}}"
+        color="blackColor"
+        style="font-size: 18px"
+      />
+      <ion-text
+        class="ellipseText blackColor16Medium"
+        style="margin: 0 10px; flex: 1; -webkit-line-clamp: 1"
+      >
+      {{ getTranslate(p.title) }}      </ion-text>
+      <ion-icon
+        name="chevron-forward-outline"
+        color="blackColor"
+        style="font-size: 18px"
+      />
+    </div>
+
+    <div class="divider"></div>
+
+    <div *ngIf="i==appPages.length-1"
+    (click)="showLogoutDialog=true"
+    class="rowAlignCenter"
+    style="margin: 15px 10px"
+  >
+    <img
+      src="../../../assets/images/icons/logout.png"
+      style="width: 18px; height: 18px; object-fit: contain"
+    />
+    <ion-text
+      class="ellipseText redColor16Medium"
+      style="margin: 0 10px; flex: 1; -webkit-line-clamp: 1"
+    >
+      Logout
+    </ion-text>
+    <ion-icon
+      name="chevron-forward-outline"
+      color="blackColor"
+      style="font-size: 18px"
+    />
+  </div>
+  </div>
+
+    <!-- <div
+      class="rowAlignCenter"
+      style="margin: 15px 10px"
+    >
+      <ion-icon
+        name="people-outline"
+        color="blackColor"
+        style="font-size: 18px"
+      />
+      <ion-text
+        class="ellipseText blackColor16Medium"
+        style="margin: 0 10px; flex: 1; -webkit-line-clamp: 1"
+      >
+        Team
+      </ion-text>
+      <ion-icon
+        name="chevron-forward-outline"
+        color="blackColor"
+        style="font-size: 18px"
+      />
+    </div>
+
+    <div class="divider"></div>
+
+    <div
+      class="rowAlignCenter"
+      style="margin: 15px 10px"
+    >
+      <ion-icon
+        name="reader-outline"
+        color="blackColor"
+        style="font-size: 18px"
+      />
+      <ion-text
+        class="ellipseText blackColor16Medium"
+        style="margin: 0 10px; flex: 1; -webkit-line-clamp: 1"
+      >
+        Terms & condition
+      </ion-text>
+      <ion-icon
+        name="chevron-forward-outline"
+        color="blackColor"
+        style="font-size: 18px"
+      />
+    </div>
+
+    <div class="divider"></div>
+
+    <div 
+      class="rowAlignCenter"
+      style="margin: 15px 10px"
+    >
+      <ion-icon
+        name="warning-outline"
+        color="blackColor"
+        style="font-size: 18px"
+      />
+      <ion-text
+        class="ellipseText blackColor16Medium"
+        style="margin: 0 10px; flex: 1; -webkit-line-clamp: 1"
+      >
+        Privacy policy
+      </ion-text>
+      <ion-icon
+        name="chevron-forward-outline"
+        color="blackColor"
+        style="font-size: 18px"
+      />
+    </div>
+
+    <div class="divider"></div>
+
+    <div
+      class="rowAlignCenter"
+      style="margin: 15px 10px"
+    >
+      <ion-icon
+        name="help-circle-outline"
+        color="blackColor"
+        style="font-size: 18px"
+      />
+      <ion-text
+        class="ellipseText blackColor16Medium"
+        style="margin: 0 10px; flex: 1; -webkit-line-clamp: 1"
+      >
+        FAQs
+      </ion-text>
+      <ion-icon
+        name="chevron-forward-outline"
+        color="blackColor"
+        style="font-size: 18px"
+      />
+    </div> -->
+
+    <div class="divider"></div>
+
+  
+  </div>
+
+  <ion-modal
+    #logoutDialog
+    mode="ios"
+    [isOpen]="showLogoutDialog"
+    (didDismiss)="showLogoutDialog=false"
+    style="--height: auto; --width: 85%; --border-radius: 10px"
+  >
+    <ng-template>
+      <div class="columnAlignCenter" style="padding: 20px">
+        <img
+          src="../../../assets/images/icons/logout_big.png"
+          style="width: 80px; height: 80px; object-fit: contain"
+        />
+        <ion-text
+          class="blackColor16Medium"
+          style="text-align: center; margin: 10px 20px"
+        >
+          Are you sure you want to logout this account?
+        </ion-text>
+        <div
+          class="rowAlignCenter"
+          style="align-self: stretch; margin-top: 5px"
+        >
+          <div
+            (click)="showLogoutDialog=false"
+            class="center dialogButton"
+            style="
+              background-color: var(--whiteColor);
+              box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+              margin-right: 7.5px;
+            "
+          >
+            <ion-text class="primaryColor18Medium"> No </ion-text>
+          </div>
+          <div
+            (click)="logout()"
+            class="center dialogButton"
+            style="
+              background-color: var(--primaryColor);
+              box-shadow: 0 6px 12px rgba(89, 62, 126, 0.2);
+              margin-left: 7.5px;
+            "
+          >
+            <ion-text class="whiteColor18Medium"> Yes </ion-text>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+
+
+<!-- <ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="util.openMenu()">
+        <ion-icon slot="icon-only" name="reorder-three-outline" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{util.translate('Profile')}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" color="light" *ngIf="authorized">
+        <ion-icon slot="icon-only" name="power" color="light"></ion-icon>
+      </ion-button>
+      <ion-button (click)="login()" color="light" *ngIf="!authorized">
+        <ion-icon slot="icon-only" name="person-outline" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="profile-screen" [ngStyle]="{'min-height': (height-65)+'px'}">
+
+    <div class="shadow_card card_box" *ngIf="authorized && util && util.userInfo && util.userInfo.cover">
+      <div class="user_image">
+      </div>
+      <ion-label class="name_lbl"> {{util.userInfo.first_name + ' '+util.userInfo.last_name}} </ion-label>
+      <ion-label class="email_lbl">{{util.userInfo.email}} </ion-label>
+    </div>
+
+    <ion-item lines="none" detail="" class="ion-activatable ripple-parent" (click)="login()" *ngIf="!authorized">
+      <ion-icon name="person-outline" slot="start"></ion-icon>
+      <ion-label>{{util.translate('Sign In / Sign Up')}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+
+    <ion-item lines="none" detail="" class="ion-activatable ripple-parent" (click)="profile()" *ngIf="authorized">
+      <ion-icon name="person-outline" slot="start"></ion-icon>
+      <ion-label>{{util.translate('Profile')}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+
+    <ion-item lines="none" detail="" class="ion-activatable ripple-parent" (click)="orders()" *ngIf="authorized">
+      <ion-icon name="calendar-outline" slot="start"></ion-icon>
+      <ion-label>{{util.translate('Orders')}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+
+    <ion-item lines="none" detail="" class="ion-activatable ripple-parent" (click)="openBookings()">
+      <ion-icon name="calendar-number-outline" slot="start"></ion-icon>
+      <ion-label> {{util.translate('Bookings')}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+
+    <ion-item lines="none" detail="" class="ion-activatable ripple-parent" (click)="goToAddress()" *ngIf="authorized">
+      <ion-icon name="location-outline" slot="start"></ion-icon>
+      <ion-label> {{util.translate('Address')}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+
+    <ion-item lines="none" detail="" class="ion-activatable ripple-parent" (click)="reset()" *ngIf="authorized">
+      <ion-icon name="key-outline" slot="start"></ion-icon>
+      <ion-label>{{util.translate('Change Password')}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+
+    <ion-item lines="none" detail="" class="ion-activatable ripple-parent" (click)="goToAbout()">
+      <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+      <ion-label> {{util.translate('About Us')}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+
+    <ion-item lines="none" detail="" class="ion-activatable ripple-parent" (click)="goToContact()">
+      <ion-icon name="mail-outline" slot="start"></ion-icon>
+      <ion-label> {{util.translate('Contact Us')}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+
+    <ion-item lines="none" detail="" class="ion-activatable ripple-parent" (click)="goLangs()">
+      <ion-icon name="language-outline" slot="start"></ion-icon>
+      <ion-label> {{util.translate('Languages')}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+
+    <ion-item lines="none" detail="" class="ion-activatable ripple-parent" (click)="goToChats()" *ngIf="authorized">
+      <ion-icon name="chatbubbles-outline" slot="start"></ion-icon>
+      <ion-label> {{util.translate('Chats')}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+
+    <ion-item lines="none" detail="" class="ion-activatable ripple-parent" (click)="goFaqs()">
+      <ion-icon name="flag-outline" slot="start"></ion-icon>
+      <ion-label> {{util.translate('FAQs')}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+
+    <ion-item lines="none" detail="" class="ion-activatable ripple-parent" (click)="goHelp()">
+      <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+      <ion-label> {{util.translate('Help')}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+
+    <ion-item lines="none" class="ion-activatable ripple-parent">
+      <ion-icon [name]="currentTheme =='dark-theme'?'moon':'moon-outline'" slot="start"></ion-icon>
+      <ion-label>{{util.translate('Light Mode')}}</ion-label>
+      <ion-toggle slot="end" [checked]="currentTheme =='primary'?true:false" (ionChange)="changeTheme()"></ion-toggle>
+    </ion-item>
+
+    <ion-item lines="none" detail="" class="ion-activatable ripple-parent" (click)="logout()" *ngIf="authorized">
+      <ion-icon name="power-outline" slot="start"></ion-icon>
+      <ion-label> {{util.translate('Log Out')}} </ion-label>
+      <ion-ripple-effect type="unbounded"></ion-ripple-effect>
+    </ion-item>
+
+  </div>
+</ion-content> -->

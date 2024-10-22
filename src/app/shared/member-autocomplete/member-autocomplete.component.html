@@ -1,0 +1,26 @@
+<!-- <ion-item>
+  <ion-input type="text" [formControl]="control" placeholder="Enter Member ID"></ion-input>
+  <ion-spinner *ngIf="isLoading" slot="end"></ion-spinner>
+</ion-item>
+<ion-list *ngIf="filteredMembers.length > 0">
+  <ion-item *ngFor="let member of filteredMembers" (click)="onSelect(member)">
+    {{ member.name }} (ID: {{ member.id }})
+  </ion-item>
+</ion-list> -->
+
+<ion-item>
+  <ion-input type="text" [formControl]="control" placeholder="Enter Member Name or Mobile Number"></ion-input>
+  <ion-spinner *ngIf="isLoading" slot="end"></ion-spinner>
+</ion-item>
+
+<ion-list *ngIf="filteredMembers.length > 0">
+  <ion-item 
+    *ngFor="let member of filteredMembers" 
+    (click)="onSelect(member)" 
+    class="autocomplete-item">
+    <ion-label>
+      <h2>{{ member.Name }}</h2>
+    </ion-label>
+    
+  </ion-item>
+</ion-list>

@@ -1,0 +1,40 @@
+// p {
+//     font-size: 12px;
+//     text-align: center;
+//   }
+  
+//   .otp_content {
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: center;
+//     align-items: center;
+//     margin: 10px;
+//   }
+  
+//   ion-button {
+//     padding: 0px 20px;
+//     width: 100%;
+//   }
+
+.infoContentWrapper {
+  flex: 1;
+  background: var(--whiteColor);
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  overflow: hidden;
+}
+
+.backArrow {
+  color: var(--whiteColor);
+  font-size: 24px;
+  display: flex;
+  margin-left: 20px;
+  margin-bottom: 180px;
+}
+
+::ng-deep .each_input:focus {
+  outline-style: solid;
+  outline-color: var(--primaryColor);
+  outline-width: 2px;
+  caret-color: var(--primaryColor);
+}

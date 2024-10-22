@@ -1,0 +1,143 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Update Payment</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+   <!-- Loader -->
+   <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p>Loading payment details...</p>
+  </div>
+
+  <!-- No data found message -->
+  <div *ngIf="!isLoading && !installment" class="no-data-container">
+    <p class="no-data-message">No payment data found</p>
+  </div>
+
+  <div *ngIf="!isLoading && installment">
+  <ion-card class="custom-card">
+    <ion-card-header color="primary" class="custom-card-header">
+      <ion-card-title class="ion-text-center custom-card-title">Current Installment</ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf="installment">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" class="detail-col">
+            <p class="detail-label">Amount Due:</p>
+            <p class="detail-value">{{ installment.AmountDue }}</p>
+          </ion-col>
+          <ion-col size="6" class="detail-col">
+            <p class="detail-label">Balance Remaining:</p>
+            <p class="detail-value">{{ installment.BalanceRemaining }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="detail-col">
+            <p class="detail-label">Received Amount:</p>
+            <p class="detail-value">{{ installment.AmountPaid }}</p>
+          </ion-col>
+          <ion-col size="6" class="detail-col">
+            <p class="detail-label">Due Date:</p>
+            <p class="detail-value">{{ installment.DueDate | date:'mediumDate' }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="installment.NextPaymentDate && installment.Status === 'Partial'">
+          <ion-col size="6" class="detail-col">
+            <p class="detail-label">Next Payment Date:</p>
+            <p class="detail-value">{{ installment.NextPaymentDate | date:'mediumDate' }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6" class="detail-col">
+            <p class="detail-label">Status:</p>
+            <ion-badge color="warning" *ngIf="installment.Status === 'Pending'">{{ installment.Status }}</ion-badge>
+            <ion-badge color="success" *ngIf="installment.Status === 'Paid'">{{ installment.Status }}</ion-badge>
+            <ion-badge color="secondary" *ngIf="installment.Status === 'Partial'">{{ installment.Status }}</ion-badge>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="installment.LateFee > 0">
+          <ion-col size="12" class="detail-col">
+            <p class="detail-label">Late Fee:</p>
+            <p class="detail-value">{{ installment.LateFee | currency }}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <form [formGroup]="paymentForm">
+    <ion-item>
+      <ion-label position="stacked">
+        Payment Amount <span class="mandatory">*</span>
+      </ion-label>
+      <ion-input type="number" formControlName="paymentAmount" required></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="paymentForm.get('paymentAmount').invalid && paymentForm.get('paymentAmount').touched">
+      <p *ngIf="paymentForm.get('paymentAmount').errors['required']">Payment Amount is required.</p>
+      <p *ngIf="paymentForm.get('paymentAmount').errors['min']">Payment Amount must be greater than zero.</p>
+      <p *ngIf="paymentForm.get('paymentAmount').errors['insufficientAmount']">Payment amount cannot be less than the due amount for full payment.</p>
+      <p *ngIf="paymentForm.get('paymentAmount').errors['excessAmount']">Payment amount exceeds the due amount for partial payment.</p>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Payment Method</ion-label>
+      <ion-select formControlName="paymentMethod" required>
+        <ion-select-option value="Bank Transfer">Bank Transfer</ion-select-option>
+        <ion-select-option value="Credit Card">Credit Card</ion-select-option>
+        <ion-select-option value="Cash">Cash</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-text color="danger" *ngIf="paymentForm.get('paymentMethod').invalid && paymentForm.get('paymentMethod').touched">
+      <p *ngIf="paymentForm.get('paymentMethod').errors['required']">Payment Method is required.</p>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Payment Status <span class="mandatory">*</span></ion-label>
+      <ion-select formControlName="paymentStatus" required >
+        <ion-select-option value="">Select Status</ion-select-option>
+        <ion-select-option value="Full">Full</ion-select-option>
+        <ion-select-option value="Partial">Partial</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="paymentForm.get('paymentStatus').value === 'Partial'">
+      <ion-label position="stacked">Late Fee (if applicable)</ion-label>
+      <ion-input type="number" formControlName="lateFee" [disabled]="paymentForm.get('adjustToNextEMI').value"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="paymentForm.get('paymentStatus').value === 'Partial'">
+      <ion-label>Adjust balance to next EMI?</ion-label>
+      <ion-toggle formControlName="adjustToNextEMI"></ion-toggle>
+    </ion-item>
+
+    <ion-item *ngIf="paymentForm.get('paymentStatus').value === 'Partial' && !paymentForm.get('adjustToNextEMI').value">
+      <ion-label position="stacked">Next Payment Date</ion-label>
+      <ion-datetime formControlName="nextPaymentDate" [min]="installment.NextPaymentDate!=null?installment.NextPaymentDate:installment.DueDate"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Remarks</ion-label>
+      <ion-textarea formControlName="remarks"></ion-textarea>
+    </ion-item>
+  </form>
+
+  <ion-button expand="block" color="primary" (click)="applyPayment()" [disabled]="paymentForm.invalid || isLoading">
+    Submit Payment
+  </ion-button>
+
+  <ion-spinner *ngIf="isSpinerLoader" name="crescent" color="primary"></ion-spinner>
+
+  <!-- Link to payment history -->
+  <ion-button *ngIf="installment && installment.AmountPaid > 0" expand="block" color="secondary" (click)="viewPaymentHistory()">
+    View Payment History
+  </ion-button>
+</div>
+</ion-content>

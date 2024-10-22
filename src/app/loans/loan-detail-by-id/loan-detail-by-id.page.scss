@@ -1,0 +1,70 @@
+/* Custom Card Styling */
+.custom-card {
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+  overflow: hidden; /* Prevent content overflow on rounded corners */
+}
+
+/* Custom Card Header Styling */
+.custom-card-header {
+  background-color: #3880ff; /* Primary color */
+  border-radius: 15px 15px 0 0;
+  padding: 15px;
+}
+
+.custom-card-title {
+  color: white;
+  font-size: 1.4em;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Detail Column Styling */
+.detail-col {
+  padding: 10px 0;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #777;
+  margin-bottom: 5px;
+  font-size: 1em;
+}
+
+.detail-value {
+  font-size: 1.2em;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Loan Information Grid Styling */
+ion-grid {
+  margin-top: 10px;
+}
+
+/* Document Download Button */
+.view-doc-link {
+  color: #3880ff; /* Primary color */
+  font-weight: bold;
+}
+
+/* Loading Container Styling */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #555; /* Text color for loading state */
+}
+
+/* Secondary color for download button */
+ion-button.fill-outline {
+  --border-color: #3880ff;
+  --color: #3880ff;
+  --border-radius: 12px;
+  --padding: 8px 16px;
+}
+
+

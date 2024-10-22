@@ -1,0 +1,114 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="util.openMenu()">
+        <ion-icon slot="icon-only" name="reorder-three-outline" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Loan List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Loader -->
+  <div *ngIf="isLoading" class="loader-container">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p>Loading loans...</p>
+  </div>
+
+  <!-- Loan List -->
+  <ng-container *ngIf="!isLoading && loans.length > 0; else noLoans">
+    <h2>Created Loans</h2>
+    <ion-card class="loan-card animated fadeIn" *ngFor="let loan of loans" (click)="viewLoanDetails(loan.EncyptLoanId)">
+      <ion-card-header class="loan-card-header">
+        <ion-card-title class="loan-card-title">{{ loan.MemberName +"("+loan.LoanID+")"}}</ion-card-title>
+        <ion-card-subtitle class="loan-card-subtitle">
+          <ion-icon name="cash-outline" class="price-icon"></ion-icon> <!-- Price Icon -->
+          {{ loan.LoanAmount | currency }}
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content class="loan-card-content">
+        <div class="loan-info-item">
+          <ion-icon name="trending-up-outline" class="info-icon"></ion-icon>
+          <p><strong>Interest Type:</strong> {{ loan.InterestType }}</p>
+        </div>
+
+        <div class="loan-info-item">
+          <ion-icon name="calculator-outline" class="info-icon"></ion-icon>
+          <p><strong>EMI Type:</strong> {{ loan.EMIType }}</p>
+        </div>
+
+        <div class="loan-info-item">
+          <ion-icon name="checkmark-circle-outline" class="info-icon"></ion-icon>
+          <p><strong>Status:</strong>
+            
+            <ng-container *ngIf="loan.EncyptCreatedBy==userId && loan.LoanStatus === 'Active'; else closedLabel">
+              <!-- Show dropdown for Active loans -->
+              <ion-select placeholder="Select Status" [(ngModel)]="loan.LoanStatus"  (ionChange)="onLoanStatusChange(loan)" (click)="onSelectClick($event)">
+                <ion-select-option value="Active">Active</ion-select-option>
+                <ion-select-option value="Closed">Closed</ion-select-option>
+              </ion-select>
+            </ng-container>
+            <!-- Show label for Closed loans -->
+            <ng-template #closedLabel>
+              <ion-badge [color]="loan.LoanStatus === 'Active' ? 'success' : 'danger'">
+                {{ loan.LoanStatus }}
+              </ion-badge>
+            </ng-template>
+            <!-- <ion-badge [color]="loan.LoanStatus === 'Active' ? 'success' : 'danger'">
+              {{ loan.LoanStatus }}
+            </ion-badge> -->
+          </p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <ng-container *ngIf="!isLoading && ownLoanList.length > 0; else noLoans">
+    <h2>You Take  Loans</h2>
+    <ion-card class="loan-card animated fadeIn" *ngFor="let loan of ownLoanList" (click)="viewLoanDetails(loan.EncyptLoanId)">
+      <ion-card-header class="loan-card-header">
+        <ion-card-title class="loan-card-title">{{ loan.MemberName +"("+loan.LoanID+")"}}</ion-card-title>
+        <ion-card-subtitle class="loan-card-subtitle">
+          <ion-icon name="cash-outline" class="price-icon"></ion-icon> <!-- Price Icon -->
+          {{ loan.LoanAmount | currency }}
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content class="loan-card-content">
+        <div class="loan-info-item">
+          <ion-icon name="trending-up-outline" class="info-icon"></ion-icon>
+          <p><strong>Interest Type:</strong> {{ loan.InterestType }}</p>
+        </div>
+
+        <div class="loan-info-item">
+          <ion-icon name="calculator-outline" class="info-icon"></ion-icon>
+          <p><strong>EMI Type:</strong> {{ loan.EMIType }}</p>
+        </div>
+
+        <div class="loan-info-item">
+          <ion-icon name="checkmark-circle-outline" class="info-icon"></ion-icon>
+          <p><strong>Status:</strong>
+            <ion-badge [color]="loan.LoanStatus === 'Active' ? 'success' : 'danger'">
+              {{ loan.LoanStatus }}
+            </ion-badge>
+          </p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <!-- No Loans Template -->
+  <ng-template #noLoans>
+    <div class="no-loans">
+      <ion-icon name="sad-outline" size="large" color="medium"></ion-icon>
+      <p>No loans Details found.</p>
+    </div>
+  </ng-template>
+
+  <!-- FAB Button for Adding New Loan -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="tertiary" (click)="createNewLoan()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

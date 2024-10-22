@@ -1,0 +1,139 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Loan Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+ <!-- Loader -->
+ <ng-container *ngIf="isLoading">
+  <div class="loading-container">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p>Loading loan details...</p>
+  </div>
+</ng-container>
+
+<!-- No Data Found Message -->
+<div *ngIf="!isLoading && !loan" class="no-data-container">
+  <p class="no-data-message">No data found</p>
+</div>
+
+<div *ngIf="!isLoading && loan">
+  <!-- Loan Information Section -->
+  <ion-card class="custom-card">
+    <ion-card-header color="primary" class="custom-card-header">
+      <ion-card-title class="ion-text-center">Loan Information</ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf="loan != null">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <p class="detail-label">Loan ID:</p>
+            <p class="detail-value">{{ loan.loanId }}</p>
+          </ion-col>
+          <ion-col size="6">
+            <p class="detail-label">Loan Amount:</p>
+            <p class="detail-value">{{ loan.LoanAmount | currency }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <p class="detail-label">Interest Type:</p>
+            <p class="detail-value">{{ loan.InterestType }}</p>
+          </ion-col>
+          
+          <!-- Conditionally show InterestRate or FixedInterestAmount based on Interest Type -->
+          <ion-col size="6" *ngIf="loan.InterestType === 'Simple' || loan.InterestType === 'Compound'">
+            <p class="detail-label">Interest Rate:</p>
+            <p class="detail-value">{{ loan.InterestRate }}%</p>
+          </ion-col>
+          
+          <ion-col size="6" *ngIf="loan.InterestType === 'Fixed'">
+            <p class="detail-label">Fixed Interest Amount:</p>
+            <p class="detail-value">{{ loan.FixedInterestAmount | currency }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <p class="detail-label">EMI Type:</p>
+            <p class="detail-value">{{ loan.EMIType }} </p>
+          </ion-col>
+          <ion-col size="6">
+            <p class="detail-label">Duration:</p>
+            <p class="detail-value">{{ loan.Tenure }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <p class="detail-label">Total Interest Received:</p>
+            <p class="detail-value">{{ loan.TotalInterestReceived | currency }}</p>
+          </ion-col>
+          <ion-col size="6">
+            <p class="detail-label">Total Principal Received:</p>
+            <p class="detail-value">{{ loan.TotalPrincipalReceived | currency }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <p class="detail-label">Total EMI Paid:</p>
+            <p class="detail-value">{{ loan.TotalEMIPaid }}</p>
+          </ion-col>
+          <ion-col size="6">
+            <p class="detail-label">Pending EMI Count:</p>
+            <p class="detail-value">{{ loan.PendingEMICount }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <p class="detail-label">Total EMI Due:</p>
+            <p class="detail-value">{{ loan.TotalEMIDue | currency }}</p>
+          </ion-col>
+          <ion-col size="6">
+            <p class="detail-label">Next Installment Due Date:</p>
+            <p class="detail-value">{{ loan.NextInstallmentDueDate | date }}</p>
+          </ion-col>
+        </ion-row>
+        <ion-row >
+          <ion-col size="6"  *ngIf="loan.NextInstallmentPartPaymentDate">
+            <p class="detail-label">Customer Commitment Payment Date:</p>
+            <p class="detail-value">{{ loan.NextInstallmentPartPaymentDate | date }}</p>
+          </ion-col>
+          <ion-col size="6"  *ngIf="loan.Remarks!=null">
+            <p class="detail-label">Remarks:</p>
+            <p class="detail-value">{{ loan.Remarks }}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- View Payment Schedule Button -->
+  <ion-button expand="block" color="primary" (click)="viewPaymentSchedule()">View Payment Schedule</ion-button>
+
+  <!-- Loan Documents Section (With Download Option) -->
+  <ion-card class="custom-card" *ngIf="loan!=null && userId==loan.EncyptCreatedBy">
+    <ion-card-header color="primary" class="custom-card-header">
+      <ion-card-title class="ion-text-center custom-card-title">Loan Documents</ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf="loanDocuments">
+      <ion-list>
+        <ion-item *ngFor="let document of loanDocuments" lines="none" class="document-item">
+          <ion-label>
+            <p class="detail-label">Document Name:</p>
+            <p class="detail-value">{{ document.ActualName }}</p>
+            <ion-button fill="outline" color="secondary" expand="block" href="{{ getDocumentUrl(document.Path) }}" target="_blank">Download</ion-button>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+</ion-content>
+

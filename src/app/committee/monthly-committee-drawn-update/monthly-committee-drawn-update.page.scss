@@ -1,0 +1,101 @@
+ion-content {
+    --background: #f3f4f6;
+    padding-top: 0;
+  
+    .payment-screen {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 16px;
+    }
+  
+    .shadow_card {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      margin-top: 0;
+  
+      .title_lbl {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+  
+      .add_list {
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+  
+        ion-label {
+          font-size: 14px;
+        }
+  
+        .bold_lbl {
+          font-weight: bold;
+        }
+      }
+  
+      .form-group {
+        margin-bottom: 15px;
+  
+        ion-select,
+        ion-input {
+          --padding-start: 16px;
+          --padding-end: 16px;
+          --min-height: 50px;
+          border-radius: 8px;
+          background: #fff;
+          border: 1px solid #e0e0e0;
+          box-shadow: none; /* Remove double border effect */
+          padding-left: 16px;
+        }
+      }
+  
+      .button-container {
+        display: flex;
+        justify-content: center;
+      }
+  
+      ion-button.submit-btn {
+        margin-top: 20px;
+        --background: linear-gradient(135deg, #97144d, #d9534f);
+        --color: white;
+        --border-radius: 8px;
+        height: 45px;
+        width: auto;
+        min-width: 120px;
+        text-align: center;
+      }
+  
+      ion-text {
+        margin-top: -10px;
+        margin-bottom: 10px;
+        color: #f53d3d;
+      }
+    }
+  }
+  
+  ion-header {
+    --background: linear-gradient(135deg, #97144d, #d9534f);
+  
+    ion-toolbar {
+      color: white;
+  
+      ion-title {
+        font-weight: bold;
+      }
+  
+      ion-button {
+        color: white;
+      }
+  
+      ion-icon {
+        color: white;
+      }
+    }
+  }
+  

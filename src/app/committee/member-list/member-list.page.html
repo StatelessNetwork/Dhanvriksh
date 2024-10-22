@@ -1,0 +1,131 @@
+<!-- <div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%;height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+  </div>
+
+<ion-header mode="ios" class="ion-no-border"  *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="util.openMenu()">
+        <ion-icon slot="icon-only" name="reorder-three-outline" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{resourceKeyValue('MemberList_lbl_member_list')}}</ion-title>
+    <ion-button  fill="clear" slot="end">
+      <ion-icon name="add" style="color: white;"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+  <ion-searchbar mode="ios" [placeholder]="util.translate('Search Member')" [(ngModel)]="searchText" (ionChange)="filterMembers()" type="text" 
+  [debounce]="250">
+</ion-searchbar>
+</ion-header>
+
+<ion-content class="ion-padding"  *ngIf="this.resourceData!=null">
+
+  <div class="payment-screen">
+
+    <div  *ngIf="filteredMembers!=null && filteredMembers.length>0">
+    <div class="shadow_card price_div"  *ngFor="let member of filteredMembers; let  i = index">
+
+      <ion-label class="title_lbl"># {{i+1}} {{ member.firstName }} {{ member.lastName }}</ion-label>
+
+      <ion-label class="time_lbl">{{ member.mobileNumber }}</ion-label>
+      <ion-label class="price_lbl"> {{ member.emailId }} </ion-label>
+      <ion-label class="price_lbl"> {{ member.address }}, {{ member.pincode }}, {{ member.cityName }}, {{ member.stateName }},  {{ member.countryName }}  </ion-label>
+
+    </div>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="circles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+     <div style="height: 30px;"></div>
+
+  </div>
+
+  <div *ngIf="filteredMembers==null || filteredMembers.length==0" class="noRecord">
+       {{resourceKeyValue('NewMember_lbl_no_member_exists')}}
+    </div>
+    
+  </div>
+ 
+</ion-content> -->
+
+
+
+
+<div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+<ion-header mode="ios" class="ion-no-border" *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="util.openMenu()">
+        <ion-icon slot="icon-only" name="reorder-three-outline" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{resourceKeyValue('MemberList_lbl_member_list')}}</ion-title>
+    <ion-button fill="clear" slot="end" (click)="addMember()">
+      <ion-icon name="add" style="color: white;"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+  <ion-searchbar mode="ios" [placeholder]="util.translate('Search Member')" [(ngModel)]="searchText" (ionChange)="filterMembers()" type="text" [debounce]="250">
+  </ion-searchbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="this.resourceData!=null">
+  <div class="member-list">
+    <div *ngIf="filteredMembers!=null && filteredMembers.length>0">
+      <div class="member-card" *ngFor="let member of filteredMembers; let i = index">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title># {{i+1}} {{ member.firstName }} {{ member.lastName }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item lines="none">
+              <ion-icon name="call-outline" slot="start"></ion-icon>
+              <ion-label>{{ member.mobileNumber }}</ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-icon name="mail-outline" slot="start"></ion-icon>
+              <ion-label>{{ member.emailId }}</ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-icon name="location-outline" slot="start"></ion-icon>
+              <ion-label>{{ member.address }}, {{ member.pincode }}, {{ member.cityName }}, {{ member.stateName }}, {{ member.countryName }}</ion-label>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+        <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+      <div style="height: 30px;"></div>
+    </div>
+    <div *ngIf="filteredMembers==null || filteredMembers.length==0" class="no-record">
+      {{resourceKeyValue('NewMember_lbl_no_member_exists')}}
+    </div>
+  </div>
+</ion-content>

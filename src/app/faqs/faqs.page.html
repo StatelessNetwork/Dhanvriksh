@@ -1,0 +1,74 @@
+<div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%;height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+  </div>
+
+
+  <ion-header [translucent]="false" mode="ios" class="ion-no-border" *ngIf="this.resourceData!=null">
+    <div style="background-color: var(--bodyBackColor)">
+      <app-header header="FAQs"></app-header>
+    </div>
+  </ion-header>
+  
+  <ion-content style="--padding-top: 20px" *ngIf="this.resourceData!=null">
+    <div
+      class="column commonShadow faqCard"
+      *ngFor="let item of faqData"
+      (click)="item.expanded=!item.expanded"
+    >
+      <div class="rowAlignCenter">
+        <ion-text
+          class="blackColor16Medium ellipseText"
+          style="-webkit-line-clamp: 1; flex: 1"
+        >
+          {{item.question}}
+        </ion-text>
+        <span
+          class="material-icons"
+          style="color: var(--blackColor); font-size: 22px"
+        >
+          {{item.expanded ? 'keyboard_arrow_up' : "keyboard_arrow_down"}}
+        </span>
+      </div>
+      <ion-text
+        *ngIf="item.expanded"
+        class="grayColor14Medium"
+        style="margin-top: 5px"
+      >
+        {{item.answer}}
+      </ion-text>
+    </div>
+  </ion-content>
+  
+
+<!-- 
+<ion-header *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="util.openMenu()">
+        <ion-icon slot="icon-only" name="reorder-three-outline" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title> {{resourceKeyValue('Menu_lbl_faq')}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding"  *ngIf="this.resourceData!=null">
+  <ion-card *ngFor="let faq of faqData">
+    <ion-card-header (click)="toggleAnswer(faq)">
+      <span class="question-prompt"><ion-icon [name]="faq.expanded ? 'chevron-down-outline' : 'chevron-forward-outline'"></ion-icon> Q: {{ faq.question }}</span>
+    </ion-card-header>
+    <ion-card-content *ngIf="faq.expanded">
+      <span class="answer-prompt">A:</span>
+      {{ faq.answer }}
+    </ion-card-content>
+  </ion-card>
+</ion-content> -->

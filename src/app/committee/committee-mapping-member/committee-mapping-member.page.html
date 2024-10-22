@@ -1,0 +1,213 @@
+
+<div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+
+<ion-header [translucent]="false" mode="ios" class="ion-no-border">
+  <div style="background-color: var(--bodyBackColor)">
+    <div class="topBgImage">
+      <span (click)="goToBack()"
+      class="material-icons"
+      style="color: var(--whiteColor); font-size: 24px;margin-left:24px"
+    >
+      arrow_back
+    </span>
+      <div class="rowAlignCenter" style="padding: 20px">
+        <ion-text *ngIf="committeeDetails!=null"
+          class="whiteColor18SemiBold ellipseText"
+          style="margin: 0 10px; -webkit-line-clamp: 1; flex: 1"
+        >
+          {{committeeDetails.holderName}}
+        </ion-text>
+
+      </div>
+    </div>
+
+    <div class="column center margin20" *ngIf="committeeDetails!=null">
+
+      <ion-text
+        class="blackColor18SemiBold ellipseText"
+        style="-webkit-line-clamp: 1; margin-top: 5px"
+      >
+      total Member : {{committeeDetails.totalMember}}
+      </ion-text>
+      <ion-text
+        class="grayColor14Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+      total Member Added : {{committeeDetails.totalMemberAdded}}
+      </ion-text>
+      <ion-text
+        class="grayColor14Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+      total Slot Available : {{committeeDetails.totalSlotAvailable}}
+      </ion-text>
+ 
+    </div>
+
+    <div
+    class="rowAlignCenter"
+    style="
+      background-color: var(--extraLightGrayColor);
+      padding: 10px 20px;
+      justify-content: space-around;
+    "
+  >
+   
+  </div>
+  <div style="padding: 20px">
+    <div class="rowAlignCenter searchFieldWrapper">
+      <ion-icon
+        name="search"
+        [color]="search?'primaryColor': 'grayColor'"
+        style="font-size: 20px"
+      />
+      <ion-input
+        mode="ios"
+        placeholder="Search here"
+        class="blackColor16Medium"
+        style="height: 20px; min-height: 20px"
+        [(ngModel)]="searchText"
+        debounce="300"  
+        (ionInput)="filterMembers()"
+      ></ion-input>
+    </div>
+  </div>
+  </div>
+</ion-header>
+
+<ion-content *ngIf="this.resourceData!=null">
+  <ng-container *ngIf="filteredMembers!=null && filteredMembers.length>0">
+  <div
+    *ngFor="let item of filteredMembers"
+    class="rowAlignCenter memberCard"
+    (click)="item.isSelected=!item.isSelected"
+  >
+  <div
+  class="center"
+  style="width: 53px; height: 53px; border-radius: 26.5px; background-color: var(--primaryColor); color: var(--whiteColor); display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: bold;"
+>
+  {{item.firstName.charAt(0).toUpperCase()}} {{item.lastName.charAt(0).toUpperCase()}}
+</div>
+    <div class="column" style="margin: 0 10px; flex: 1">
+      <ion-text
+        class="blackColor15Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+        {{item.firstName +" "+item.lastName}}
+      </ion-text>
+      <ion-text
+        class="grayColor14Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+        {{item.emailId}}
+      </ion-text>
+      <ion-text
+      class="grayColor14Medium ellipseText"
+      style="-webkit-line-clamp: 1"
+    >
+      {{item.mobileNumber}}
+    </ion-text>
+    </div>
+    <span
+      *ngIf="item.isSelected"
+      class="material-icons"
+      style="color: var(--primaryColor); font-size: 24px"
+    >
+      check
+    </span>
+  </div>
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ng-container>
+  <div *ngIf="filteredMembers.length == 0"
+  class="center column"
+  style="flex: 1"
+>
+  <img
+    src="../../../assets/images/icons/folder.png"
+    style="width: 53px; height: 53px; object-fit: contain"
+  />
+  <ion-text class="grayColor16Medium"> {{resourceKeyValue('CommitteeList_lbl_no_committee_exists')}} </ion-text>
+</div>
+</ion-content>
+
+<ion-footer *ngIf="this.resourceData!=null && filteredMembers!=null && filteredMembers.length>0"
+  mode="ios"
+  class="ion-no-border"
+  style="background-color: var(--bodyBackColor)"
+>
+  <div class="commonButton center" (click)="addMemberWithCommittee()">
+    <ion-text class="whiteColor18SemiBold"> {{resourceKeyValue("ExistingMember_lbl__submit")}} </ion-text>
+  </div>
+</ion-footer>
+
+
+
+
+
+<!-- <ion-header mode="ios" class="ion-no-border" *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title *ngIf="committeeName!=null">{{committeeName}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="(totalMember==totalActiveMember)==false || totalMember==0" (click)="addNewMember()">
+        <ion-icon slot="icon-only" name="add" color="light"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="(totalMember==totalActiveMember)==false || totalMember==0" (click)="addExistingMember()">
+        <ion-icon slot="icon-only" name="exit-outline" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-searchbar mode="ios" [placeholder]="util.translate('Search Member')" [(ngModel)]="searchText" (ionChange)="filterMembers()" type="text" [debounce]="250">
+  </ion-searchbar>
+</ion-header> -->
+
+<!-- <ion-content class="ion-padding" *ngIf="this.resourceData!=null">
+  <div class="member-list">
+    <div *ngIf="filteredMembers!=null && filteredMembers.length>0">
+      <div class="member-card" *ngFor="let member of filteredMembers; let i = index">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title># {{i+1}} {{ member.MemberName }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item lines="none">
+              <ion-icon name="call-outline" slot="start"></ion-icon>
+              <ion-label>{{ member.mobileNumber }}</ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-icon name="mail-outline" slot="start"></ion-icon>
+              <ion-label>{{ member.emailId }}</ion-label>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+        <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+      <div style="height: 30px;"></div>
+    </div>
+    <div *ngIf="filteredMembers==null || filteredMembers.length==0" class="no-record">
+      {{resourceKeyValue('NewMember_lbl_no_member_exists')}}
+    </div>
+  </div>
+</ion-content> -->

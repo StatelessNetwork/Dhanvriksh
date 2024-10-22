@@ -1,0 +1,25 @@
+.optionsWrapper {
+    background-color: var(--whiteColor);
+    border-radius: 10px;
+    margin: 0 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .divider {
+    height: 1px;
+    background-color: var(--extraLightGrayColor)
+  }
+  
+  .dialogButton {
+    flex: 1;
+    border-radius: 10px;
+    padding: 12px;
+  }
+  
+  .backArrow {
+    color: var(--whiteColor);
+    font-size: 24px;
+    display: flex;
+    margin-left: 20px;
+    margin-bottom: 180px;
+  }

@@ -1,0 +1,94 @@
+// ion-content {
+//   .input-item {
+//     margin-bottom: 15px;
+//     min-height: 60px;  /* Ensures enough space for the label and input */
+
+//     ion-icon {
+//       color: #97144d;
+//       margin-top: 30px;
+//     }
+
+//     ion-label {
+//       color: #000;
+//       height: 30px; /* Ensure the label text is fully visible */
+//       padding-top: 5px; /* Adjust padding if necessary */
+//     }
+
+//     ion-input {
+//       --padding-start: 10px;
+//     }
+
+//     ion-select {
+//       --padding-start: 10px;
+//     }
+
+//     ion-checkbox {
+//       --background: #97144d;
+//       margin-top: -10px;
+//     }
+//   }
+
+//   .block_btn {
+//     margin-top: 20px;
+//     --background: #97144d;
+//     --color: #fff;
+//     --border-radius: 20px;
+//   }
+
+//   .checkbox_label {
+//     vertical-align: middle;
+//     color: #0c3053;
+//     font-size: 13px !important;
+//     font-weight: 100 !important;
+//   }
+// }
+
+
+.fieldWrapper {
+  background-color: var(--whiteColor);
+  border-radius: 10px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+  padding: 13px;
+}
+
+ion-input {
+  --placeholder-color: var(--grayColor);
+  --placeholder-opacity: 1;
+}
+
+.circle20 {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+}
+
+.memberCircleStyle {
+  width: 25px;
+  height: 25px;
+  border-radius: 12.5px;
+  border: 2px solid var(--whiteColor);
+  position: relative;
+  background-color: var(--bodyBackColor);
+}
+
+ion-datetime::part(calendar-day):focus {
+  background-color: var(--primaryColor);
+  box-shadow: 0px 0px 0px transparent;
+}
+
+ion-datetime::part(calendar-day) {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.dialogButton {
+  border-radius: 10px;
+  padding: 12px;
+  min-width: 100px;
+}
+
+.circle40 {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}

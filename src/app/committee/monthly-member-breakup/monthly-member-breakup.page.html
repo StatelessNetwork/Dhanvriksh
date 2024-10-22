@@ -1,0 +1,469 @@
+<!-- <div class="ion-padding" *ngIf="this.resourceData==null || monthlyBreakupData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%;height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+  </div>
+
+
+<ion-header [translucent]="true" *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{resourceKeyValue('MemberMonthlyBreakup_lbl_member_monthly_breakup')}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="this.resourceData!=null">
+  <div class="payment-screen">
+    <div class="shadow_card price_div"  *ngIf="monthlyBreakupData!=null && monthlyBreakupData.length>0">
+  
+      <ion-label class="title_lbl alignCenter">{{ monthlyBreakupData[0].holderName }}</ion-label>
+  
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('Member_Month_Popup_lbl_committee_date')}}</ion-label>
+        <ion-label class="bold_lbl">
+          <span> {{ monthlyBreakupData[0].committeeDate}}</span>
+        </ion-label>
+      </div>
+  
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('MonthlyMemberBreakup_lbl_last_date_for_payment')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].lastData }}</span>
+        </ion-label>
+      </div>
+  
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('Member_Month_Popup_lbl_total_committee_amount')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].totalCommitteeAmount }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('ComtMonthlyBreakup_lbl_per_member_amount')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].monthlyAmount }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('ComtMonthlyBreakup_lbl_per_head_profit')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].profitAmount }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('MonthlyMemberBreakup_lbl_per_day_panelty')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].penaltyAmount }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_status')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span><ion-badge [ngClass]="monthlyBreakupData[0].monthlyCommitteeStatus=='Pending'?'statusPending':(monthlyBreakupData[0].monthlyCommitteeStatus=='Active' ? 'statusActive':'statsuOther') ">{{ monthlyBreakupData[0].monthlyCommitteeStatus }}</ion-badge> </span>
+        </ion-label>
+      </div>
+  
+    </div>
+
+    <div class="shadow_card price_div"  *ngFor="let month of monthlyBreakupData; let  i = index">
+      <ion-label class="title_lbl"># {{i+1}} {{month.memberName}}</ion-label>
+      <ion-label class="time_lbl mrgbt5">{{resourceKeyValue('Member_Month_Popup_lbl_total_committee_amount')}} : <span class="alignRight">{{ month.pricePerMemberCommittee }}</span></ion-label>
+      <ion-label class="time_lbl mrgbt5">{{resourceKeyValue('MonthlyMemberBreakup_lbl_net_committee_amount')}} : <span class="alignRight">{{ month.monthlyAmount }}</span></ion-label>
+      <ion-label class="time_lbl mrgbt5">{{resourceKeyValue('CommitteeList_lbl_total_months')}} : <span class="alignRight">{{ month.profitAmount }}</span></ion-label>
+      <ion-label class="time_lbl mrgbt5">{{resourceKeyValue('CommitteeList_lbl_status')}} : <span class="alignRight"><ion-badge [ngClass]="month.paymentStatus=='Pending'?'statusPending':(month.paymentStatus=='Received' ? 'statusActive':'statsuOther') ">{{ month.paymentStatus }}</ion-badge></span></ion-label>
+      <ion-button *ngIf="month.paymentStatus!='Received' && isCreated==loginUserData.userId" expand="block" class="book_btn" type="button" (click)="changePaymentStatus(month)">{{resourceKeyValue("MonthlyMemberBreakup_lbl_update_payment_status")}}
+      </ion-button>
+    </div>
+    <div style="height: 30px;"></div>
+  </div>
+  
+  
+</ion-content> -->
+
+
+<div class="ion-padding" *ngIf="this.resourceData==null || monthlyBreakupData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+
+<ion-header [translucent]="false" mode="ios" class="ion-no-border" *ngIf="this.resourceData!=null">
+  <div style="background-color: #fff">
+    <div class="topBgImage">
+      <div class="rowAlignCenter" style="padding: 20px">
+        <span (click)="goToBack()"
+          class="material-icons"
+          style="color: var(--whiteColor); font-size: 16px"
+        >
+          arrow_back
+        </span>
+        <ion-text
+          class="whiteColor16SemiBold ellipseText"
+          style="margin: 0 10px; -webkit-line-clamp: 1; flex: 1"
+        >
+        {{resourceKeyValue('MemberMonthlyBreakup_lbl_member_monthly_breakup')}}
+        </ion-text>
+        
+      </div>
+    </div>
+
+    <div class="column center margin20" *ngIf="monthlyBreakupData!=null && monthlyBreakupData.length>0">
+      <div style="height: 75px; position: relative" class="center">
+        <circle-progress
+          [percent]="100"
+          [radius]="32"
+          [outerStrokeWidth]="7"
+          [outerStrokeColor]="'var(--blackColor)'"
+          [animation]="true"
+          [animationDuration]="300"
+          [showInnerStroke]="false"
+          [showTitle]="true"
+          [showSubtitle]="false"
+          [showUnits]="true"
+          unitsFontSize="16px"
+          unitsFontWeight="500"
+          [unitsColor]="'var(--blackColor)'"
+          [titleColor]="'var(--blackColor)'"
+          titleFontSize="16px"
+          titleFontWeight="500"
+          [backgroundStroke]="'rgba(218, 152, 135, 0.16)'"
+          [backgroundStrokeWidth]="7"
+          [backgroundPadding]="-3"
+        ></circle-progress>
+      </div>
+      <ion-text
+        class="blackColor16SemiBold ellipseText"
+        style="-webkit-line-clamp: 1; margin-top: 5px"
+      >
+      {{ monthlyBreakupData[0].holderName }}
+      </ion-text>
+      <ion-text
+        class="grayColor13Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+      {{resourceKeyValue('Member_Month_Popup_lbl_committee_date')}} : {{ monthlyBreakupData[0].committeeDate }}
+      </ion-text>
+      <ion-text
+        class="grayColor13Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+      {{resourceKeyValue('MonthlyMemberBreakup_lbl_last_date_for_payment')}} : {{ monthlyBreakupData[0].lastData }}
+      </ion-text>
+      <ion-text
+        class="grayColor13Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+      {{resourceKeyValue('Member_Month_Popup_lbl_total_committee_amount')}} : {{ monthlyBreakupData[0].totalCommitteeAmount }}
+      </ion-text>
+      <ion-text
+        class="grayColor13Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+      {{resourceKeyValue('ComtMonthlyBreakup_lbl_per_member_amount')}} : {{ monthlyBreakupData[0].monthlyAmount }}
+      </ion-text>
+      <ion-text
+        class="grayColor13Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+      {{resourceKeyValue('ComtMonthlyBreakup_lbl_per_head_profit')}} : {{ monthlyBreakupData[0].profitAmount }}
+      </ion-text>
+      <ion-text
+      class="grayColor13Medium ellipseText"
+      style="-webkit-line-clamp: 1"
+    >
+    {{resourceKeyValue('CommitteeList_lbl_status')}} : {{ monthlyBreakupData[0].monthlyCommitteeStatus }}
+    </ion-text>
+    </div>
+
+  </div>
+</ion-header>
+
+<ion-content *ngIf="this.resourceData!=null">
+
+    <div
+      *ngFor="let month of monthlyBreakupData; let i = index"
+      class="rowAlignCenter card"
+      style="padding: 10px"
+    >
+ 
+      <div class="column" style="flex: 1; margin: 0 12px">
+        <ion-text
+          class="blackColor14Medium ellipseText"
+          style="-webkit-line-clamp: 1"
+        >
+        # {{i+1}} {{month.memberName}}
+        </ion-text>
+        <ion-text
+          class="grayColor12Medium ellipseText"
+          style="-webkit-line-clamp: 1"
+        >
+        {{resourceKeyValue('MonthlyMemberBreakup_lbl_net_committee_amount')}} : {{ month.monthlyAmount }}
+        </ion-text>
+        <ion-text
+        class="grayColor12Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+      {{resourceKeyValue('ComtMonthlyBreakup_lbl_per_head_profit')}} : {{ month.profitAmount }}
+      </ion-text>
+        <ion-text
+          class="grayColor12Medium ellipseText"
+          style="-webkit-line-clamp: 1"
+        >
+       Payment {{resourceKeyValue('CommitteeList_lbl_status')}} : {{ month.paymentStatus }}
+        </ion-text>
+      </div>
+      <ion-icon *ngIf="month.paymentStatus!='Received' && isCreated==loginUserData.encryptUserId"
+        [id]="'menu'+i"
+        name="ellipsis-vertical"
+        color="grayColor"
+        style="font-size: 18px"
+      ></ion-icon>
+      <ion-popover
+        mode="md"
+        [trigger]="'menu'+i"
+        (didDismiss)="popCtrl.dismiss()"
+      >
+        <ng-template>
+          <ion-content class="ion-no-padding">
+            <div class="column" style="padding: 5px 15px">
+              <ion-text
+                class="blackColor13Medium"
+                style="margin: 0px 0"
+                (click)="openChangePaymentStatus(month)"
+              >
+                Update Payment
+              </ion-text>
+            </div>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+    </div>
+  
+  <ion-modal *ngIf="this.resourceData!=null"
+    #taskSheet
+    mode="ios"
+    [isOpen]="showAddTaskSheet"
+    (didDismiss)="showAddTaskSheet=false"
+    [initialBreakpoint]="1"
+    [breakpoints]="[0, 1]"
+    style="--height: auto; --border-radius: 40px"
+    handle="false"
+  >
+    <ng-template>
+      <form [formGroup]="memberMonthlyBreakupForm">
+      <div
+        class="column"
+        style="padding: 25px 20px"
+        [style.margin-bottom]="platform.is('ios')?'0':keyboardHeight+'px'"
+      >
+        <div class="column">
+            <ion-text class="blackColor16Medium" style="margin-bottom: 10px; display: flex">
+              {{resourceKeyValue('Member_Month_Popup_lbl_payment_status')}}
+            </ion-text>
+          
+            <!-- Trigger for popover with formControlName="country" -->
+            <div id="countryOptions" class="fieldWrapper rowAlignCenter" style="padding: 13px !important;">
+              <ion-text
+                [class]="memberMonthlyBreakupForm.get('paymentStatus')?.value ? 'blackColor15Medium' : 'grayColor15Medium'"
+                class="ellipseText"
+                style="flex: 1; -webkit-line-clamp: 1; margin-right: 10px"
+              >
+                {{ selectedPaymentStatus ? selectedPaymentStatus : 'Select country' }}
+              </ion-text>
+              <ion-icon name="chevron-down" color="grayColor" style="font-size: 20px"></ion-icon>
+            </div>
+          
+            <!-- Popover for country selection -->
+            <ion-popover
+              #countryOptionsPopover
+              mode="md"
+              trigger="countryOptions"
+              side="right"
+              alignment="end"
+            >
+              <ng-template>
+                <ion-content class="ion-no-padding" style="max-height: 400px;"> <!-- Set max-height for scrollable area -->
+                  <div class="column" style="padding: 10px; overflow-y: auto; max-height: 100%;"> <!-- Ensure content is scrollable -->
+                    <!-- Loop through countriesList and display Name -->
+                    <ion-text
+                      *ngFor="let payment of paymentStatusList"
+                      class="blackColor16Medium"
+                      style="margin: 10px 0"
+                      (click)="onSelectPayment(payment.EncyptID); countryOptionsPopover.dismiss();"
+                    >
+                      {{ payment.Name }}
+                    </ion-text>
+                  </div>
+                </ion-content>
+              </ng-template>
+            </ion-popover>
+          
+          <!-- <ion-text class="blackColor16Medium" style="margin-bottom: 10px">
+            {{resourceKeyValue('Member_Month_Popup_lbl_payment_status')}}
+          </ion-text>
+          <div class="fieldWrapper">
+            <ion-select multiple="false" interface="popover" mode="ios" formControlName="paymentStatus" style="height: 20px; min-height: 20px"
+          class="blackColor15Medium"
+            [placeholder]="resourceKeyValue('Member_Month_Popup_lbl_payment_status')" id="paymentStatus">
+          <ion-select-option [value]="pay.EncyptID" *ngFor="let pay of paymentStatusList;" >{{pay.Name}} </ion-select-option>
+        </ion-select>
+          </div> -->
+          
+        </div>
+
+        <div class="column"  style="margin-top: 20px">
+          <ion-text class="blackColor16Medium" style="margin-bottom: 10px">
+            {{resourceKeyValue('Member_Month_Popup_lbl_penalty_amount')}}
+          </ion-text>
+          <div class="fieldWrapper">
+            <ion-input
+              mode="ios"
+              placeholder="{{resourceKeyValue('Member_Month_Popup_lbl_penalty_amount')}}"
+              style="height: 20px; min-height: 20px"
+              class="blackColor15Medium"
+              formControlName="penaltyAmount"
+              type="number"
+            />
+          </div>
+          
+        </div>
+
+        <div class="column"  style="margin-top: 20px">
+          <ion-text class="blackColor16Medium" style="margin-bottom: 10px">
+            {{resourceKeyValue('Member_Month_Popup_lbl_remarks')}}
+          </ion-text>
+          <div class="fieldWrapper">
+            <ion-input
+              mode="ios"
+              placeholder="{{resourceKeyValue('Member_Month_Popup_lbl_remarks')}}"
+              style="height: 20px; min-height: 20px"
+              class="blackColor15Medium"
+              formControlName="remarks"
+              type="text"
+            />
+
+          </div>
+          
+        </div>
+
+        <div  [ngClass]="{'disabled-div': selectedPaymentStatus == 'Pending'}"
+        (click)="onSubmit()"
+          class="center commonButton"
+          style="margin: 0px; margin-top: 40px"
+        >
+          <ion-text class="whiteColor18SemiBold"> {{resourceKeyValue("Member_Month_Popup_btn_submit")}} </ion-text>
+        </div>
+      </div>
+    </form>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+
+
+<!-- 
+
+<ion-header [translucent]="true" *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{resourceKeyValue('MemberMonthlyBreakup_lbl_member_monthly_breakup')}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="this.resourceData!=null">
+  <div class="payment-screen">
+    <ion-card class="shadow_card" *ngIf="monthlyBreakupData!=null && monthlyBreakupData.length>0">
+      <ion-card-header>
+        <ion-card-title>{{ monthlyBreakupData[0].holderName }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-label>{{resourceKeyValue('Member_Month_Popup_lbl_committee_date')}}</ion-label>
+          <ion-note slot="end">{{ monthlyBreakupData[0].committeeDate }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>{{resourceKeyValue('MonthlyMemberBreakup_lbl_last_date_for_payment')}}</ion-label>
+          <ion-note slot="end">{{ monthlyBreakupData[0].lastData }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>{{resourceKeyValue('Member_Month_Popup_lbl_total_committee_amount')}}</ion-label>
+          <ion-note slot="end">{{ monthlyBreakupData[0].totalCommitteeAmount }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>{{resourceKeyValue('ComtMonthlyBreakup_lbl_per_member_amount')}}</ion-label>
+          <ion-note slot="end">{{ monthlyBreakupData[0].monthlyAmount }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>{{resourceKeyValue('ComtMonthlyBreakup_lbl_per_head_profit')}}</ion-label>
+          <ion-note slot="end">{{ monthlyBreakupData[0].profitAmount }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>{{resourceKeyValue('MonthlyMemberBreakup_lbl_per_day_panelty')}}</ion-label>
+          <ion-note slot="end">{{ monthlyBreakupData[0].penaltyAmount }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>{{resourceKeyValue('CommitteeList_lbl_status')}}</ion-label>
+          <ion-note slot="end">
+            <ion-badge [ngClass]="monthlyBreakupData[0].monthlyCommitteeStatus=='Pending' ? 'statusPending' : (monthlyBreakupData[0].monthlyCommitteeStatus=='Active' ? 'statusActive' : 'statusOther')">{{ monthlyBreakupData[0].monthlyCommitteeStatus }}</ion-badge>
+          </ion-note>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="shadow_card" *ngFor="let month of monthlyBreakupData; let i = index">
+      <ion-card-header>
+        <ion-card-title># {{i+1}} {{month.memberName}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-label>{{resourceKeyValue('Member_Month_Popup_lbl_total_committee_amount')}}</ion-label>
+          <ion-note slot="end">{{ month.pricePerMemberCommittee }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>{{resourceKeyValue('MonthlyMemberBreakup_lbl_net_committee_amount')}}</ion-label>
+          <ion-note slot="end">{{ month.monthlyAmount }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>{{resourceKeyValue('CommitteeList_lbl_total_months')}}</ion-label>
+          <ion-note slot="end">{{ month.profitAmount }}</ion-note>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>{{resourceKeyValue('CommitteeList_lbl_status')}}</ion-label>
+          <ion-note slot="end">
+            <ion-badge [ngClass]="month.paymentStatus=='Pending' ? 'statusPending' : (month.paymentStatus=='Received' ? 'statusActive' : 'statusOther')">{{ month.paymentStatus }}</ion-badge>
+          </ion-note>
+        </ion-item>
+        <ion-button *ngIf="month.paymentStatus!='Received' && isCreated==loginUserData.encryptUserId" fill="outline" class="update-status-btn" (click)="changePaymentStatus(month)">
+          {{resourceKeyValue("MonthlyMemberBreakup_lbl_update_payment_status")}}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+    <div style="height: 30px;"></div>
+  </div>
+</ion-content> -->

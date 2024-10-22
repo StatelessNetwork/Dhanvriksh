@@ -1,0 +1,477 @@
+<ion-header [translucent]="false" mode="ios" class="ion-no-border">
+  <div style="background-color: #fff">
+    <div class="topBgImage">
+      <div class="rowAlignCenter" style="padding: 20px">
+        <span (click)="goToBack()"
+      class="material-icons"
+      style="color: var(--whiteColor); font-size: 24px;margin-left:24px"
+    >
+      arrow_back
+    </span>
+        <ion-text *ngIf="monthlyBreakupList!=null && monthlyBreakupList.length>0"
+          class="blackColor16SemiBoldWhite ellipseText"
+          style="margin: 0 10px; -webkit-line-clamp: 1; flex: 1"
+        >
+          {{monthlyBreakupList[0].committeeName}} ({{monthlyBreakupList[0].monthlyTotalAmount}})
+        </ion-text>
+
+      </div>
+    </div>
+
+    <div class="column center margin20" *ngIf="monthlyBreakupList!=null && monthlyBreakupList.length>0">
+      <div style="height: 75px; position: relative" class="center">
+        <circle-progress
+          [percent]="40"
+          [radius]="32"
+          [outerStrokeWidth]="7"
+          [outerStrokeColor]="'var(--woodenColor)'"
+          [animation]="true"
+          [animationDuration]="300"
+          [showInnerStroke]="false"
+          [showTitle]="true"
+          [showSubtitle]="false"
+          [showUnits]="true"
+          unitsFontSize="16px"
+          unitsFontWeight="500"
+          [unitsColor]="'var(--blackColor)'"
+          [titleColor]="'var(--blackColor)'"
+          titleFontSize="16px"
+          titleFontWeight="500"
+          [backgroundStroke]="'rgba(218, 152, 135, 0.16)'"
+          [backgroundStrokeWidth]="7"
+          [backgroundPadding]="-3"
+        ></circle-progress>
+
+      </div>
+      <ion-text
+        class="blackColor16SemiBold ellipseText"
+        style="-webkit-line-clamp: 1; margin-top: 5px"
+      >
+        Committee : {{monthlyBreakupList[0].committeeName}}
+      </ion-text>
+      <ion-text
+        class="grayColor13Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+        Amount Per Member : {{monthlyBreakupList[0].monthlyTotalAmount}}
+      </ion-text>
+      <ion-text
+        class="grayColor13Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+      Total Month : {{monthlyBreakupList[0].totalMonthsOfCommittee}}
+      </ion-text>
+      <ion-text
+      class="grayColor13Medium ellipseText"
+      style="-webkit-line-clamp: 1"
+    >
+      Total Member : {{monthlyBreakupList[0].totalMember}}
+    </ion-text>
+      <ion-text
+        class="grayColor13Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+        Committee date : {{monthlyBreakupList[0].startDate}}
+      </ion-text>
+      <ion-text
+        class="grayColor13Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+        Payment Last date : {{monthlyBreakupList[0].endDate}}
+      </ion-text>
+    </div>
+
+    <div
+    class="rowAlignCenter"
+    style="
+      background-color: var(--extraLightGrayColor);
+      padding: 10px 20px;
+      justify-content: space-around;
+    "
+  >
+    <div *ngFor="let item of tabs;let index=index">
+      <ion-text
+        (click)="selectedTabIndex=index"
+        [class]="selectedTabIndex==index?'primaryColor13SemiBold':'grayColor13SemiBold'"
+      >
+        {{item}}
+      </ion-text>
+    </div>
+    
+  </div>
+  </div>
+</ion-header>
+
+
+<ion-content  *ngIf="this.resourceData!=null">
+  <div
+    *ngIf="selectedTabIndex==0"
+    class="column"
+    [style.margin-top]="monthlyBreakupList.length == 0?'0':'20px'"
+    [style.height]="monthlyBreakupList.length == 0?'100%':null"
+  >
+
+  <ng-container *ngIf="monthlyBreakupList.length>0">
+    <div
+      *ngFor="let item of monthlyBreakupList;let index=index;"
+      class="card"
+      (click)="redirectToMemberBreakup(item)"
+    >
+      <div
+        class="column"
+        style="
+          margin-left: 8px;
+          padding: 10px;
+          background-color: var(--whiteColor);
+        "
+      >
+        <div class="rowAlignCenter">
+          <div class="column" style="flex: 1">
+            <ion-text
+              class="blackColor16Medium ellipseText"
+              style="-webkit-line-clamp: 1"
+            >
+            {{ item.committeeDate | date: 'dd-MMM-yyyy' }}
+            </ion-text>
+            <div class="rowAlignCenter" style="margin-top: 5px">
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                attach_money
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                {{item.memberName}} {{resourceKeyValue('ComtMonthlyBreakup_lbl_member_name')}}
+                </ion-text>
+              </div>
+              <div class="dateAndTaskDivider"></div>
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                  calendar_today
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                {{ item.perHeadmonthlyAmount }} {{resourceKeyValue('ComtMonthlyBreakup_lbl_per_member_amount')}} 
+                </ion-text>
+              </div>
+              
+            </div>
+            <div class="rowAlignCenter" style="margin-top: 5px">
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                person
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                {{ item.netAmountForOwner }} {{resourceKeyValue('ComtMonthlyBreakup_lbl_net_amount_for_member')}}
+                </ion-text>
+              </div>
+              <div class="dateAndTaskDivider"></div>
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                access_time
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                {{ item.remarks }} {{resourceKeyValue('ComtMonthlyBreakup_lbl_remarks')}}
+                </ion-text>
+              </div>
+            </div>
+     
+            <div class="rowAlignCenter" style="margin-top: 5px">
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                person
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                {{ item.totalPendingMemberPayment }} {{resourceKeyValue('ComtMonthlyBreakup_lbl_total_pending_payment_member')}}
+                </ion-text>
+              </div>
+              <div class="dateAndTaskDivider"></div>
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                access_time
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                <ion-badge slot="end" [ngClass]="item.statusName=='Pending'? 'statusPending' : (item.statusName=='Active' ? 'statusActive':'statusOther')">{{ item.statusName }}</ion-badge>
+                {{ item.statusName }} {{resourceKeyValue('CommitteeList_lbl_status')}}
+                </ion-text>
+              </div>
+            </div>
+     
+            
+          </div>     
+   
+        </div>
+
+      </div>
+    </div>
+    </ng-container>
+
+    <div *ngIf="monthlyBreakupList.length == 0"
+      class="center column"
+      style="flex: 1"
+    >
+      <img
+        src="../../../assets/images/icons/folder.png"
+        style="width: 53px; height: 53px; object-fit: contain"
+      />
+      <ion-text class="grayColor16Medium"> {{resourceKeyValue('CommitteeList_lbl_no_committee_exists')}} </ion-text>
+    </div>
+  </div>
+
+  <div
+    *ngIf="selectedTabIndex==1"
+    class="column"
+    [style.margin-top]="memberMappedWithCommitteeList.length==0?'0':'5px'"
+    [style.height]="memberMappedWithCommitteeList.length==0?'100%':null"
+  >
+  <div class="rowAlignCenter margin20" style="margin-bottom: 20px !important; margin-top: 5px !important;">
+    <ion-text
+      class="blackColor14Medium ellipseText"
+      style="flex: 1; -webkit-line-clamp: 1"
+    >
+   
+    </ion-text>
+    <div class="rowAlignCenter">
+      <div
+        class="center buttonInnerShadow circle15"
+        style="background-color: var(--primaryColor)"
+      >
+        <span
+          class="material-icons"
+          style="color: var(--whiteColor); font-size: 13px"
+        >
+          add
+        </span>
+      </div>
+      <ion-text *ngIf="memberMappedWithCommitteeList!=null && monthlyBreakupList!=null && memberMappedWithCommitteeList.length<monthlyBreakupList[0].totalMember" (click)="redirectToMember()"
+        class="primaryColor14Medium ellipseText"
+        style="margin-left: 5px; -webkit-line-clamp: 1"
+      >
+        Invite member
+      </ion-text>
+    </div>
+  </div>
+  <ng-container *ngIf="memberMappedWithCommitteeList!=null && memberMappedWithCommitteeList.length>0">
+    <div
+      *ngFor="let item of memberMappedWithCommitteeList;let index=index;"
+      class="card"
+    >
+      <div
+        class="column"
+        style="
+          margin-left: 8px;
+          padding: 10px;
+          background-color: var(--whiteColor);
+        "
+      >
+        <div class="rowAlignCenter">
+          <div class="column" style="flex: 1">
+            <ion-text
+              class="blackColor14Medium ellipseText"
+              style="-webkit-line-clamp: 1"
+            >
+            # {{index+1}} {{ item.MemberName }}
+            </ion-text>
+     
+          </div>
+        </div>
+
+        <div class="rowAlignCenter" style="margin-top: 5px">
+          <div class="rowAlignCenter">
+            <span
+              class="material-icons"
+              style="color: var(--grayColor); font-size: 14px"
+            >
+            person
+            </span>
+            <ion-text
+              class="grayColor12SemiBold ellipseText"
+              style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+            >
+            {{ item.emailId }} 
+            </ion-text>
+          </div>
+          <div class="dateAndTaskDivider"></div>
+          <div class="rowAlignCenter">
+            <span
+              class="material-icons"
+              style="color: var(--grayColor); font-size: 14px"
+            >
+            access_time
+            </span>
+            <ion-text
+              class="grayColor12SemiBold ellipseText"
+              style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+            >
+            {{ item.mobileNumber }} 
+            </ion-text>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </ng-container>
+
+    <div *ngIf="memberMappedWithCommitteeList.length == 0"
+      class="center column"
+      style="flex: 1"
+    >
+      <img
+        src="../../../assets/images/icons/folder.png"
+        style="width: 53px; height: 53px; object-fit: contain"
+      />
+      <ion-text class="grayColor16Medium"> {{resourceKeyValue('NewMember_lbl_no_member_exists')}} </ion-text>
+    </div>
+  </div>
+
+  <!-- <div 
+    slot="fixed"
+    class="center bottomAddButton" 
+    (click)="addNewCommittee()"
+  >
+    <span
+      class="material-icons"
+      style="color: var(--whiteColor); font-size: 30px"
+    >
+      add
+    </span>
+  </div> -->
+</ion-content>
+
+
+
+<!-- <ion-content>
+  <div
+    class="column"
+    style="flex: 1"
+  >
+
+    <div *ngIf="allTasks.length!=0">
+      <div
+        *ngFor="let item of allTasks;let index=index;"
+        class="rowAlignCenter card"
+        style="padding: 8px"
+      >
+        <div style="height: 60px">
+          <circle-progress
+            [percent]="item.progress*100"
+            [radius]="22"
+            [outerStrokeWidth]="4"
+            [outerStrokeColor]="item.fill"
+            [animation]="true"
+            [animationDuration]="300"
+            [showInnerStroke]="false"
+            [showTitle]="true"
+            [showSubtitle]="false"
+            [showUnits]="true"
+            unitsFontSize="12px"
+            unitsFontWeight="500"
+            [unitsColor]="item.fill"
+            [titleColor]="item.fill"
+            titleFontSize="12px"
+            titleFontWeight="500"
+            [backgroundStroke]="item.unfill"
+            [backgroundStrokeWidth]="4"
+            [backgroundPadding]="-2"
+          ></circle-progress>
+        </div>
+        <div class="column" style="flex: 1; margin: 0 10px">
+          <ion-text
+            class="blackColor16Medium ellipseText"
+            style="-webkit-line-clamp: 1"
+          >
+            {{item.title}}
+          </ion-text>
+          <ion-text
+            class="grayColor14Medium ellipseText"
+            style="-webkit-line-clamp: 1"
+          >
+           Paybel Amount : 15000
+          </ion-text>
+          <ion-text
+          class="grayColor14Medium ellipseText"
+          style="-webkit-line-clamp: 1"
+        >
+         Net Profit : 5000
+        </ion-text>
+        <ion-text
+        class="grayColor14Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+       Payment Status : Paid
+      </ion-text>
+        </div>
+        <ion-icon
+          (click)="$event.stopPropagation()"
+          [id]="'menu'+item.id"
+          name="ellipsis-vertical"
+          style="color: var(--grayColor); font-size: 18px"
+        />
+        <ion-popover
+          mode="md"
+          [trigger]="'menu'+item.id"
+          (didDismiss)="popCtrl.dismiss()"
+        >
+          <ng-template>
+            <ion-content class="ion-no-padding">
+              <div class="column" style="padding: 5px 15px">
+                <ion-text
+                  *ngFor="let option of taskOptions;let menuIndex=index"
+                  class="blackColor16Medium"
+                  style="margin: 10px 0"
+                  (click)="selectedTaskIndex=index; popCtrl.dismiss(); menuIndex==0?showTaskDeleteDialog=true:null"
+                >
+                  {{option}}
+                </ion-text>
+              </div>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </div>
+    </div>
+
+    <div *ngIf="allTasks.length==0" class="center column" style="flex: 1">
+      <img
+        src="../../../assets/images/icons/empty_task.png"
+        style="width: 53px; height: 53px; object-fit: contain"
+      />
+      <ion-text class="grayColor16Medium"> Empty task list </ion-text>
+    </div>
+
+  </div>
+
+</ion-content>
+ -->

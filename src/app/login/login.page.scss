@@ -1,0 +1,124 @@
+
+// ion-content {
+//   --background: linear-gradient(135deg, #97144d, #d9534f); /* Use the provided color theme */
+
+//   .login-screen {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+//     height: 100%;
+
+//     .logo_div {
+//       display: flex;
+//       flex-direction: column;
+//       align-items: center;
+//       margin-bottom: 20px;
+//       width: 55%;
+//       img {
+//         width: 100%;
+//         margin-bottom: 10px;
+//       }
+
+//     }
+
+//     .white_box {
+//       background: #fff;
+//       border-radius: 10px;
+//       padding: 20px;
+//       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+//       width: 90%;
+//       max-width: 400px;
+//       text-align: center;
+
+//       .welcome_lbl {
+//         font-size: 20px;
+//         font-weight: bold;
+//         color: #97144d; /* Theme color */
+//         margin-bottom: 10px;
+//       }
+
+//       .small_lbl {
+//         font-size: 14px;
+//         color: #666;
+//         margin-bottom: 20px;
+//       }
+
+//       ion-item.item-no-border {
+//         --inner-padding-end: 0;
+//         --inner-padding-start: 0;
+//         --padding-start: 0;
+//         --padding-end: 0;
+//         background: none; /* Ensure no background color is set by ion-item */
+//         width: 100%; /* Ensure ion-item takes full width */
+//       }
+
+//       input.from-conftrolLg {
+//         padding-left: 15px; /* Adjusted padding */
+//         height: 50px;
+//         border-radius: 25px;
+//         border: 1px solid #9d9999;
+//         width: 100%; /* Ensure input takes full width */
+//         margin-bottom: 10pt;
+//         background: #f0f0f0 !important; /* Explicit light background color */
+//         color: #000; /* Ensure text color is black for readability */
+//       }
+
+//       .block_btn {
+//         width: 100%;
+//         margin-top: 25px;
+//         --background: linear-gradient(135deg, #97144d, #d9534f); /* Theme color */
+//         --color: #fff;
+//         --border-radius: 5px;
+//         --padding-start: 10px;
+//         --padding-end: 10px;
+//       }
+
+//       .form-control-lg {
+//         font-size: 16px;
+//         padding: 10px;
+//         width: 100%;
+//       }
+//     }
+
+//     .reg_lbl {
+//       font-size: 14px;
+//       color: #fff; /* White color for contrast */
+
+//       span {
+//         color: #ffd700; /* A contrasting color for the sign-up link */
+//         cursor: pointer;
+//       }
+//     }
+//   }
+// }
+
+
+
+input:not(.country-search) {
+  background-color: var(--whiteColor);
+  border-width: 0px;
+  border-radius: 10px;
+  padding: 12px 0;
+  outline-style: none;
+  caret-color: var(--primaryColor);
+  flex: 1;
+  color: var(--blackColor);
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+}
+
+input::placeholder {
+  color: var(--grayColor);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.infoContentWrapper {
+  flex: 1;
+  background: var(--whiteColor);
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  overflow: hidden;
+}

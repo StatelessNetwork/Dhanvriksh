@@ -1,0 +1,124 @@
+<!-- <div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%;height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+  </div>
+
+<ion-header *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-title>{{resourceKeyValue("MonthMemberDrawb_lbl_monthly_committee_drawn_update")}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close('false','false')">
+        <ion-icon slot="icon-only" name="close" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="this.resourceData!=null">
+  <div class="book-table-screen">
+    <div class="content_div">
+      <div>
+
+        <form [formGroup]="memberMonthlyBreakupForm">
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-select multiple="false" interface="popover" mode="ios" formControlName="paymentStatus"
+          [placeholder]="resourceKeyValue('Member_Month_Popup_lbl_payment_status')" id="paymentStatus">
+          <ion-select-option [value]="pay.EncyptID" *ngFor="let pay of paymentStatusList;">{{pay.Name}} </ion-select-option>
+        </ion-select>
+        </div>
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-input label="{{resourceKeyValue('Member_Month_Popup_lbl_penalty_amount')}}" type="text"  formControlName="penaltyAmount"   placeholder="00"></ion-input>
+        </div>
+        <ion-text color="danger" *ngIf="memberMonthlyBreakupForm.get('penaltyAmount').errors && memberMonthlyBreakupForm.get('penaltyAmount').touched">
+          <p  *ngIf="memberMonthlyBreakupForm.get('penaltyAmount').errors['required']">
+            Please enter penalty amount
+          </p>
+        </ion-text>
+
+        
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-input label="{{resourceKeyValue('Member_Month_Popup_lbl_remarks')}}" type="text"  formControlName="remarks"   placeholder="xzy"></ion-input>
+        </div>
+
+
+        <ion-button expand="block" class="block_btn book_btn" type="button"  (click)="onSubmit()" [disabled]="!memberMonthlyBreakupForm.valid">{{resourceKeyValue("Member_Month_Popup_btn_submit")}}
+        </ion-button>
+       
+      </form>
+      </div>
+
+    </div>
+
+  </div>
+</ion-content> -->
+
+
+
+<div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+<ion-header *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-title>{{resourceKeyValue("MonthMemberDrawb_lbl_monthly_committee_drawn_update")}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close('false', 'false')">
+        <ion-icon slot="icon-only" name="close" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="this.resourceData!=null">
+  <div class="book-table-screen">
+    <div class="content_div">
+      <form [formGroup]="memberMonthlyBreakupForm">
+        <div class="form-group">
+          <ion-select multiple="false" interface="popover" mode="ios" formControlName="paymentStatus"
+            [placeholder]="resourceKeyValue('Member_Month_Popup_lbl_payment_status')" id="paymentStatus">
+            <ion-select-option [value]="pay.EncyptID" *ngFor="let pay of paymentStatusList;">{{pay.Name}} </ion-select-option>
+          </ion-select>
+        </div>
+
+        <div class="form-group">
+          <ion-input placeholder="{{resourceKeyValue('Member_Month_Popup_lbl_penalty_amount')}}" type="text" formControlName="penaltyAmount"
+            placeholder="00"></ion-input>
+          <ion-text color="danger" *ngIf="memberMonthlyBreakupForm.get('penaltyAmount').errors && memberMonthlyBreakupForm.get('penaltyAmount').touched">
+            <p *ngIf="memberMonthlyBreakupForm.get('penaltyAmount').errors['required']">
+              Please enter penalty amount
+            </p>
+          </ion-text>
+        </div>
+
+        <div class="form-group">
+          <ion-input placeholder="{{resourceKeyValue('Member_Month_Popup_lbl_remarks')}}" type="text" formControlName="remarks"
+            placeholder="xzy"></ion-input>
+        </div>
+
+        <ion-button expand="block" class="submit-btn" type="button" (click)="onSubmit()" [disabled]="!memberMonthlyBreakupForm.valid">
+          {{resourceKeyValue("Member_Month_Popup_btn_submit")}}
+        </ion-button>
+      </form>
+    </div>
+  </div>
+</ion-content>

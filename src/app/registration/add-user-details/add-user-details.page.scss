@@ -1,0 +1,43 @@
+.infoContentWrapper {
+  flex: 1;
+  background: var(--whiteColor);
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  overflow: hidden;
+}
+
+.backArrow {
+  color: var(--whiteColor);
+  font-size: 24px;
+  display: flex;
+  margin-left: 20px;
+  margin-bottom: 180px;
+}
+
+.fieldWrapper {
+  background-color: var(--whiteColor);
+  border-radius: 10px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+  padding: 13px;
+}
+
+ion-input {
+  --placeholder-color: var(--grayColor);
+  --placeholder-opacity: 1;
+}
+
+.rowAlignCenter {
+  display: flex;
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blackColor14Medium {
+  font-size: 14px;
+  color: black;
+}

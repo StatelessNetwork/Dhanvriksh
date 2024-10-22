@@ -1,0 +1,225 @@
+// .swiper-container {
+//   width: 100%;
+//   height: 100%;
+//   position: relative; /* Ensure relative positioning for absolute positioned buttons */
+// }
+
+// /* Styling for buttons */
+// .next-button,
+// .skip-button,
+// .get-started-button {
+//   position: absolute;
+//   bottom: 20px;
+//   padding: 2px 2px;
+//   cursor: pointer;
+//   z-index: 99999;
+// }
+
+// .next-button{
+//   right: 20px;
+// }
+// .get-started-button {
+//   right: 20%;
+//   left: 20%;
+// }
+
+// .skip-button {
+//   left: 20px;
+// }
+
+// .swiper-pagination {
+//   bottom: 10px;
+// }
+
+// .swiper-pagination-bullet {
+//   width: 8px;
+//   height: 8px;
+//   background-color: rgba(255, 255, 255, 0.5); // Adjust color and opacity
+//   border-radius: 50%;
+//   margin: 0 5px; // Adjust margin as needed
+// }
+
+// .firstSlider{
+//   background-color: #42C7F1;
+//   background-repeat: repeat; /* Ensures the image covers the entire banner area */
+// }
+// .firstSlider::before{
+//   content: "";
+//   background-color: #000;
+//   top: 0;
+//   left: 0;
+//   opacity: 0.4;
+//   position: absolute;
+//   width: 100%;
+//   height: 100vh;
+// }
+
+// .secondSlider{
+//   background-color:#EF6260;
+//   background-position: center top;
+//   background-repeat: no-repeat;
+//   background-size: cover;
+// }
+// .secondSlider::before{
+//   content: "";
+//   background-color: #000;
+//   top: 0;
+//   left: 0;
+//   opacity: 0.4;
+//   position: absolute;
+//   width: 100%;
+//   height: 100vh;
+// }
+
+// .thirdSlider{
+//   background-color: #62C4BB;
+//   background-position: center top;
+//   background-repeat: no-repeat;
+//   background-size: cover;
+// }
+// .thirdSlider::before{
+//   content: "";
+//   background-color: #000;
+//   top: 0;
+//   left: 0;
+//   opacity: 0.4;
+//   position: absolute;
+//   width: 100%;
+//   height: 100vh;
+// }
+
+// .slider-text3 {
+//   padding-top: 70%;
+//   z-index: 11;
+//   position: relative;
+// }
+
+// .slider-text {
+//   padding-top: 70%;
+//   z-index: 9;
+//   height: 100vh;
+//   position: relative;
+// }
+
+// .slider-text h2 {
+//   font-size: 1.5rem;
+//   margin: 0 1.5rem;
+//   padding: 1.2rem 1.2rem;
+//   /* border-radius: 25px; */
+//   letter-spacing: 1px;
+//   font-weight: 800;
+//   width: 90%;
+//   color: #fff;
+//   text-align: center;
+// }
+// .custom_title{
+//   margin: 0 2rem !important;
+// }
+
+// ion-content {
+//   .swiper-container {
+//     height: 100%;
+//   }
+
+//   .swiper-slide {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     position: relative;
+//     height: 100%;
+
+//     &.firstSlider {
+//       background: url('../../assets/imgs/mobile _background.jpg') no-repeat center center / cover;
+//     }
+
+//     &.secondSlider {
+//       background: url('../../assets/imgs/mobile _background.jpg') no-repeat center center / cover;
+//     }
+
+//     &.thirdSlider {
+//       background: url('../../assets/imgs/mobile\ _background.jpg') no-repeat center center / cover;
+//     }
+//   }
+
+//   .slider-overlay {
+//     background: rgba(0, 0, 0, 0.5); /* Dark overlay for better text visibility */
+//     width: 100%;
+//     height: 100%;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     text-align: center;
+//   }
+
+//   .slider-content {
+//     color: #fff;
+//     padding: 20px;
+
+//     .slider-icon {
+//       width: 100%;
+//       margin-bottom: 20px;
+//       animation: fadeInDown 1s ease;
+//     }
+
+//     .slider-title {
+//       font-size: 24px;
+//       font-weight: bold;
+//       margin-bottom: 20px;
+//       animation: fadeInUp 1s ease;
+//     }
+
+//     .navigator {
+//       display: flex;
+//       justify-content: center;
+//       gap: 10px;
+
+//       ion-button {
+//         --background: #ffd700; /* Gold color for buttons */
+//         --color: #97144d; /* Theme color for text */
+//         --border-radius: 20px;
+//         --padding-start: 20px;
+//         --padding-end: 20px;
+//         font-weight: bold;
+//       }
+//     }
+//   }
+
+//   @keyframes fadeInDown {
+//     from {
+//       opacity: 0;
+//       transform: translateY(-20px);
+//     }
+//     to {
+//       opacity: 1;
+//       transform: translateY(0);
+//     }
+//   }
+
+//   @keyframes fadeInUp {
+//     from {
+//       opacity: 0;
+//       transform: translateY(20px);
+//     }
+//     to {
+//       opacity: 1;
+//       transform: translateY(0);
+//     }
+//   }
+// }
+
+
+.swiperWrapper {
+  height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.pageBackBottom {
+  background: var(--whiteColor);
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  flex: 1;
+}

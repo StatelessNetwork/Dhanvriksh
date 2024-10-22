@@ -1,0 +1,325 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Create New Loan</ion-title> <!-- Fixed Header Title -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="loan-management-screen">
+    <ion-row class="stepTitleRow">
+      <ion-col>
+        <ion-title class="step-title">{{ currentStepTitle }}</ion-title> <!-- Step Title -->
+      </ion-col>
+    </ion-row>
+    <div class="content_div">
+
+      <form [formGroup]="loanForm" (ngSubmit)="onSubmit()">
+
+        <!-- Step 1: Basic Loan Details -->
+        <div *ngIf="currentStep === 1">
+          <ion-item class="input-item">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-label position="floating" class="mandatory">Member ID</ion-label>
+            <app-member-autocomplete 
+              [control]="memberIDControl" 
+              (memberSelected)="onMemberSelected($event)" style="width: 100% !important;">
+            </app-member-autocomplete>
+          </ion-item>
+          <ion-text color="danger" *ngIf="loanForm.get('memberID').errors && loanForm.get('memberID').touched">
+            <p class="errorText" *ngIf="loanForm.get('memberID').errors['required']">Member Name is required</p>
+          </ion-text>
+
+          <ion-item class="input-item">
+            <ion-icon name="cash-outline" slot="start"></ion-icon>
+            <ion-label position="floating" class="mandatory">Loan Amount</ion-label>
+            <ion-input type="number" formControlName="loanAmount" placeholder="Enter Loan Amount"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="loanForm.get('loanAmount').errors && loanForm.get('loanAmount').touched">
+            <p class="errorText" *ngIf="loanForm.get('loanAmount').errors['required']">Loan Amount is required</p>
+          </ion-text>
+
+          <ion-item class="input-item">
+            <ion-icon name="stats-chart-outline" slot="start"></ion-icon>
+            <ion-label position="stacked" class="mandatory">Interest Type</ion-label>
+            <ion-select formControlName="interestType" placeholder="Select Interest Type" (ionChange)="onInterestTypeChange($event)">
+              <ion-select-option value="Simple">Simple</ion-select-option>
+              <ion-select-option value="Compound">Compound</ion-select-option>
+              <ion-select-option value="Fixed">Fixed</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+        <!-- Step 2: Loan Period and Interest Details -->
+        <div *ngIf="currentStep === 2">
+          <ion-item class="input-item" *ngIf="showInterestRate">
+            <ion-icon name="trending-up-outline" slot="start"></ion-icon>
+            <ion-label position="floating" class="mandatory">Interest Rate (%)</ion-label>
+            <ion-input type="number" formControlName="interestRate" placeholder="Enter Interest Rate"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="loanForm.get('interestRate').errors && loanForm.get('interestRate').touched">
+            <p class="errorText" *ngIf="loanForm.get('interestRate').errors['required']">Interest Rate is required</p>
+          </ion-text>
+
+          <ion-item class="input-item">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <ion-label position="stacked" class="mandatory">Interest Period</ion-label>
+            <ion-select 
+              formControlName="interestPeriod" 
+              placeholder="Select Interest Period"
+              [disabled]="isInterestPeriodDisabled">
+              <ion-select-option value="Monthly">Monthly</ion-select-option>
+              <ion-select-option value="Yearly">Yearly</ion-select-option>
+              <ion-select-option value="Days">Days</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-text color="danger" *ngIf="loanForm.get('interestPeriod').errors && loanForm.get('interestPeriod').touched">
+            <p class="errorText" *ngIf="loanForm.get('interestPeriod').errors['required']">Interest Period is required</p>
+          </ion-text>
+
+          <ion-item class="input-item">
+            <ion-icon name="calculator-outline" slot="start"></ion-icon>
+            <ion-label position="stacked" class="mandatory">EMI Type</ion-label>
+            <ion-select formControlName="emiType" placeholder="Select EMI Type">
+              <ion-select-option value="EMI">EMI</ion-select-option>
+              <ion-select-option value="InterestOnly">Interest Only</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item class="input-item">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <ion-label position="floating" class="mandatory">Tenure</ion-label>
+            <ion-input type="number" formControlName="tenure" placeholder="Enter Tenure"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="loanForm.get('tenure').errors && loanForm.get('tenure').touched">
+            <p class="errorText" *ngIf="loanForm.get('tenure').errors['required']">Tenure is required</p>
+          </ion-text>
+
+          <ion-item class="input-item">
+            <ion-icon name="time-outline" slot="start"></ion-icon>
+            <ion-label position="floating" class="mandatory">Tenure Type</ion-label>
+            <ion-select formControlName="tenureType" placeholder="Select Tenure Type" [disabled]="isInterestPeriodDisabled">
+              <ion-select-option value="Days">Days</ion-select-option>
+              <ion-select-option value="Months">Months</ion-select-option>
+              <ion-select-option value="Years">Years</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-text color="danger" *ngIf="loanForm.get('tenureType').errors && loanForm.get('tenureType').touched">
+            <p class="errorText" *ngIf="loanForm.get('tenureType').errors['required']">Tenure Type is required</p>
+          </ion-text>
+
+          <ion-item class="input-item">
+            <ion-icon name="repeat-outline" slot="start"></ion-icon>
+            <ion-label position="floating" class="mandatory">Payment Frequency (Days/Months)</ion-label>
+            <ion-input type="number" formControlName="paymentFrequency" placeholder="Enter Payment Frequency"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="loanForm.get('paymentFrequency').errors && loanForm.get('paymentFrequency').touched">
+            <p class="errorText" *ngIf="loanForm.get('paymentFrequency').errors['required']">Payment Frequency is required</p>
+          </ion-text>
+        </div>
+
+        <!-- Step 3: Document Upload -->
+        <div *ngIf="currentStep === 3">
+          <ion-button expand="full" (click)="captureImage()">Capture Image</ion-button>
+          <div class="file-upload-wrapper">
+            <ion-button expand="full" color="secondary" (click)="fileInput.click()">Select Files</ion-button>
+            <input type="file" #fileInput style="display: none;" (change)="selectFile($event)" multiple />
+          </div>
+
+          <!-- Display selected file names -->
+          <div *ngIf="files.length > 0">
+            <h2>Selected Files:</h2>
+            <ion-list>
+              <ion-item *ngFor="let file of files; let i = index">
+                <p>{{ file.name }}</p>
+                <ion-button fill="clear" color="danger" (click)="deleteFile(i)">
+                  <ion-icon name="trash-outline"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </ion-list>
+          </div>
+
+          <!-- <div *ngIf="uploadedFileUrls.length > 0">
+            <h2>Uploaded Files:</h2>
+            <ion-list>
+              <ion-item *ngFor="let url of uploadedFileUrls">
+                <a [href]="url" target="_blank">{{ url }}</a>
+              </ion-item>
+            </ion-list>
+          </div> -->
+        </div>
+
+        <!-- Navigation Buttons -->
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" color="light" *ngIf="currentStep > 1" (click)="prevStep()">Back</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="block" color="primary" *ngIf="currentStep < 3" [disabled]="!isCurrentStepValid()"  (click)="nextStep()">Next</ion-button>
+            <ion-button expand="block" color="primary" type="submit" *ngIf="currentStep === 3" [disabled]="!loanForm.valid">Submit</ion-button>
+          </ion-col>
+        </ion-row>
+
+      </form>
+    </div>
+  </div>
+</ion-content>
+
+
+<!-- 
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="util.openMenu()">
+        <ion-icon slot="icon-only" name="reorder-three-outline" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Add New Loan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="loan-management-screen">
+    <div class="content_div">
+      <form [formGroup]="loanForm" (ngSubmit)="onSubmit()">
+
+        <ion-item class="input-item">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label position="floating" class="mandatory">Member ID</ion-label>
+          <app-member-autocomplete 
+            [control]="memberIDControl" 
+            (memberSelected)="onMemberSelected($event)" style="width: 100% !important;">
+          </app-member-autocomplete>
+        </ion-item>
+        <ion-text color="danger" *ngIf="loanForm.get('memberID').errors && loanForm.get('memberID').touched">
+          <p class="errorText" *ngIf="loanForm.get('memberID').errors['required']">Member Name is required</p>
+        </ion-text>
+
+        <ion-item class="input-item">
+          <ion-icon name="cash-outline" slot="start"></ion-icon>
+          <ion-label position="floating" class="mandatory">Loan Amount</ion-label>
+          <ion-input type="number" formControlName="loanAmount" placeholder="Enter Loan Amount"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="loanForm.get('loanAmount').errors && loanForm.get('loanAmount').touched">
+          <p class="errorText" *ngIf="loanForm.get('loanAmount').errors['required']">Loan Amount is required</p>
+        </ion-text>
+
+        <ion-item class="input-item">
+          <ion-icon name="stats-chart-outline" slot="start"></ion-icon>
+          <ion-label position="stacked" class="mandatory">Interest Type</ion-label>
+          <ion-select formControlName="interestType" placeholder="Select Interest Type" (ionChange)="onInterestTypeChange($event)">
+            <ion-select-option value="Simple">Simple</ion-select-option>
+            <ion-select-option value="Compound">Compound</ion-select-option>
+            <ion-select-option value="Fixed">Fixed</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-text color="danger" *ngIf="loanForm.get('interestType').errors && loanForm.get('interestType').touched">
+          <p class="errorText" *ngIf="loanForm.get('interestType').errors['required']">Interest Type is required</p>
+        </ion-text>
+
+        <ion-item class="input-item" *ngIf="showInterestRate">
+          <ion-icon name="trending-up-outline" slot="start"></ion-icon>
+          <ion-label position="floating" class="mandatory">Interest Rate (%)</ion-label>
+          <ion-input type="number" formControlName="interestRate" placeholder="Enter Interest Rate"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="loanForm.get('interestRate').errors && loanForm.get('interestRate').touched">
+          <p class="errorText" *ngIf="loanForm.get('interestRate').errors['required']">Interest Rate is required</p>
+        </ion-text>
+
+        <ion-item class="input-item">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label position="stacked" class="mandatory">Interest Period</ion-label>
+          <ion-select 
+            formControlName="interestPeriod" 
+            placeholder="Select Interest Period"
+            [disabled]="isInterestPeriodDisabled">
+            <ion-select-option value="Monthly">Monthly</ion-select-option>
+            <ion-select-option value="Yearly">Yearly</ion-select-option>
+            <ion-select-option value="Days">Days</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-text color="danger" *ngIf="loanForm.get('interestPeriod').errors && loanForm.get('interestPeriod').touched">
+          <p class="errorText" *ngIf="loanForm.get('interestPeriod').errors['required']">Interest Period is required</p>
+        </ion-text>
+
+        <ion-item class="input-item">
+          <ion-icon name="calculator-outline" slot="start"></ion-icon>
+          <ion-label position="stacked" class="mandatory">EMI Type</ion-label>
+          <ion-select formControlName="emiType" placeholder="Select EMI Type">
+            <ion-select-option value="EMI">EMI</ion-select-option>
+            <ion-select-option value="InterestOnly">Interest Only</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-text color="danger" *ngIf="loanForm.get('emiType').errors && loanForm.get('emiType').touched">
+          <p class="errorText" *ngIf="loanForm.get('emiType').errors['required']">EMI Type is required</p>
+        </ion-text>
+
+        <ion-item class="input-item">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label position="floating" class="mandatory">Tenure</ion-label>
+          <ion-input type="number" formControlName="tenure" placeholder="Enter Tenure"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="loanForm.get('tenure').errors && loanForm.get('tenure').touched">
+          <p class="errorText" *ngIf="loanForm.get('tenure').errors['required']">Tenure is required</p>
+        </ion-text>
+
+        <ion-item class="input-item">
+          <ion-icon name="time-outline" slot="start"></ion-icon>
+          <ion-label position="floating" class="mandatory">Tenure Type</ion-label>
+          <ion-select formControlName="tenureType" placeholder="Select Tenure Type" [disabled]="isInterestPeriodDisabled">
+            <ion-select-option value="Days">Days</ion-select-option>
+            <ion-select-option value="Months">Months</ion-select-option>
+            <ion-select-option value="Years">Years</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-text color="danger" *ngIf="loanForm.get('tenureType').errors && loanForm.get('tenureType').touched">
+          <p class="errorText" *ngIf="loanForm.get('tenureType').errors['required']">Tenure Type is required</p>
+        </ion-text>
+
+        <ion-item class="input-item">
+          <ion-icon name="repeat-outline" slot="start"></ion-icon>
+          <ion-label position="floating" class="mandatory">Payment Frequency (Days/Months)</ion-label>
+          <ion-input type="number" formControlName="paymentFrequency" placeholder="Enter Payment Frequency"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="loanForm.get('paymentFrequency').errors && loanForm.get('paymentFrequency').touched">
+          <p class="errorText" *ngIf="loanForm.get('paymentFrequency').errors['required']">Payment Frequency is required</p>
+        </ion-text>
+
+        <ion-text color="danger" *ngIf="loanForm.errors?.['paymentFrequencyExceedsTenure'] && loanForm.touched">
+          <p class="errorText">Payment Frequency cannot be greater than Tenure.</p>
+        </ion-text>
+
+        <ion-item class="input-item" *ngIf="showFixedInterestAmount">
+          <ion-icon name="cash-outline" slot="start"></ion-icon>
+          <ion-label position="floating" class="mandatory">Daily Interest Amount</ion-label>
+          <ion-input type="number" formControlName="fixedInterestAmount" placeholder="Enter Daily Interest Amount"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="loanForm.get('fixedInterestAmount').errors && loanForm.get('fixedInterestAmount').touched">
+          <p class="errorText" *ngIf="loanForm.get('fixedInterestAmount').errors['required']">Daily Interest Amount is required</p>
+        </ion-text>
+
+        <ion-item class="input-item">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label position="floating" class="mandatory">Start Date</ion-label>
+          <ion-input type="date" formControlName="startDate" [min]="minDate" placeholder="Select Start Date"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-item">
+          <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
+          <ion-label position="stacked" class="mandatory">Loan Status</ion-label>
+          <ion-select formControlName="loanStatus" placeholder="Select Loan Status">
+            <ion-select-option value="Active">Active</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button expand="block" class="block_btn book_btn" type="submit" [disabled]="!loanForm.valid">Submit</ion-button>
+        <div style="height: 30px;"></div>
+
+      </form>
+    </div>
+  </div>
+</ion-content> -->

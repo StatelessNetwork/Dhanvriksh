@@ -1,0 +1,234 @@
+<!-- <div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%;height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+  </div>
+
+  <ion-header [translucent]="true" *ngIf="this.resourceData!=null">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="goToBack()">
+          <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>{{resourceKeyValue('MonthMemberDrawb_lbl_monthly_committee_drawn_update')}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="this.resourceData!=null">
+  <div class="payment-screen">
+    <div class="shadow_card price_div"   *ngIf="monthlyBreakupData!=null">
+  
+      <ion-label class="title_lbl alignCenter">{{monthlyBreakupData[0].committeeName}}</ion-label>
+  
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('Member_Month_Popup_lbl_committee_date')}}</ion-label>
+        <ion-label class="bold_lbl">
+          <span> {{ monthlyBreakupData[0].committeeDate    | date: 'dd-MMM-yyyy' }}</span>
+        </ion-label>
+      </div>
+  
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('Member_Month_Popup_lbl_total_committee_amount')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].monthlyTotalAmount }}</span>
+        </ion-label>
+      </div>
+  
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('ComtMonthlyBreakup_lbl_per_member_amount')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].perHeadmonthlyAmount }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list" *ngIf="monthlyBreakupData[0].memberName!=null">
+        <ion-label class="simp_lbl">{{resourceKeyValue('Member_Month_Popup_lbl_member_name')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].memberName  }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list" *ngIf="monthlyBreakupData[0].memberName!=null">
+        <ion-label class="simp_lbl">{{resourceKeyValue('ComtMonthlyBreakup_lbl_net_amount_for_member')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].netAmountForOwner  }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list" *ngIf="monthlyBreakupData[0].memberName!=null">
+        <ion-label class="simp_lbl">{{resourceKeyValue('ComtMonthlyBreakup_lbl_per_head_profit')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].perHeadProfitAmount  }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list" *ngIf="monthlyBreakupData[0].memberName!=null">
+        <ion-label class="simp_lbl">{{resourceKeyValue('Member_Month_Popup_lbl_remarks')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].remarks  }}</span>
+        </ion-label>
+      </div>
+
+      <form [formGroup]="monthlyDrawnMemberForm"  *ngIf="monthlyBreakupData!=null && monthlyBreakupData[0].memberName==null">
+
+      <div class="shadow_card card_box">
+        <ion-select multiple="false" interface="popover" mode="ios" formControlName="member"
+        [placeholder]="resourceKeyValue('Member_Month_Popup_lbl_member_name')" id="member">
+        <ion-select-option [value]="member.EncyptID" *ngFor="let member of memberList;">{{member.Name}} </ion-select-option>
+      </ion-select>
+      </div>
+      <ion-text color="danger" *ngIf="monthlyDrawnMemberForm.get('member').errors && monthlyDrawnMemberForm.get('member').touched">
+        <p  *ngIf="monthlyDrawnMemberForm.get('member').errors['required']">
+          {{resourceKeyValue('MonthMemberDrawb_error_msg_select_member')}}
+        </p>
+      </ion-text>
+
+      <div class="shadow_card card_box">
+        <ion-input label="{{resourceKeyValue('MonthMemberDrawb_lbl_loss_Amount')}}" type="number"  formControlName="lossamount"   placeholder="00"  maxlength="10"></ion-input>
+      </div>
+      <ion-text color="danger" *ngIf="monthlyDrawnMemberForm.get('lossamount').errors && monthlyDrawnMemberForm.get('lossamount').touched">
+        <p  *ngIf="monthlyDrawnMemberForm.get('lossamount').errors['required']">
+          {{resourceKeyValue('MonthMemberDrawb_error_msg_loss_amount')}}
+        </p>
+      </ion-text>
+
+      
+      <div class="shadow_card card_box">
+        <ion-input label="{{resourceKeyValue('Member_Month_Popup_lbl_remarks')}}" type="text"  formControlName="remarks"   placeholder="xzy"></ion-input>
+      </div>
+
+
+      <ion-button expand="block" class="block_btn book_btn" type="button"  (click)="onSubmit()" [disabled]="!monthlyDrawnMemberForm.valid">{{resourceKeyValue("Member_Month_Popup_btn_submit")}}
+      </ion-button>
+     
+    </form>
+
+    </div>
+
+    <div style="height: 30px;"></div>
+  </div>
+</ion-content> -->
+
+
+<div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+<ion-header [translucent]="true" *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{resourceKeyValue('MonthMemberDrawb_lbl_monthly_committee_drawn_update')}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="this.resourceData!=null">
+  <div class="payment-screen">
+    <div class="shadow_card" *ngIf="monthlyBreakupData!=null">
+      <ion-label class="title_lbl alignCenter">{{monthlyBreakupData[0].committeeName}}</ion-label>
+
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('Member_Month_Popup_lbl_committee_date')}}</ion-label>
+        <ion-label class="bold_lbl">
+          <span>{{ monthlyBreakupData[0].committeeDate | date: 'dd-MMM-yyyy' }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('Member_Month_Popup_lbl_total_committee_amount')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].monthlyTotalAmount }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('ComtMonthlyBreakup_lbl_per_member_amount')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].perHeadmonthlyAmount }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list" *ngIf="monthlyBreakupData[0].memberName!=null">
+        <ion-label class="simp_lbl">{{resourceKeyValue('Member_Month_Popup_lbl_member_name')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].memberName }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list" *ngIf="monthlyBreakupData[0].memberName!=null">
+        <ion-label class="simp_lbl">{{resourceKeyValue('ComtMonthlyBreakup_lbl_net_amount_for_member')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].netAmountForOwner }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list" *ngIf="monthlyBreakupData[0].memberName!=null">
+        <ion-label class="simp_lbl">{{resourceKeyValue('ComtMonthlyBreakup_lbl_per_head_profit')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].perHeadProfitAmount }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list" *ngIf="monthlyBreakupData[0].memberName!=null">
+        <ion-label class="simp_lbl">{{resourceKeyValue('Member_Month_Popup_lbl_remarks')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ monthlyBreakupData[0].remarks }}</span>
+        </ion-label>
+      </div>
+
+      <form [formGroup]="monthlyDrawnMemberForm" *ngIf="monthlyBreakupData!=null && monthlyBreakupData[0].memberName==null">
+        <div class="form-group">
+          <ion-select multiple="false" interface="popover" mode="ios" formControlName="member" [placeholder]="resourceKeyValue('Member_Month_Popup_lbl_member_name')" id="member">
+            <ion-select-option [value]="member.EncyptID" *ngFor="let member of memberList;">{{member.Name}} </ion-select-option>
+          </ion-select>
+        </div>
+        <ion-text color="danger" *ngIf="monthlyDrawnMemberForm.get('member').errors && monthlyDrawnMemberForm.get('member').touched">
+          <p *ngIf="monthlyDrawnMemberForm.get('member').errors['required']">
+            {{resourceKeyValue('MonthMemberDrawb_error_msg_select_member')}}
+          </p>
+        </ion-text>
+
+        <div class="form-group">
+          <ion-input placeholder="{{resourceKeyValue('MonthMemberDrawb_lbl_loss_Amount')}}" type="number" formControlName="lossamount" placeholder="00" maxlength="10"></ion-input>
+        </div>
+        <ion-text color="danger" *ngIf="monthlyDrawnMemberForm.get('lossamount').errors && monthlyDrawnMemberForm.get('lossamount').touched">
+          <p *ngIf="monthlyDrawnMemberForm.get('lossamount').errors['required']">
+            {{resourceKeyValue('MonthMemberDrawb_error_msg_loss_amount')}}
+          </p>
+        </ion-text>
+
+        <div class="form-group">
+          <ion-input placeholder="{{resourceKeyValue('Member_Month_Popup_lbl_remarks')}}" type="text" formControlName="remarks" placeholder="xzy"></ion-input>
+        </div>
+
+        <div class="button-container">
+          <ion-button class="submit-btn" type="button" (click)="onSubmit()" [disabled]="!monthlyDrawnMemberForm.valid">
+            {{resourceKeyValue("Member_Month_Popup_btn_submit")}}
+          </ion-button>
+        </div>
+      </form>
+    </div>
+
+    <div style="height: 30px;"></div>
+  </div>
+</ion-content>

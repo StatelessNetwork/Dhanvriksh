@@ -1,0 +1,281 @@
+/* Styling for the ion-toolbar (header) */
+ion-header {
+  ion-toolbar {
+    --background: linear-gradient(135deg, #97144d, #d9534f); /* Gradient background for toolbar */
+    --color: #fff; /* White text for contrast */
+    --ion-background-color: linear-gradient(135deg, #97144d, #d9534f); /* Compatibility with Ionic color variables */
+    --ion-text-color: #fff; /* Set text color globally for the toolbar */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Add subtle shadow for depth */
+
+    /* Title styling */
+    ion-title {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #fff; /* Ensure title text is white */
+      text-align: center; /* Center the title */
+    }
+
+    /* Buttons and Icons */
+    ion-button {
+      --color: #fff; /* Ensure button text and icons are white */
+      margin-left: 5px; /* Add space between buttons */
+      --padding-start: 10px; 
+      --padding-end: 10px;
+    }
+
+    ion-icon {
+      margin-right: 5px; /* Add space between icon and text in buttons */
+    }
+  }
+}
+
+/* General content styling */
+ion-content {
+  --background: #f4f4f9; /* Light background for the dashboard */
+  padding: 0 15px;
+}
+
+/* Welcome Section with Dynamic Greeting */
+.welcome-section {
+  text-align: center;
+  margin: 20px 0;
+  background: linear-gradient(135deg, #97144d, #d9534f); /* Gradient using the theme color */
+  color: white;
+  padding: 25px;
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+
+  /* Icon for dynamic greeting */
+  .greeting-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 2.5em;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  h2 {
+    margin: 10px 0;
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  p {
+    margin: 5px 0 0 0;
+    font-size: 1.2em;
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* Summary Cards Styling */
+.summary-card {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+  border-radius: 12px; /* Rounded corners */
+  margin-bottom: 15px; /* Space between cards */
+  text-align: center;
+  padding: 15px;
+  transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+  
+  &:hover {
+    transform: translateY(-3px); /* Slight lift effect */
+  }
+
+  ion-card-header {
+    padding-bottom: 0;
+  }
+
+  ion-card-title {
+    font-size: 1.2em;
+    color: #97144d; /* Primary theme color for titles */
+  }
+
+  ion-card-content {
+    h2 {
+      font-size: 2.5em;
+      color: #97144d; /* Primary theme color for key numbers */
+      margin: 10px 0;
+      font-weight: bold;
+    }
+    p {
+      font-size: 1em;
+      color: #888;
+    }
+  }
+}
+
+/* Currency and Language Buttons */
+ion-toolbar {
+  --background: linear-gradient(135deg, #97144d, #d9534f); /* Primary theme gradient */
+}
+
+ion-button {
+  --background: none;
+  --color: #fff; /* White color for button text/icons */
+  font-size: 1em;
+  margin-left: 5px;
+  padding: 5px 10px;
+  border-radius: 4px; /* Rounded button corners */
+  transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+ion-button:hover {
+  --background: rgba(255, 255, 255, 0.2); /* Slight hover effect */
+}
+
+ion-icon {
+  margin-right: 5px;
+}
+
+/* Notifications and Transactions Section */
+ion-list {
+  margin: 0;
+}
+
+ion-item {
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+ion-item ion-label h2 {
+  font-size: 1em;
+  color: #97144d; /* Primary theme color for item titles */
+}
+
+ion-item ion-label p {
+  font-size: 0.9em;
+  color: #777;
+}
+
+ion-badge {
+  font-size: 0.8em;
+  color: #fff;
+  background: linear-gradient(135deg, #97144d, #d9534f); /* Theme gradient for badges */
+  border-radius: 5px;
+  padding: 5px 8px;
+  margin-left: 5px;
+}
+
+/* Button Styling */
+ion-button {
+  --background: none;
+  --color: #97144d; /* Primary theme color for buttons */
+  font-size: 1em;
+  --border-radius: 8px;
+}
+
+ion-button[fill="outline"] {
+  --border-color: #97144d; /* Outline button color */
+  --color: #97144d; 
+}
+
+ion-button[fill="outline"]:hover {
+  --background: rgba(151, 20, 77, 0.1); /* Slight background change on hover */
+}
+
+/* Responsive adjustments for mobile view */
+@media only screen and (max-width: 768px) {
+  ion-col {
+    --ion-grid-column-padding: 10px;
+  }
+
+  .summary-card {
+    padding: 12px;
+    ion-card-content {
+      h2 {
+        font-size: 1.8em;
+      }
+      p {
+        font-size: 0.9em;
+      }
+    }
+  }
+
+  ion-card {
+    ion-card-content {
+      canvas {
+        height: 200px;
+      }
+    }
+  }
+
+  .welcome-section {
+    padding: 15px;
+    h2 {
+      font-size: 1.5em;
+    }
+    p {
+      font-size: 1em;
+    }
+  }
+}
+
+/* Ensure the card header has a flexible layout */
+.card-header-content {
+  display: flex;
+  justify-content: space-between; /* Pushes the button to the right */
+  align-items: center; /* Centers content vertically */
+  padding: 0 10px; /* Adjust padding for alignment */
+}
+
+.card-header-content ion-card-title {
+  margin: 0;
+  font-size: 1.2em; /* Adjust the font size as needed */
+  flex: 1; /* Allows the title to take available space */
+}
+
+/* Styling for the "View More" button */
+.view-more-button {
+  --padding-start: 8px; /* Adjust left padding */
+  --padding-end: 8px; /* Adjust right padding */
+  --border-radius: 4px; /* Rounded corners */
+  --height: 28px; /* Set a smaller height for the button */
+  font-size: 0.8em; /* Smaller font size */
+  --background: #fff; /* White background for the outline */
+  --border-color: #97144d; /* Use your primary color for the border */
+  --color: #97144d; /* Primary color for text */
+  margin-left: auto; /* Aligns the button to the right */
+}
+
+.view-more-button:hover {
+  --background: #97144d; /* Background color on hover */
+  --color: #fff; /* Change text color to white on hover */
+}
+
+/* Ensure the arrow icon and text color in the ion-select component are white */
+.language-select {
+  --placeholder-color: #fff; /* Placeholder color */
+  --color: #fff;             /* Text color */
+  --icon-color: #fff;        /* Arrow icon color */
+  --padding-start: 10px;     /* Adjust padding if necessary */
+  --padding-end: 10px;
+}
+
+/* More specific styling to target the select icon */
+.language-select .select-icon {
+  color: #fff !important; /* Set the icon color to white */
+  --ion-color-base: #fff; /* Set the base color */
+}
+
+.language-select .select-icon-inner {
+  color: #fff !important; /* Set the inner icon color to white */
+  --ion-color-base: #fff; /* Set the base color */
+}
+
+/* This additional selector ensures the icon is always white */
+.language-select::part(icon) {
+  color: #fff !important; /* Part pseudo-element for the icon color */
+}
+
+/* Additional styling if the above does not work */
+.language-select ion-select-option {
+  --ion-color-base: #fff !important;
+}
+
+
+

@@ -1,0 +1,42 @@
+<div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%;height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+  </div>
+
+
+<ion-header *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="util.openMenu()">
+        <ion-icon slot="icon-only" name="reorder-three-outline" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title> {{resourceKeyValue('Menu_lbl_aboutUs')}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding"  *ngIf="this.resourceData!=null">
+  <h3><strong>{{resourceKeyValue('AboutUs_Introduction')}}</strong></h3>
+  <p>{{resourceKeyValue('AboutUs_Introduction_Details')}}</p>
+  <h3><strong>{{resourceKeyValue('AboutUs_User_Registration')}}</strong></h3>
+  <p>{{resourceKeyValue('AboutUs_User_Registration_Details')}}</p>
+  <h3><strong>{{resourceKeyValue('AboutUs_Committee_Creation')}}</strong></h3>
+  <p>{{resourceKeyValue('AboutUs_Committee_Creation_Details')}}</p>
+  <h3><strong>{{resourceKeyValue('AboutUs_Member_Management')}}</strong></h3>
+  <p>{{resourceKeyValue('AboutUs_Member_Management_Details')}}</p>
+  <h3><strong>{{resourceKeyValue('AboutUs_Communication_and_Collaboration')}}</strong></h3>
+  <p>{{resourceKeyValue('AboutUs_Communication_and_Collaboration_Details')}}</p>
+  <h3><strong>{{resourceKeyValue('AboutUs_Financial_Tracking')}}</strong></h3>
+  <p>{{resourceKeyValue('AboutUs_Financial_Tracking_Details')}}</p>
+  <h3><strong>{{resourceKeyValue('AboutUs_Conclusion')}}</strong></h3>
+  <p>{{resourceKeyValue('AboutUs_Conclusion_Details')}}</p>
+
+</ion-content>

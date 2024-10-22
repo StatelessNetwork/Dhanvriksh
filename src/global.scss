@@ -1,0 +1,220 @@
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+@import "./theme/fonts.scss";
+@import "./theme/styles.scss";
+@import "material-icons/iconfont/material-icons.css";
+
+* {
+  font-family: "Poppins";
+}
+
+ion-content::part(scroll)::-webkit-scrollbar {
+  display: none !important;
+}
+
+.overscroll::before {
+  bottom: 0px;
+}
+
+ion-content {
+  --background: var(--bodyBackColor);
+}
+
+ion-toolbar {
+  --background: var(--primaryColor);
+  height: 0;
+}
+
+.ellipseText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.horizontalScroll {
+  overflow-x: scroll;
+  white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.exitWrapper {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.exitText {
+  background-color: #333333;
+  padding: 10px 15px;
+  border-radius: 20px;
+  z-index: 99999;
+}
+
+.margin20 {
+  margin: 20px;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.rowAlignCenter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.columnAlignCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.imageOverflow {
+  overflow: hidden;
+  object-fit: cover;
+}
+
+ion-toast {
+  --background: #333333;
+  --box-shadow: 0 0 0;
+  --border-radius: 5px;
+}
+
+.ion-valid.sc-ion-input-ios-h {
+  --highlight-color: var(--primaryColor);
+}
+
+.ion-valid.sc-ion-textarea-ios-h {
+  --highlight-color: var(--primaryColor);
+}
+
+.iti .iti__country-list {
+  font-size: 14px;
+  color: var(--blackColor);
+  font-weight: 500;
+  height: 350px;
+  background-color: var(--whiteColor);
+  border-radius: 5px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.iti .iti__selected-flag {
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.01);
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--whiteColor);
+  margin-left: 5px;
+}
+
+.iti--fullscreen-popup.iti--container.iti--country-search {
+  justify-content: center;
+}
+
+.iti__search-input {
+  border-radius: 0px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 12px;
+  color: var(--blackColor);
+  background: var(--whiteColor);
+  caret-color: var(--primaryColor);
+  outline-style: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.commonButton {
+  background: var(--primaryColor);
+  padding: 12px;
+  border-radius: 10px;
+  margin: 20px;
+  box-shadow: 0 6px 12px rgba(150, 114, 251, 0.1);
+}
+
+.authBackImage {
+  height: 280px;
+  background-repeat: no-repeat;
+  background-image: url('../src/assets/images/top_image.png');
+  // background-image: url('../../../../assets/images/top_image.png');
+  background-blend-mode: color-dodge;
+  background-color: var(--primaryColor);
+  background-size: cover;
+  opacity: 0.1;
+  display: flex;
+}
+
+.topBgImage {
+  background-repeat: no-repeat;
+  background-image: url('../src/assets/images/top_image2.png');
+  padding-top: max(var(--ion-safe-area-top), 40px);
+  background-size: cover;
+}
+
+.bottomAddButton {
+  width: 45px;
+  height: 45px;
+  border-radius: 29px;
+  background-color: var(--primaryColor);
+  bottom: 5px;
+  right: 5px;
+  box-shadow: inset 0 -4px 4px rgba(0, 0, 0, 0.25), inset 0 4px 4px rgba(0, 0, 0, 0.25), 0 6px 12px rgba(150, 114, 251, 0.2);
+}
+
+.buttonInnerShadow {
+  box-shadow: inset 0 -4px 4px rgba(0, 0, 0, 0.25), inset 0 4px 4px rgba(0, 0, 0, 0.25), 0 6px 12px rgba(150, 114, 251, 0.2);
+}
+
+.commonShadow {
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.25)
+}
+
+.redStick{
+  color: red;
+}
+
+.marTop5{
+  margin-top: 5px;
+}
+
+.margin20Bot0 {
+  margin: 20px;
+  margin-bottom: 0px;
+}
+
+.searchbar-input-container.sc-ion-searchbar-ios {
+  min-height: 35px !important;
+}
+
+.searchbar-input.sc-ion-searchbar-ios {
+  font-size: 12px !important;
+}

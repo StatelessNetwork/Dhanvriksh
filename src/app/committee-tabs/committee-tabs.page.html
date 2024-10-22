@@ -1,0 +1,21 @@
+<ion-tabs #tabs (ionTabsDidChange)="setCurrentTab()">
+
+  <ion-tab-bar slot="bottom" slot="bottom" mode="ios" style="padding: 0 15px">
+
+    <ion-tab-button  expand="block" (click)="redirectToTabs('home')">
+      <ion-icon aria-hidden="true" name="home-outline"></ion-icon>
+      <ion-label>{{util.translate('Home')}}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button expand="block" (click)="redirectToTabs('loan')">
+      <ion-icon aria-hidden="true" name="calendar-clear-outline"></ion-icon>
+      <ion-label>Loan</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button  expand="block" (click)="redirectToTabs('profile')">
+      <ion-icon aria-hidden="true" name="bag-outline"></ion-icon>
+      <ion-label>Profile</ion-label>
+    </ion-tab-button>
+</ion-tab-bar>
+
+</ion-tabs>

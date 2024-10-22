@@ -1,0 +1,70 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Payment History</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+     <!-- Loader -->
+     <div *ngIf="isLoading" class="loading-container">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Loading payment details...</p>
+    </div>
+  
+    <!-- No data found message -->
+    <div *ngIf="!isLoading && !paymentHistory" class="no-data-container">
+      <p class="no-data-message">No payment data found</p>
+    </div>
+  
+
+  <!-- Payment History List -->
+    <ion-card *ngIf="!isLoading && paymentHistory && paymentHistory.length > 0" class="custom-card">
+      <ion-card-header class="custom-card-header">
+        <ion-card-title class="ion-text-center">Payment History</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let payment of paymentHistory" lines="none" class="payment-item">
+            <ion-label>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="detail-label">Payment Date:</p>
+                    <p class="detail-value">{{ payment.PaymentDate | date: 'mediumDate' }}</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="detail-label">Payment Amount:</p>
+                    <p class="detail-value">{{ payment.PaymentAmount | currency }}</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6">
+                    <p class="detail-label">Payment Method:</p>
+                    <p class="detail-value">{{ payment.PaymentMethod }}</p>
+                  </ion-col>
+                  <ion-col size="6">
+                    <p class="detail-label">Late Fee:</p>
+                    <p class="detail-value">{{ payment.LateFee | currency }}</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="payment.Remarks">
+                  <ion-col size="12">
+                    <p class="detail-label">Remarks:</p>
+                    <p class="detail-value">{{ payment.Remarks }}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+</ion-content>
+

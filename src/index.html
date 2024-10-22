@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Ionic App</title>
+
+  <base href="/" />
+
+  <meta name="color-scheme" content="light dark" />
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+
+  <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
+
+  <!-- add to homescreen for ios -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+  <style>
+    /* Splash screen styles */
+    #splash-screen {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #splash-screen img {
+      max-width: 150px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <div id="splash-screen">
+    <img src="assets/imgs/dhanvrikshIcon.png" alt="Splash Screen Logo" />
+  </div> -->
+
+  <ion-content scrollY="false" id="splash-screen">
+    <div class="center column" style="background: var(--primaryColor); height: 100%">
+      <img
+        src="../../../assets/images/app_icon.png"
+        style="width: 65px; height: 65px; object-fit: contain"
+      />
+      <ion-text class="whiteColor30Medium" style="margin-top: 5px;">
+        Go task
+      </ion-text>
+    </div>
+  </ion-content>
+  
+  <app-root></app-root>
+</body>
+
+</html>

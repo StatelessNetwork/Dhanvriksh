@@ -1,0 +1,35 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Recent Transaction</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-card>
+    <ion-list *ngIf="notificationrecentData && notificationrecentData.length > 0; else noDataTemplate">
+      <ion-item *ngFor="let notification of notificationrecentData" (click)="redirectToRecentNotificationPage(notification.Type, notification.EncyptId)">
+        <ion-label>
+          <h2>{{ notification.Title }}</h2>
+          <p>{{ notification.Message }}</p>
+        </ion-label>
+        <ion-badge>{{ notification.DueDate | date }}</ion-badge>
+      </ion-item>
+    </ion-list>
+    
+    <!-- Template to show when there's no data -->
+    <ng-template #noDataTemplate>
+      <ion-item>
+        <ion-label>
+          <h2>No notifications available</h2>
+        </ion-label>
+      </ion-item>
+    </ng-template>
+  </ion-card>
+  
+</ion-content>

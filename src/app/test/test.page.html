@@ -1,0 +1,532 @@
+<ion-header [translucent]="false" mode="ios" class="ion-no-border">
+  <div style="background-color: var(--bodyBackColor)">
+    <div class="topBgImage">
+      <div class="rowAlignCenter" style="padding: 20px">
+        <span
+          class="material-icons"
+          style="color: var(--whiteColor); font-size: 24px"
+        >
+          arrow_back
+        </span>
+        <ion-text
+          class="whiteColor18SemiBold ellipseText"
+          style="margin: 0 10px; -webkit-line-clamp: 1; flex: 1"
+        >
+          Task detail
+        </ion-text>
+        <ion-icon
+          id="openOptions"
+          name="ellipsis-vertical"
+          color="whiteColor"
+          style="font-size: 20px"
+        >
+        </ion-icon>
+        <ion-popover
+          mode="md"
+          trigger="openOptions"
+          (didDismiss)="popCtrl.dismiss()"
+        >
+          <ng-template>
+            <ion-content class="ion-no-padding">
+              <div class="column" style="padding: 5px 15px">
+                <ion-text
+                  *ngFor="let option of taskOptions;let menuIndex=index"
+                  class="blackColor16Medium"
+                  style="margin: 10px 0"
+                  (click)=" popCtrl.dismiss(); menuIndex==0?showDeleteDialog=true:null"
+                >
+                  {{option}}
+                </ion-text>
+              </div>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </div>
+    </div>
+
+    <div class="column center margin20">
+      <div style="height: 75px; position: relative" class="center">
+        <circle-progress
+          [percent]="400"
+          [radius]="32"
+          [outerStrokeWidth]="7"
+          [outerStrokeColor]="'var(--blackColor)'"
+          [animation]="true"
+          [animationDuration]="300"
+          [showInnerStroke]="false"
+          [showTitle]="true"
+          [showSubtitle]="false"
+          [showUnits]="true"
+          unitsFontSize="16px"
+          unitsFontWeight="500"
+          [unitsColor]="'var(--blackColor)'"
+          [titleColor]="'var(--blackColor)'"
+          titleFontSize="16px"
+          titleFontWeight="500"
+          [backgroundStroke]="'rgba(218, 152, 135, 0.16)'"
+          [backgroundStrokeWidth]="7"
+          [backgroundPadding]="-3"
+        ></circle-progress>
+        <!-- <span
+          class="material-icons"
+          style="font-size: 30px; position: absolute; top: 20px"
+          [style.color]="item.fill"
+        >
+          done
+        </span> -->
+      </div>
+      <ion-text
+        class="blackColor18SemiBold ellipseText"
+        style="-webkit-line-clamp: 1; margin-top: 5px"
+      >
+        Naveen Kumar
+      </ion-text>
+      <ion-text
+        class="grayColor14Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+        Starting date : 25 jan 2022
+      </ion-text>
+      <ion-text
+        class="grayColor14Medium ellipseText"
+        style="-webkit-line-clamp: 1"
+      >
+        Ending date : 15 feb 2022
+      </ion-text>
+    </div>
+
+    <div
+      class="rowAlignCenter"
+      style="
+        background-color: var(--extraLightGrayColor);
+        padding: 10px 20px;
+        justify-content: space-between;
+      "
+    >
+      <div *ngFor="let item of tabs;let index=index">
+        <ion-text
+          (click)="selectedTabIndex=index"
+          class="ellipseText"
+          style="-webkit-line-clamp: 1"
+          [class]="selectedTabIndex==index?'primaryColor16SemiBold':'grayColor16SemiBold'"
+        >
+          {{item}}
+        </ion-text>
+      </div>
+    </div>
+  </div>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="selectedTabIndex==0">
+    <div class="column">
+      <div class="rowAlignCenter margin20">
+        <ion-text
+          class="blackColor16Medium ellipseText"
+          style="flex: 1; -webkit-line-clamp: 1"
+        >
+          Total {{subTasks.length}} sub task
+        </ion-text>
+        <div (click)="showAddTaskSheet=true" class="rowAlignCenter">
+          <div
+            class="center buttonInnerShadow circle15"
+            style="background-color: var(--primaryColor)"
+          >
+            <span
+              class="material-icons"
+              style="color: var(--whiteColor); font-size: 13px"
+            >
+              add
+            </span>
+          </div>
+          <ion-text
+            class="primaryColor14Medium ellipseText"
+            style="margin-left: 5px; -webkit-line-clamp: 1"
+          >
+            Add new sub task
+          </ion-text>
+        </div>
+      </div>
+
+      <div
+        *ngFor="let task of subTasks"
+        class="rowAlignCenter card"
+        (click)="task.isDone=!task.isDone"
+        style="padding: 10px 15px"
+      >
+        <div
+          class="center"
+          style="width: 24px; height: 24px; border-radius: 5px"
+          [style.background-color]="task.isDone?'var(--primaryColor)':'var(--whiteColor)'"
+          [class]="task.isDone?'':'commonShadow'"
+        >
+          <span
+            class="material-icons"
+            style="color: var(--whiteColor); font-size: 16px"
+          >
+            check
+          </span>
+        </div>
+        <div class="subTaskDivider"></div>
+        <div class="column" style="flex: 1">
+          <ion-text
+            class="blackColor14Medium ellipseText"
+            style="-webkit-line-clamp: 1"
+          >
+            {{task.task}}
+          </ion-text>
+          <div class="rowAlignCenter" style="margin-top: 3px">
+            <img
+              [src]="task.image"
+              class="imageOverflow"
+              style="width: 18px; height: 18px; border-radius: 9px"
+            />
+            <ion-text
+              class="grayColor12SemiBold ellipseText"
+              style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+            >
+              {{task.tasker}} ({{task.profession}})
+            </ion-text>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedTabIndex==1">
+    <div class="column">
+      <div class="rowAlignCenter margin20">
+        <ion-text
+          class="blackColor16Medium ellipseText"
+          style="flex: 1; -webkit-line-clamp: 1"
+        >
+          Attachment ({{attachFilesList.length}} file)
+        </ion-text>
+        <div class="rowAlignCenter">
+          <div
+            class="center buttonInnerShadow circle15"
+            style="background-color: var(--primaryColor)"
+          >
+            <span
+              class="material-icons"
+              style="color: var(--whiteColor); font-size: 13px"
+            >
+              add
+            </span>
+          </div>
+          <ion-text
+            class="primaryColor14Medium ellipseText"
+            style="margin-left: 5px; -webkit-line-clamp: 1"
+          >
+            Attach new
+          </ion-text>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngFor="let file of attachFilesList"
+      class="rowAlignCenter card"
+      style="padding: 10px"
+    >
+      <img
+        [src]="file.image"
+        style="width: 92px; height: 57px; object-fit: contain"
+      />
+      <div class="column" style="flex: 1; margin: 0 12px">
+        <ion-text
+          class="blackColor15Medium ellipseText"
+          style="-webkit-line-clamp: 1"
+        >
+          {{file.name}}
+        </ion-text>
+        <ion-text
+          class="grayColor14Medium ellipseText"
+          style="-webkit-line-clamp: 1"
+        >
+          {{file.size}}
+        </ion-text>
+      </div>
+      <ion-icon
+        [id]="'menu'+file.id"
+        name="ellipsis-vertical"
+        color="grayColor"
+        style="font-size: 18px"
+      ></ion-icon>
+      <ion-popover
+        mode="md"
+        [trigger]="'menu'+file.id"
+        (didDismiss)="popCtrl.dismiss()"
+      >
+        <ng-template>
+          <ion-content class="ion-no-padding">
+            <div class="column" style="padding: 5px 15px">
+              <ion-text
+                *ngFor="let option of attachmentOptions;let menuIndex=index"
+                class="blackColor16Medium"
+                style="margin: 10px 0"
+                (click)="popCtrl.dismiss();"
+              >
+                {{option}}
+              </ion-text>
+            </div>
+          </ion-content>
+        </ng-template>
+      </ion-popover>
+    </div>
+  </div>
+
+  <div *ngIf="selectedTabIndex==2">
+    <div class="column">
+      <div class="rowAlignCenter margin20">
+        <ion-text
+          class="blackColor16Medium ellipseText"
+          style="flex: 1; -webkit-line-clamp: 1"
+        >
+          Team member({{teamsList.length}})
+        </ion-text>
+        <div class="rowAlignCenter">
+          <div
+            class="center buttonInnerShadow circle15"
+            style="background-color: var(--primaryColor)"
+          >
+            <span
+              class="material-icons"
+              style="color: var(--whiteColor); font-size: 13px"
+            >
+              add
+            </span>
+          </div>
+          <ion-text
+            class="primaryColor14Medium ellipseText"
+            style="margin-left: 5px; -webkit-line-clamp: 1"
+          >
+            Invite member
+          </ion-text>
+        </div>
+      </div>
+
+      <div
+        *ngFor="let member of teamsList"
+        class="card rowAlignCenter"
+        style="padding: 10px 15px"
+      >
+        <img
+          [src]="member.image"
+          class="imageOverflow"
+          style="width: 53px; height: 53px; border-radius: 26.5px"
+        />
+        <div class="column" style="flex: 1; margin-left: 10px">
+          <ion-text
+            class="blackColor15Medium ellipseText"
+            style="-webkit-line-clamp: 1"
+          >
+            {{member.name}}
+          </ion-text>
+          <ion-text
+            class="grayColor14Medium ellipseText"
+            style="-webkit-line-clamp: 1"
+          >
+            {{member.profession}}
+          </ion-text>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedTabIndex==3">
+    <div class="column">
+      <div class="rowAlignCenter margin20">
+        <ion-text
+          class="blackColor16Medium ellipseText"
+          style="flex: 1; -webkit-line-clamp: 1"
+        >
+          Comments({{commentsList.length}})
+        </ion-text>
+      </div>
+
+      <div
+        *ngFor="let comment of commentsList"
+        class="column card"
+        style="padding: 10px"
+      >
+        <div class="rowAlignCenter">
+          <img
+            [src]="comment.image"
+            class="imageOverflow"
+            style="width: 50px; height: 50px; border-radius: 25px"
+          />
+          <div class="column" style="margin: 0 10px; flex: 1">
+            <ion-text
+              class="blackColor15Medium ellipseText"
+              style="-webkit-line-clamp: 1"
+            >
+              {{comment.name}}
+            </ion-text>
+            <ion-text
+              class="grayColor14Medium ellipseText"
+              style="-webkit-line-clamp: 1"
+            >
+              {{comment.profession}}
+            </ion-text>
+          </div>
+          <ion-text class="grayColor14Medium"> {{comment.time}} </ion-text>
+        </div>
+
+        <div
+          *ngIf="comment.attachments"
+          class="horizontalScroll"
+          style="margin-top: 15px"
+        >
+          <div
+            *ngFor="let attachment of comment.attachments;let index=index;"
+            style="display: inline-block"
+          >
+            <img
+              [src]="attachment"
+              style="width: 51px; height: 51px; border-radius: 5px"
+              [style.margin-right]="comment.attachments.length-1==index?'0':'10px'"
+            />
+          </div>
+        </div>
+
+        <ion-text class="grayColor14Medium" style="margin-top: 10px">
+          {{comment.comment}}
+        </ion-text>
+      </div>
+    </div>
+  </div>
+
+  <!-- <app-deleted-dialog
+    [isopen]="showDeleteDialog"
+    (closeModal)="showDeleteDialog=false"
+    (deletePress)="deletePress()"
+  ></app-deleted-dialog> -->
+
+  <ion-modal
+    #taskSheet
+    mode="ios"
+    [isOpen]="showAddTaskSheet"
+    (didDismiss)="showAddTaskSheet=false"
+    [initialBreakpoint]="1"
+    [breakpoints]="[0, 1]"
+    style="--height: auto; --border-radius: 40px"
+    handle="false"
+  >
+    <ng-template>
+      <div
+        class="column"
+        style="padding: 25px 20px"
+        [style.margin-bottom]="platform.is('ios')?'0':keyboardHeight+'px'"
+      >
+        <div class="column">
+          <ion-text class="blackColor16Medium" style="margin-bottom: 10px">
+            Task name
+          </ion-text>
+          <div class="fieldWrapper">
+            <ion-input
+              mode="ios"
+              placeholder="Enter task name"
+              style="height: 20px; min-height: 20px"
+              class="blackColor15Medium"
+              [(ngModel)]="taskName"
+            />
+          </div>
+        </div>
+        <div class="column" style="margin-top: 20px">
+          <ion-text class="blackColor16Medium" style="margin-bottom: 10px">
+            Task assign to
+          </ion-text>
+          <div
+            class="fieldWrapper column"
+            style="padding: 13px"
+          >
+            <div *ngIf="subtaskMembers.length==0" class="rowAlignCenter">
+              <ion-text
+                class="grayColor15Medium ellipseText"
+                style="flex: 1; -webkit-line-clamp: 1"
+              >
+                Select member
+              </ion-text>
+              <span
+                class="material-icons"
+                style="font-size: 24px; color: var(--grayColor)"
+              >
+                chevron_right
+              </span>
+            </div>
+            <div *ngIf="subtaskMembers" class="rowAlignCenter">
+              <img
+                *ngFor="let member of subtaskMembers.slice(0,4);let index=index"
+                [src]="member.image"
+                class="imageOverflow memberCircleStyle"
+                [style.left]="-(index * 6)+'px'"
+              />
+              <div
+                *ngIf="subtaskMembers.length>4"
+                class="center memberCircleStyle"
+                style="left: -25px"
+              >
+                <ion-text class="blackColor12SemiBold">
+                  +{{subtaskMembers.length - 4}}
+                </ion-text>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          (click)="showAddTaskSheet=false;taskSheet.dismiss();"
+          class="center commonButton"
+          style="margin: 0px; margin-top: 40px"
+        >
+          <ion-text class="whiteColor18SemiBold"> Add sub task </ion-text>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+
+<ion-footer
+  *ngIf="selectedTabIndex==3"
+  mode="ios"
+  class="ion-no-border"
+  style="background: var(--bodyBackColor)"
+>
+  <div
+    class="rowAlignCenter commonShadow"
+    style="padding: 10px 20px; background-color: var(--whiteColor)"
+    [style.margin-bottom]="platform.is('ios')?'0': keyboardHeight+'px'"
+  >
+    <div
+      (click)="commentField.setFocus()"
+      class="commonShadow center attachmentButton"
+    >
+      <span
+        class="material-icons"
+        style="
+          color: var(--grayColor);
+          font-size: 20px;
+          transform: rotate(50deg);
+        "
+      >
+        attach_file
+      </span>
+    </div>
+    <ion-input
+      #commentField
+      mode="ios"
+      placeholder="Write comment.."
+      style="height: 20px; min-height: 20px"
+      class="blackColor14Medium"
+      [(ngModel)]="comment"
+    />
+    <div (click)="comment=''" class="center commonShadow sendButton">
+      <span
+        class="material-icons"
+        style="color: var(--primaryColor); font-size: 20px"
+      >
+        send
+      </span>
+    </div>
+  </div>
+</ion-footer>

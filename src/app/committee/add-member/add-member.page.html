@@ -1,0 +1,266 @@
+<!-- <div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%;height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+  </div>
+
+<ion-header mode="ios" class="ion-no-border"  *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{resourceKeyValue('NewMember_lbl_add_new_member')}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+  
+
+<ion-content class="ion-padding" *ngIf="this.resourceData!=null">
+
+  <h2 *ngIf="committeeDetails!=null && committeeDetails[0].holderName!=null">{{committeeDetails[0].holderName}}</h2>
+
+  <div class="book-table-screen">
+    <div class="content_div">
+      <div>
+
+        <form [formGroup]="memberForm" (ngSubmit)="onSubmit()">
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-input label="{{resourceKeyValue('NewMember_lbl_first_name')}}" type="text"  formControlName="firstName" placeholder="e.g., Naveen"></ion-input>
+        </div>
+        <ion-text color="danger" *ngIf="memberForm.get('firstName').errors && memberForm.get('firstName').touched">
+          <p  *ngIf="memberForm.get('firstName').errors['required']">
+            {{resourceKeyValue("NewMember_error_msg_req_first_name")}}
+          </p>
+        </ion-text>
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-input label="{{resourceKeyValue('NewMember_lbl_last_name')}}" type="text"  formControlName="lastName"  placeholder="e.g., Kumar"></ion-input>
+        </div>
+        <ion-text color="danger" *ngIf="memberForm.get('lastName').errors && memberForm.get('lastName').touched">
+          <p  *ngIf="memberForm.get('lastName').errors['required']">
+            {{resourceKeyValue("NewMember_error_msg_req_last_name")}}
+          </p>
+        </ion-text>
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-input label="{{resourceKeyValue('NewMember_lbl_mobile_number')}}" type="tel"  formControlName="mobileNumber"   placeholder="000 0000 000"></ion-input>
+        </div>
+        <ion-text color="danger" *ngIf="memberForm.get('mobileNumber').errors && memberForm.get('mobileNumber').touched">
+          <p  *ngIf="memberForm.get('mobileNumber').errors['required']">
+            {{resourceKeyValue("NewMember_error_msg_req_mobile_number")}}
+          </p>
+          <p  *ngIf="memberForm.get('mobileNumber').errors['pattern']">
+            {{resourceKeyValue("NewMember_error_msg_pattern_mobile_number")}}
+          </p>
+          <p  *ngIf="memberForm.get('mobileNumber').errors['minLength']">
+            {{resourceKeyValue("NewMember_error_msg_minLength_mobile_number")}}
+          </p>
+        </ion-text>
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-input label="{{resourceKeyValue('NewMember_lbl_email_address')}}" type="email"  formControlName="email"   placeholder="xyx@gmail.com"></ion-input>
+        </div>
+        <ion-text color="danger" *ngIf="memberForm.get('email').errors && memberForm.get('email').touched">
+          <p  *ngIf="memberForm.get('email').errors['required']">
+            {{resourceKeyValue("NewMember_error_msg_req_email_address")}}
+          </p>
+          <p  *ngIf="memberForm.get('email').errors['pattern']">
+            {{resourceKeyValue("NewMember_error_msg_req_valid_email_address")}}
+          </p>
+        </ion-text>
+
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-input label="{{resourceKeyValue('NewMember_lbl_address')}}" type="text"  formControlName="address"   placeholder="delhi"></ion-input>
+        </div>
+        <ion-text color="danger" *ngIf="memberForm.get('address').errors && memberForm.get('address').touched">
+          <p  *ngIf="memberForm.get('address').errors['required']">
+            {{resourceKeyValue("NewMember_error_msg_req_address")}}
+          </p>
+        </ion-text>
+
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-select multiple="false" interface="popover" mode="ios" formControlName="country" (ionChange)="onCountryChange()"
+          [placeholder]="resourceKeyValue('NewMember_lbl_country')" id="country">
+          <ion-select-option [value]="country.EncyptID" *ngFor="let country of countryList">{{country.Name}} </ion-select-option>
+        </ion-select>
+        </div>
+        <ion-text color="danger" *ngIf="memberForm.get('country').errors && memberForm.get('country').touched">
+          <p  *ngIf="memberForm.get('country').errors['required']">
+            {{resourceKeyValue("NewMember_error_msg_req_country")}}
+          </p>
+        </ion-text>
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-select multiple="false" interface="popover" mode="ios" formControlName="state" (ionChange)="onStateChange()"
+          [placeholder]="resourceKeyValue('NewMember_lbl_state')" id="state">
+          <ion-select-option [value]="state.EncyptID" *ngFor="let state of stateList">{{state.Name}} </ion-select-option>
+        </ion-select>
+        </div>
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-select multiple="false" interface="popover" mode="ios" formControlName="city"
+          [placeholder]="resourceKeyValue('NewMember_lbl_city')" id="city">
+          <ion-select-option [value]="city.EncyptID" *ngFor="let city of cityList">{{city.Name}} </ion-select-option>
+        </ion-select>
+        </div>
+
+
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-input label="{{resourceKeyValue('NewMember_lbl_pincode')}}" type="text"  formControlName="pincode"   placeholder="110000"></ion-input>
+        </div>
+
+
+        <ion-button expand="block" class="block_btn book_btn" type="submit" [disabled]="!memberForm.valid">{{resourceKeyValue("NewMember_btn_submit")}}
+        </ion-button>
+        <div style="height: 30px;"></div>
+
+      </form>
+      </div>
+
+    </div>
+
+  </div>
+</ion-content> -->
+
+
+<div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+<ion-header mode="ios" class="ion-no-border" *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{resourceKeyValue('NewMember_lbl_add_new_member')}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="this.resourceData!=null">
+  <h2 class="committee-title" *ngIf="committeeDetails!=null && committeeDetails[0].holderName!=null">{{committeeDetails[0].holderName}}</h2>
+
+  <div class="book-table-screen">
+    <div class="content_div">
+      <form [formGroup]="memberForm" (ngSubmit)="onSubmit()">
+
+        <!-- First Name -->
+        <ion-item class="input-item">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewMember_lbl_first_name')}}</ion-label>
+          <ion-input type="text" formControlName="firstName" placeholder="e.g., Naveen"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="memberForm.get('firstName').errors && memberForm.get('firstName').touched">
+          <p *ngIf="memberForm.get('firstName').errors['required']">{{resourceKeyValue("NewMember_error_msg_req_first_name")}}</p>
+        </ion-text>
+
+        <!-- Last Name -->
+        <ion-item class="input-item">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewMember_lbl_last_name')}}</ion-label>
+          <ion-input type="text" formControlName="lastName" placeholder="e.g., Kumar"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="memberForm.get('lastName').errors && memberForm.get('lastName').touched">
+          <p *ngIf="memberForm.get('lastName').errors['required']">{{resourceKeyValue("NewMember_error_msg_req_last_name")}}</p>
+        </ion-text>
+
+        <!-- Mobile Number -->
+        <ion-item class="input-item">
+          <ion-icon name="call-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewMember_lbl_mobile_number')}}</ion-label>
+          <ion-input type="tel" formControlName="mobileNumber" placeholder="000 0000 000"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="memberForm.get('mobileNumber').errors && memberForm.get('mobileNumber').touched">
+          <p *ngIf="memberForm.get('mobileNumber').errors['required']">{{resourceKeyValue("NewMember_error_msg_req_mobile_number")}}</p>
+          <p *ngIf="memberForm.get('mobileNumber').errors['pattern']">{{resourceKeyValue("NewMember_error_msg_pattern_mobile_number")}}</p>
+          <p *ngIf="memberForm.get('mobileNumber').errors['minLength']">{{resourceKeyValue("NewMember_error_msg_minLength_mobile_number")}}</p>
+        </ion-text>
+
+        <!-- Email Address -->
+        <ion-item class="input-item">
+          <ion-icon name="mail-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewMember_lbl_email_address')}}</ion-label>
+          <ion-input type="email" formControlName="email" placeholder="xyx@gmail.com"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="memberForm.get('email').errors && memberForm.get('email').touched">
+          <p *ngIf="memberForm.get('email').errors['required']">{{resourceKeyValue("NewMember_error_msg_req_email_address")}}</p>
+          <p *ngIf="memberForm.get('email').errors['pattern']">{{resourceKeyValue("NewMember_error_msg_req_valid_email_address")}}</p>
+        </ion-text>
+
+        <!-- Address -->
+        <ion-item class="input-item">
+          <ion-icon name="home-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewMember_lbl_address')}}</ion-label>
+          <ion-input type="text" formControlName="address" placeholder="Delhi"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="memberForm.get('address').errors && memberForm.get('address').touched">
+          <p *ngIf="memberForm.get('address').errors['required']">{{resourceKeyValue("NewMember_error_msg_req_address")}}</p>
+        </ion-text>
+
+        <!-- Country -->
+        <ion-item class="input-item">
+          <ion-icon name="earth-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewMember_lbl_country')}}</ion-label>
+          <ion-select formControlName="country" (ionChange)="onCountryChange()">
+            <ion-select-option *ngFor="let country of countryList" [value]="country.EncyptID">{{country.Name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-text color="danger" *ngIf="memberForm.get('country').errors && memberForm.get('country').touched">
+          <p *ngIf="memberForm.get('country').errors['required']">{{resourceKeyValue("NewMember_error_msg_req_country")}}</p>
+        </ion-text>
+
+        <!-- State -->
+        <ion-item class="input-item">
+          <ion-icon name="map-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewMember_lbl_state')}}</ion-label>
+          <ion-select formControlName="state" (ionChange)="onStateChange()">
+            <ion-select-option *ngFor="let state of stateList" [value]="state.EncyptID">{{state.Name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <!-- City -->
+        <ion-item class="input-item">
+          <ion-icon name="business-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewMember_lbl_city')}}</ion-label>
+          <ion-select formControlName="city">
+            <ion-select-option *ngFor="let city of cityList" [value]="city.EncyptID">{{city.Name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <!-- Pincode -->
+        <ion-item class="input-item">
+          <ion-icon name="location-outline" slot="start"></ion-icon>
+          <ion-label position="floating">{{resourceKeyValue('NewMember_lbl_pincode')}}</ion-label>
+          <ion-input type="text" formControlName="pincode" placeholder="110000"></ion-input>
+        </ion-item>
+
+        <!-- Submit Button -->
+        <ion-button expand="block" class="block_btn book_btn" type="submit" [disabled]="!memberForm.valid">{{resourceKeyValue("NewMember_btn_submit")}}</ion-button>
+        <div style="height: 30px;"></div>
+
+      </form>
+    </div>
+  </div>
+</ion-content>

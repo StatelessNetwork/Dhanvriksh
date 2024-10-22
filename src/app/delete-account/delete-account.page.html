@@ -1,0 +1,55 @@
+<div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%;height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+  </div>
+
+  <ion-header [translucent]="true" *ngIf="this.resourceData!=null">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="goBack()">
+          <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>{{resourceKeyValue('DeleteAccount_title')}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="this.resourceData!=null">
+  <div class="payment-screen">
+    <div class="shadow_card price_div">
+  
+      <ion-label class="title_lbl alignCenter">{{resourceKeyValue('DeleteAccount_action_cannot_be_undone_msg')}}</ion-label>
+  
+      <ion-list  *ngIf="optionList!=null">
+        <ion-radio-group   [(ngModel)]="deleteOption">
+          <ion-list-header>
+            <ion-label>{{resourceKeyValue('DeleteAccount_pelase_select_delete_reason')}} (*)</ion-label>
+          </ion-list-header>
+          <ion-item  *ngFor="let option of optionList;">
+            <ion-label>{{resourceKeyValue(option.Name)}}</ion-label>
+            <ion-radio [value]="option.EncyptID"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+
+        <div class="shadow_card card_box inputPadding">
+          <ion-input placeholder="{{resourceKeyValue('DeleteAccount_share_you_feedbaack')}}" type="text"  [(ngModel)]="deletionReason"  placeholder="zyx"></ion-input>
+        </div>
+
+        <ion-button expand="block" class="block_btn book_btn" type="button"  [disabled]="!deleteOption || !deletionReason" (click)="deleteAccount()">{{resourceKeyValue("DeleteAccount_title")}}
+        </ion-button>
+
+    </ion-list>
+  
+    </div>
+
+    <div style="height: 30px;"></div>
+  </div>
+</ion-content>

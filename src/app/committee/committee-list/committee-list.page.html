@@ -1,0 +1,787 @@
+<!-- <div class="ion-padding" *ngIf="this.resourceData==null || filteredcommitteeList==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%;height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+  </div>
+
+<ion-header mode="ios" class="ion-no-border"  *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="util.openMenu()">
+        <ion-icon slot="icon-only" name="reorder-three-outline" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{resourceKeyValue('CommitteeList_lbl_committee_list')}}</ion-title>
+    <ion-button  fill="clear" slot="end" (click)="addNewCommittee()">
+      <ion-icon name="add" style="color: white;"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+  <ion-searchbar mode="ios" [placeholder]="util.translate('Search Committee')" type="text" [(ngModel)]="searchText" (ionChange)="filterCommittee()"  
+  [debounce]="250">
+</ion-searchbar>
+</ion-header>
+  
+
+<ion-content class="ion-padding" *ngIf="this.resourceData!=null">
+  <div class="payment-screen">
+
+    <div  *ngIf="filteredcommitteeList!=null && filteredcommitteeList.length>0">
+    <div class="shadow_card price_div"  *ngFor="let committee of filteredcommitteeList">
+
+      <ion-label class="title_lbl">{{committee.holderName}}</ion-label>
+
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_total_committee_amount')}}</ion-label>
+        <ion-label class="bold_lbl">
+          <span> {{ committee.totalCommitteeAmount }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_total_members')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ committee.totalMember }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_total_months')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ committee.totalMonthsOfCommittee }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_start_date')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ committee.startDate  | date: 'dd-MMM-yyyy' }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_end_date')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ committee.endDate  | date: 'dd-MMM-yyyy' }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list"  *ngIf="committee.totalSlotAvailable>0">
+        <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_total_slot_available')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ committee.totalSlotAvailable}}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list"  *ngIf="committee.totalSlotAvailable>0">
+        <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_total_member_added')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ committee.totalMemberAdded}}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list">
+        <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_status')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{ committee.statusName }}</span>
+        </ion-label>
+      </div>
+
+      <div class="add_list" *ngIf="committee.totalSlotAvailable>0">
+        <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_next_date')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{committee.endDate | date: 'dd-MMM-yyyy' }}</span>
+        </ion-label>
+      </div>
+
+
+      <div class="add_list"  *ngIf="committee.totalSlotAvailable==0">
+        <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_upcoming_date')}}</ion-label>
+        <ion-label class="simp_lbl">
+          <span>{{committee.nextCommitteeDate | date: 'dd-MMM-yyyy' }}</span>
+        </ion-label>
+      </div>
+
+
+      <div class="order_detail">
+        <ion-row>
+          <ion-col size="6">
+            <div class="order-way alignLeft">  
+              <div class="add_btn_list" (click)="goToDetails(committee,'MemberList')">
+                <ion-label>{{resourceKeyValue('CommitteeList_lbl_member_list')}}</ion-label>
+              </div>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="order-status alignRight" *ngIf="committee.totalSlotAvailable==0">
+              <div class="add_btn_breakup" (click)="goToDetails(committee,'ViewCommitteeBreakup')">
+                <ion-label>{{resourceKeyValue('CommitteeList_lbl_breakup_details')}}</ion-label>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </div>
+  
+
+    </div>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+      <ion-infinite-scroll-content
+        loadingSpinner="circles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+     <div style="height: 30px;"></div>
+
+  </div>
+
+  <div *ngIf="filteredcommitteeList.length==0" class="noRecord">
+       {{resourceKeyValue('CommitteeList_lbl_no_committee_exists')}}
+    </div>
+    
+  </div>
+</ion-content> -->
+
+
+
+
+<div  *ngIf="this.resourceData==null || filteredcommitteeList==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%; height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+<ion-header [translucent]="false" mode="ios" class="ion-no-border"  *ngIf="this.resourceData!=null">
+  <div style="background-color: var(--bodyBackColor)">
+    <div class="topBgImage">
+      <div class="rowAlignCenter" style="padding: 0 16px">
+        <span
+        (click)="goBack()"
+        class="material-icons"
+        style="color: var(--whiteColor); font-size: 16px;margin-left:15px;margin-right: 15px;"
+      >
+        arrow_back
+      </span>
+        <div class="column" style="flex: 1">
+          <ion-text class="whiteColor16SemiBold"> {{resourceKeyValue('CommitteeList_lbl_committee_list')}} </ion-text>
+        </div>
+        <img
+          src="../../../assets/images/women_working.png"
+          style="width: 95px; height: 95px; object-fit: cover"
+        />
+      </div>
+    </div>
+
+    <div class="rowAlignCenter" style="padding: 20px">
+      <div class="rowAlignCenter projectAndTaskBox" style="margin-right: 10px">
+        <div
+          class="center circle40"
+          style="background-color: var(--primaryColor)"
+        >
+          <ion-icon
+            name="document-outline"
+            color="whiteColor"
+            style="font-size: 20px"
+          />
+        </div>
+        <div class="column" style="flex: 1; margin-left: 10px">
+          <ion-text
+            class="blackColor13Medium "
+            style="-webkit-line-clamp: 1"
+          >
+          Total {{filteredcommitteeList!=null || filteredCompletedcommitteeList!=null? (filteredcommitteeList.length+filteredCompletedcommitteeList.length):0}} committees
+          </ion-text>
+        </div>
+      </div>
+
+      <div class="rowAlignCenter projectAndTaskBox" style="margin-left: 10px">
+        <div
+          class="center circle40"
+          style="background-color: var(--primaryColor)"
+        >
+          <span
+            class="material-icons"
+            style="color: var(--whiteColor); font-size: 20px"
+          >
+            list_alt
+          </span>
+        </div>
+        <div class="column" style="flex: 1; margin-left: 10px">
+          <ion-text
+            class="blackColor13Medium"
+            style="-webkit-line-clamp: 1"
+          >
+          {{filteredCompletedcommitteeList!=null? filteredCompletedcommitteeList.length:0}} completed
+          </ion-text>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="rowAlignCenter"
+      style="
+        background-color: var(--extraLightGrayColor);
+        padding: 10px 20px;
+        justify-content: space-around;
+      "
+    >
+      <div *ngFor="let item of tabs;let index=index">
+        <ion-text
+          (click)="selectedTabIndex=index"
+          [class]="selectedTabIndex==index?'primaryColor13SemiBold':'grayColor13SemiBold'"
+        >
+          {{item}}
+        </ion-text>
+      </div>
+    </div>
+  </div>
+
+</ion-header>
+
+<ion-content  *ngIf="this.resourceData!=null">
+  <div
+    *ngIf="selectedTabIndex==0"
+    class="column"
+    [style.margin-top]="filteredcommitteeList.length == 0?'0':'20px'"
+    [style.height]="filteredcommitteeList.length == 0?'100%':null"
+  >
+  <ion-searchbar mode="ios" [placeholder]="util.translate('Search Committee')" type="text"  class="custom-searchbar" [(ngModel)]="searchText" (ionChange)="filterCommittee()" [debounce]="250"></ion-searchbar>
+
+  <ng-container *ngIf="filteredcommitteeList.length>0">
+    <div
+      *ngFor="let item of filteredcommitteeList;let index=index;"
+      class="card"
+      (click)="goToDetail(item,'active',index)"
+    >
+      <div
+        class="column"
+        style="
+          margin-left: 8px;
+          padding: 10px;
+          background-color: var(--whiteColor);
+        "
+      >
+        <div class="rowAlignCenter">
+          <div class="column" style="flex: 1">
+            <ion-text
+              class="blackColor16Medium ellipseText"
+              style="-webkit-line-clamp: 1"
+            >
+              {{item.holderName}}
+            </ion-text>
+            <div class="rowAlignCenter" style="margin-top: 5px">
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                attach_money
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                  {{item.totalCommitteeAmount}} Buget
+                </ion-text>
+              </div>
+              <div class="dateAndTaskDivider"></div>
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                  calendar_today
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                {{item.startDate | date: 'dd-MMM-yyyy'}}
+                </ion-text>
+              </div>
+              
+            </div>
+            <div class="rowAlignCenter" style="margin-top: 5px">
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                person
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                  {{item.totalMember}} Members
+                </ion-text>
+              </div>
+              <div class="dateAndTaskDivider"></div>
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                access_time
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                  {{item.totalMonthsOfCommittee}} Months
+                </ion-text>
+              </div>
+            </div>
+            <div class="rowAlignCenter" style="margin-top: 5px" *ngIf="item.totalSlotAvailable > 0">
+              <div class="rowAlignCenter" >
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                event_available
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                  {{item.totalSlotAvailable}} Slot Aviable
+                </ion-text>
+              </div>
+              <div class="dateAndTaskDivider"></div>
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                person_add
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                  {{item.totalMemberAdded}} Member Added
+                </ion-text>
+              </div>
+            </div>
+
+            <div class="rowAlignCenter" style="margin-top: 5px" *ngIf="item.totalSlotAvailable > 0">
+              <div class="rowAlignCenter" >
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                event
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                  {{item.nextCommitteeDate | date: 'dd-MMM-yyyy'}} Next Installment Date
+                </ion-text>
+              </div>
+         
+            </div>
+            
+          </div>
+
+          <div *ngIf="getInitials(item.Members).length !== 0" class="rowAlignCenter" [style.margin-right]="getInitials(item.Members).length > 4 ? '-25px' : -(getInitials(item.Members).length * 5)+'px'">
+  
+            <!-- Loop through initials and display them -->
+            <div *ngFor="let member of getInitials(item.Members).slice(0, 4); let index = index" class="imageOverflow memberCircleStyle center" [style.left]="-(index * 6) + 'px'">
+              <ion-text>
+                {{ member }} <!-- Directly shows initials like 'NK', 'DD', etc. -->
+              </ion-text> 
+            </div>
+          
+            <!-- If more than 4 members, show the +X count -->
+            <div *ngIf="getInitials(item.Members).length > 4" class="center memberCircleStyle" style="left: -25px">
+              <ion-text class="blackColor12SemiBold">
+                +{{ getInitials(item.Members).length - 4 }}
+              </ion-text>
+            </div>
+          
+          </div>
+          
+
+        
+          
+        </div>
+
+        <div class="rowAlignCenter" style="margin-top: 10px">
+          <ion-progress-bar
+            [value]="item.PendingPercentage-100"
+            style="height: 4px; border-radius: 8px"
+            [style.--background]="'rgba(218, 152, 135, 0.16)'"
+            [style.--progress-background]="'var(--woodenColor)'"
+          >
+          </ion-progress-bar>
+          <ion-text
+            class="blackColor12SemiBold"
+            style="font-weight: 700; margin-left: 6px"
+            [style.color]="'var(--woodenColor)'"
+          >
+            {{item.PendingPercentage-100}}%
+          </ion-text>
+        </div>
+      </div>
+    </div>
+    </ng-container>
+
+    <div *ngIf="filteredcommitteeList.length == 0"
+      class="center column"
+      style="flex: 1"
+    >
+      <img
+        src="../../../assets/images/icons/folder.png"
+        style="width: 53px; height: 53px; object-fit: contain"
+      />
+      <ion-text class="grayColor16Medium"> {{resourceKeyValue('CommitteeList_lbl_no_committee_exists')}} </ion-text>
+    </div>
+  </div>
+
+  <div
+    *ngIf="selectedTabIndex==1"
+    class="column"
+    [style.margin-top]="filteredCompletedcommitteeList.length==0?'0':'20px'"
+    [style.height]="filteredCompletedcommitteeList.length==0?'100%':null"
+  >
+  <ion-searchbar mode="ios" [placeholder]="util.translate('Search Committee')" type="text"  class="custom-searchbar_complate" [(ngModel)]="searchTextCompletedCommitee" (ionChange)="filterCompeletedCommittee()" [debounce]="250"></ion-searchbar>
+  
+  <ng-container *ngIf="filteredCompletedcommitteeList.length>0">
+    <div
+      *ngFor="let item of filteredCompletedcommitteeList;let index=index;"
+      class="card"
+      (click)="goToDetail(item,'active',index)"
+    >
+      <div
+        class="column"
+        style="
+          margin-left: 8px;
+          padding: 10px;
+          background-color: var(--whiteColor);
+        "
+      >
+        <div class="rowAlignCenter">
+          <div class="column" style="flex: 1">
+            <ion-text
+              class="blackColor16Medium ellipseText"
+              style="-webkit-line-clamp: 1"
+            >
+              {{item.holderName}}
+            </ion-text>
+            <div class="rowAlignCenter" style="margin-top: 5px">
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                attach_money
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                  {{item.totalCommitteeAmount}} Buget
+                </ion-text>
+              </div>
+              <div class="dateAndTaskDivider"></div>
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                  calendar_today
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                {{item.startDate | date: 'dd-MMM-yyyy'}}
+                </ion-text>
+              </div>
+              
+            </div>
+            <div class="rowAlignCenter" style="margin-top: 5px">
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                person
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                  {{item.totalMember}} Members
+                </ion-text>
+              </div>
+              <div class="dateAndTaskDivider"></div>
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                access_time
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                  {{item.totalMonthsOfCommittee}} Months
+                </ion-text>
+              </div>
+            </div>
+            <div class="rowAlignCenter" style="margin-top: 5px" *ngIf="item.totalSlotAvailable > 0">
+              <div class="rowAlignCenter" >
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                event_available
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                  {{item.totalSlotAvailable}} Slot Aviable
+                </ion-text>
+              </div>
+              <div class="dateAndTaskDivider"></div>
+              <div class="rowAlignCenter">
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                person_add
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                  {{item.totalMemberAdded}} Member Added
+                </ion-text>
+              </div>
+            </div>
+
+            <div class="rowAlignCenter" style="margin-top: 5px" *ngIf="item.totalSlotAvailable > 0">
+              <div class="rowAlignCenter" >
+                <span
+                  class="material-icons"
+                  style="color: var(--grayColor); font-size: 14px"
+                >
+                event
+                </span>
+                <ion-text
+                  class="grayColor12SemiBold ellipseText"
+                  style="-webkit-line-clamp: 1; flex: 1; margin-left: 5px"
+                >
+                  {{item.nextCommitteeDate | date: 'dd-MMM-yyyy'}} Next Installment Date
+                </ion-text>
+              </div>
+         
+            </div>
+            
+          </div>
+
+          <div *ngIf="getInitials(item.Members).length !== 0" class="rowAlignCenter" [style.margin-right]="getInitials(item.Members).length > 4 ? '-25px' : -(getInitials(item.Members).length * 5)+'px'">
+  
+            <!-- Loop through initials and display them -->
+            <div *ngFor="let member of getInitials(item.Members).slice(0, 4); let index = index" class="imageOverflow memberCircleStyle center" [style.left]="-(index * 6) + 'px'">
+              <ion-text>
+                {{ member }} <!-- Directly shows initials like 'NK', 'DD', etc. -->
+              </ion-text> 
+            </div>
+          
+            <!-- If more than 4 members, show the +X count -->
+            <div *ngIf="getInitials(item.Members).length > 4" class="center memberCircleStyle" style="left: -25px">
+              <ion-text class="blackColor12SemiBold">
+                +{{ getInitials(item.Members).length - 4 }}
+              </ion-text>
+            </div>
+          
+          </div>
+          
+
+        
+          
+        </div>
+
+        <div class="rowAlignCenter" style="margin-top: 10px">
+          <ion-progress-bar
+            [value]="item.PendingPercentage-100"
+            style="height: 4px; border-radius: 8px"
+            [style.--background]="'rgba(218, 152, 135, 0.16)'"
+            [style.--progress-background]="'var(--woodenColor)'"
+          >
+          </ion-progress-bar>
+          <ion-text
+            class="blackColor12SemiBold"
+            style="font-weight: 700; margin-left: 6px"
+            [style.color]="'var(--woodenColor)'"
+          >
+            {{item.PendingPercentage-100}}%
+          </ion-text>
+        </div>
+      </div>
+    </div>
+    </ng-container>
+
+    <div *ngIf="filteredCompletedcommitteeList.length == 0"
+      class="center column"
+      style="flex: 1"
+    >
+      <img
+        src="../../../assets/images/icons/folder.png"
+        style="width: 53px; height: 53px; object-fit: contain"
+      />
+      <ion-text class="grayColor16Medium"> {{resourceKeyValue('CommitteeList_lbl_no_committee_exists')}} </ion-text>
+    </div>
+  </div>
+
+  <div 
+    slot="fixed"
+    class="center bottomAddButton" 
+    (click)="addNewCommittee()"
+  >
+    <span
+      class="material-icons"
+      style="color: var(--whiteColor); font-size: 30px"
+    >
+      add
+    </span>
+  </div>
+</ion-content>
+
+
+<!-- <ion-header mode="ios" class="ion-no-border" *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="util.openMenu()">
+        <ion-icon slot="icon-only" name="reorder-three-outline" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{resourceKeyValue('CommitteeList_lbl_committee_list')}}</ion-title>
+    <ion-button fill="clear" slot="end" (click)="addNewCommittee()">
+      <ion-icon name="add" style="color: white;"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+  <ion-searchbar mode="ios" [placeholder]="util.translate('Search Committee')" type="text" [(ngModel)]="searchText" (ionChange)="filterCommittee()" [debounce]="250"></ion-searchbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="this.resourceData!=null">
+  <div class="payment-screen">
+    <div *ngIf="filteredcommitteeList!=null && filteredcommitteeList.length>0">
+      <ion-card *ngFor="let committee of filteredcommitteeList" class="mrgBtn25">
+        <ion-card-header>
+          <ion-card-title>{{committee.holderName}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="add_list">
+            <ion-icon name="cash-outline" slot="start"></ion-icon>
+            <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_total_committee_amount')}}</ion-label>
+            <ion-label class="bold_lbl"><span>{{committee.totalCommitteeAmount}}</span></ion-label>
+          </div>
+
+          <div class="add_list">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_total_members')}}</ion-label>
+            <ion-label class="bold_lbl"><span>{{committee.totalMember}}</span></ion-label>
+          </div>
+
+          <div class="add_list">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_total_months')}}</ion-label>
+            <ion-label class="bold_lbl"><span>{{committee.totalMonthsOfCommittee}}</span></ion-label>
+          </div>
+
+          <div class="add_list">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_start_date')}}</ion-label>
+            <ion-label class="bold_lbl"><span>{{committee.startDate | date: 'dd-MMM-yyyy'}}</span></ion-label>
+          </div>
+
+          <div class="add_list">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_end_date')}}</ion-label>
+            <ion-label class="bold_lbl"><span>{{committee.endDate | date: 'dd-MMM-yyyy'}}</span></ion-label>
+          </div>
+
+          <div class="add_list" *ngIf="committee.totalSlotAvailable > 0">
+            <ion-icon name="people-outline" slot="start"></ion-icon>
+            <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_total_slot_available')}}</ion-label>
+            <ion-label class="bold_lbl"><span>{{committee.totalSlotAvailable}}</span></ion-label>
+          </div>
+
+          <div class="add_list" *ngIf="committee.totalSlotAvailable > 0">
+            <ion-icon name="person-add-outline" slot="start"></ion-icon>
+            <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_total_member_added')}}</ion-label>
+            <ion-label class="bold_lbl"><span>{{committee.totalMemberAdded}}</span></ion-label>
+          </div>
+
+          <div class="add_list">
+            <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+            <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_status')}}</ion-label>
+            <ion-label class="bold_lbl"><span>{{committee.statusName}}</span></ion-label>
+          </div>
+
+          <div class="add_list" *ngIf="committee.totalSlotAvailable > 0">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_next_date')}}</ion-label>
+            <ion-label class="bold_lbl"><span>{{committee.endDate | date: 'dd-MMM-yyyy'}}</span></ion-label>
+          </div>
+
+          <div class="add_list" *ngIf="committee.totalSlotAvailable == 0">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <ion-label class="simp_lbl">{{resourceKeyValue('CommitteeList_lbl_upcoming_date')}}</ion-label>
+            <ion-label class="bold_lbl"><span>{{committee.nextCommitteeDate | date: 'dd-MMM-yyyy'}}</span></ion-label>
+          </div>
+
+          <div class="order_detail">
+            <ion-row>
+              <ion-col size="6">
+                <div class="order-way alignLeft">  
+                  <div class="add_btn_list" (click)="goToDetails(committee,'MemberList')">
+                    <ion-label>{{resourceKeyValue('CommitteeList_lbl_member_list')}}</ion-label>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size="6">
+                <div class="order-status alignRight">
+                  <div class="add_btn_breakup" (click)="goToDetails(committee,'ViewCommitteeBreakup')">
+                    <ion-label>{{resourceKeyValue('CommitteeList_lbl_breakup_details')}}</ion-label>
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+      <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading more data..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+    <div style="height: 30px;"></div>
+  </div>
+
+  <div *ngIf="filteredcommitteeList.length == 0" class="noRecord">
+    {{resourceKeyValue('CommitteeList_lbl_no_committee_exists')}}
+  </div>
+</ion-content> -->
+

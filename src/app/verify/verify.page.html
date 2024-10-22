@@ -1,0 +1,133 @@
+<ion-content style="--background: var(--primaryColor)" scrollY="false">
+  <div class="column" style="height: 100%">
+    <div class="column" style="height: 250px">
+      <div class="authBackImage center"></div>
+      <div
+        class="column center"
+        style="position: absolute; height: 280px; margin: 0 50px"
+      >
+        <ion-text class="whiteColor22SemiBold" style="text-align: center">
+          OTP verification
+        </ion-text>
+        <ion-text
+          class="whiteColor15Medium"
+          style="text-align: center; margin-top: 10px; opacity: 0.8"
+        >
+          We will send one time password on this mobile number {{mobileNumber}}
+        </ion-text>
+      </div>
+    </div>
+
+    <div class="infoContentWrapper">
+      <ion-content
+        style="--background: var(--whiteColor)"
+        [style.--keyboard-offset]="platform.is('ios')?'0px': keyboardShow?keyboardHeight+'px': '0px'"
+      >
+        <div class="center" style="margin: 40px">
+          <img
+            src="../../../../assets/images/auth_girl.png"
+            style="width: 120px; height: 120px; object-fit: contain"
+          />
+        </div>
+
+        <ng-otp-input (onInputChange)="onChange($event)" [config]="config">
+        </ng-otp-input>
+
+        <ion-text class="primaryColor18Medium center" style="margin: 30px 0">
+          {{displayTime}}
+        </ion-text>
+
+        <ion-button (click)="onSubmit()" [disabled]="isLogin"   class="loginButton center commonButton"
+        style="margin-bottom: 10px;padding: 0px !important;" >
+        <ion-text class="whiteColor18SemiBold"> Verifiy</ion-text>
+        <ion-spinner name="circles" *ngIf="isLogin"></ion-spinner>
+        </ion-button>
+
+
+        <ion-text class="center grayColor18Medium" style="text-align: center">
+          Didn’t receive code?&nbsp;
+          <ion-text (click)="resendPress()" class="primaryColor18Medium">
+            Resend
+          </ion-text>
+        </ion-text>
+      </ion-content>
+    </div>
+  </div>
+
+  <div (click)="back()" 
+    slot="fixed"
+    style="top: 0; height: 250px; align-items: flex-end; display: flex"
+  >
+    <span  class="material-icons backArrow">
+      arrow_back
+    </span>
+  </div>
+
+  <ion-modal
+    mode="md"
+    [isOpen]="showLoadingDialog"
+    style="--height: auto; --width: 80%; --border-radius: 10px"
+    (didDismiss)="showLoadingDialog = false"
+    backdropDismiss="false"
+  >
+    <ng-template>
+      <div
+        class="column center"
+        style="background-color: var(--whiteColor); padding: 25px"
+      >
+        <ion-spinner
+          name="lines-sharp"
+          color="primaryColor"
+          style="transform: scale(1.2)"
+        ></ion-spinner>
+        <ion-text class="primaryColor20Medium" style="margin-top: 10px">
+          Please wait
+        </ion-text>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>
+
+<!-- <div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%;height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+  </div>
+
+  
+<ion-header *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+    <ion-title>{{resourceKeyValue("MobileNumberVerification_lbl_verification")}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close('false','false')">
+        <ion-icon slot="icon-only" name="close" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="this.resourceData!=null">
+  <p> {{resourceKeyValue("MobileNumberVerification_lbl_we_have_sent_verification_code_on")}} <br> <b> {{mobileNumber}} </b></p>
+  <div class="otp_content">
+    <ng-otp-input (onInputChange)="onOtpChange($event)"
+      [config]="{length:6,inputStyles:{'width': '40px','height': '40px','border':'1px solid lightgray','background-color':'white'}}">
+    </ng-otp-input>
+  </div>
+
+</ion-content>
+<ion-footer *ngIf="this.resourceData!=null">
+  <ion-toolbar>
+
+    <ion-button (click)="onSubmit()" [disabled]="isLogin">
+      <span *ngIf="!isLogin"> {{resourceKeyValue("MobileNumberVerification_btn_verifiy_otp")}}</span>
+      <ion-spinner name="circles" *ngIf="isLogin"></ion-spinner>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer> -->

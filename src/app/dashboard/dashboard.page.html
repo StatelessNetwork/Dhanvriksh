@@ -1,0 +1,169 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button slot="start">
+      <ion-button (click)="util.openMenu()">
+        <ion-icon slot="icon-only" name="reorder-three-outline" color="light"></ion-icon>
+      </ion-button>
+    </ion-button>
+    <!-- Title aligned to the left side -->
+    <ion-title>Dashboard</ion-title>
+
+    <!-- Currency Switcher with Icon -->
+    <ion-buttons slot="end">
+      <!-- Language Switcher Dropdown -->
+      <ion-select
+        [(ngModel)]="selectedLanguage"
+        interface="popover"
+        (ionChange)="toggleLanguage($event)"
+        placeholder="Select Language"
+        cancelText="Cancel"
+        okText="Select"
+        class="language-select"
+      >
+        <ion-select-option value="en">English</ion-select-option>
+        <ion-select-option value="hi">हिन्दी</ion-select-option>
+      </ion-select>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+  <!-- Welcome Message -->
+  <div class="welcome-section">
+    <div class="greeting-icon">
+      <ion-icon name="sunny-outline" *ngIf="currentHour < 12"></ion-icon>
+      <ion-icon name="cloudy-night-outline" *ngIf="currentHour >= 12 && currentHour < 18"></ion-icon>
+      <ion-icon name="moon-outline" *ngIf="currentHour >= 18"></ion-icon>
+    </div>
+    <h2>{{ greetingMessage }}, {{ userName }}!</h2>
+    <p>Your financial overview for {{ currentDate | date }}</p>
+  </div>
+
+  <!-- Financial Summary Cards -->
+  <ion-grid *ngIf="notificationCount">
+    <ion-row>
+      <!-- Total Committees Created -->
+      <ion-col size="6">
+        <ion-card class="summary-card" (click)="redirectToPage('committee')">
+          <ion-card-header>
+            <ion-card-title>Total Committees Created</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <h2>{{ notificationCount.TotalCommitteeOwnerCount }}</h2>
+            <p>Total Amount: {{ notificationCount.TotalCommitteeOwnerAmount | currency }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <!-- Total Loans Given -->
+      <ion-col size="6">
+        <ion-card class="summary-card" (click)="redirectToPage('loan')">
+          <ion-card-header>
+            <ion-card-title>Total Loans Given</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <h2>{{ notificationCount.TotalLoanGiverCount }}</h2>
+            <p>Total Amount: {{ notificationCount.TotalLoanGiverAmount | currency }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <!-- Total Committees Joined -->
+      <ion-col size="6">
+        <ion-card class="summary-card" (click)="redirectToPage('committee')">
+          <ion-card-header>
+            <ion-card-title>Total Committees Joined</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <h2>{{ notificationCount.TotalCommitteeParticpateCount }}</h2>
+            <p>Total Contribution: {{ notificationCount.TotalCommitteeParticpateAmount | currency }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <!-- Total Loans Taken -->
+      <ion-col size="6">
+        <ion-card class="summary-card" (click)="redirectToPage('loan')">
+          <ion-card-header>
+            <ion-card-title>Total Loans Taken</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <h2>{{ notificationCount.TotalLoanTakenCount }}</h2>
+            <p>Total Borrowed: {{ notificationCount.TotalLoanTakenAmount | currency }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Chart: Net Income vs. Expense -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Net Income vs Expense</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <canvas id="incomeExpenseChart"></canvas> <!-- Chart.js used for charts -->
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Notifications Section -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Recent Notifications</ion-card-title>
+      <ion-button *ngIf="hasMoreNotifications" fill="outline" size="small" (click)="viewMore('notifications')" class="view-more-button">View More</ion-button>
+    </ion-card-header>
+    <ion-list *ngIf="notificationrecentData && notificationrecentData.length > 0; else noDataTemplate">
+      <ion-item *ngFor="let notification of notificationrecentData" (click)="redirectToRecentNotificationPage(notification.Type, notification.EncyptId)">
+        <ion-label>
+          <h2>{{ notification.Title }}</h2>
+          <p>{{ notification.Message }}</p>
+        </ion-label>
+        <ion-badge>{{ notification.DueDate | date }}</ion-badge>
+      </ion-item>
+    </ion-list>
+    
+    <!-- Template to show when there's no data -->
+    <ng-template #noDataTemplate>
+      <ion-item>
+        <ion-label>
+          <h2>No notifications available</h2>
+        </ion-label>
+      </ion-item>
+    </ng-template>
+  </ion-card>
+  
+
+  <!-- Recent Transactions -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Recent Transactions</ion-card-title>
+      <ion-button *ngIf="hasMoreTransaction" fill="outline" size="small" (click)="viewMore('transaction')" class="view-more-button">View More</ion-button>
+    </ion-card-header>
+    <ion-list *ngIf="transactionrecentData && transactionrecentData.length > 0; else noTranactionDataTemplate">
+      <ion-item *ngFor="let transData of transactionrecentData" (click)="redirectToRecentNotificationPage(transData.Type, transData.EncyptId)">
+        <ion-label>
+          <h2>{{ transData.Title }}</h2>
+          <p>{{ transData.Message }}</p>
+        </ion-label>
+        <ion-badge>{{ transData.DueDate | date }}</ion-badge>
+      </ion-item>
+    </ion-list>
+    
+    <!-- Template to show when there's no data -->
+    <ng-template #noTranactionDataTemplate>
+      <ion-item>
+        <ion-label>
+          <h2>No recent transactions available</h2>
+        </ion-label>
+      </ion-item>
+    </ng-template>
+  </ion-card>
+</ion-content>
+
+
+
+

@@ -1,0 +1,113 @@
+ion-input {
+  --placeholder-color: var(--grayColor);
+  --placeholder-opacity: 1;
+  flex: 1;
+  margin-left: 10px;
+}
+
+.searchFieldWrapper {
+  background-color: var(--whiteColor);
+  border-radius: 10px;
+  padding: 12px 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.memberCard {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  padding: 10px;
+  margin: 0 20px;
+  margin-bottom: 20px;
+  background-color: var(--whiteColor);
+  border-radius: 10px;
+}
+
+
+// ion-content {
+//     --background: #f3f4f6;
+  
+//     .member-list {
+//       display: flex;
+//       flex-direction: column;
+//       gap: 10px;
+  
+//       .member-card {
+//         ion-card {
+//           --background: #fff;
+//           --border-radius: 10px;
+//           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+//           margin-bottom: 15px;
+  
+//           ion-card-header {
+//             background: linear-gradient(135deg, #97144d, #d9534f);
+//             color: white;
+//             border-top-left-radius: 10px;
+//             border-top-right-radius: 10px;
+//             padding: 10px;
+  
+//             ion-card-title {
+//               font-size: 18px;
+//               font-weight: bold;
+//               color: white;
+//             }
+//           }
+  
+//           ion-card-content {
+//             padding: 10px;
+  
+//             ion-item {
+//               --background: transparent;
+//               --min-height: 40px;
+//               color: #444;
+  
+//               ion-icon {
+//                 color: linear-gradient(135deg, #97144d, #d9534f);
+//               }
+  
+//               ion-label {
+//                 margin-left: 10px;
+//                 color: #444;
+//               }
+//             }
+//           }
+//         }
+//       }
+  
+//       .no-record {
+//         text-align: center;
+//         color: #888;
+//         margin-top: 20px;
+//         font-size: 16px;
+//       }
+//     }
+//   }
+  
+//   ion-header {
+//     --background: linear-gradient(135deg, #97144d, #d9534f);
+  
+//     ion-toolbar {
+//       color: white;
+  
+//       ion-title {
+//         font-weight: bold;
+//       }
+  
+//       ion-button {
+//         color: white;
+//       }
+  
+//       ion-icon {
+//         color: white;
+//       }
+//     }
+  
+//     ion-searchbar {
+//       --background: white;
+//       --color: linear-gradient(135deg, #97144d, #d9534f);
+//       --placeholder-color: #888;
+//       --icon-color: #888;
+//       --padding-start: 10px;
+//       --padding-end: 10px;
+//       margin-top: 10px;
+//     }
+//   }
+  

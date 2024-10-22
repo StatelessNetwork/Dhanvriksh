@@ -1,0 +1,433 @@
+<div class="ion-padding" *ngIf="this.resourceData==null">
+  <ion-card>
+    <ion-skeleton-text animated style="width: 100%;height: 150px;"></ion-skeleton-text>
+    <ion-item lines="none">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-card-content>
+      <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+  </div>
+
+
+<ion-content style="--background: var(--primaryColor)" scrollY="false" *ngIf="this.resourceData!=null">
+  <div class="column" style="height: 100%">
+    <div class="column" style="height: 250px">
+      <div class="authBackImage center"></div>
+      <div
+        class="column center"
+        style="position: absolute; height: 280px; margin: 0 50px"
+      >
+        <ion-text class="whiteColor22SemiBold" style="text-align: center">
+          {{resourceKeyValue("AddUserDetails_lbl_user_details")}}
+        </ion-text>
+        <ion-text
+          class="whiteColor15Medium"
+          style="text-align: center; margin-top: 10px; opacity: 0.8"
+        >
+          Welcome please create your account using email address
+        </ion-text>
+      </div>
+    </div>
+
+    <div class="infoContentWrapper">
+      <ion-content
+        style="--background: var(--whiteColor)"
+        [style.--keyboard-offset]="platform.is('ios')?'0px': keyboardShow?keyboardHeight+'px': '0px'"
+      >
+      <form [formGroup]="userForm" novalidate>
+        <div class="margin20">
+          <ion-text
+            class="blackColor16Medium"
+            style="margin-bottom: 10px; display: flex"
+          >
+          {{resourceKeyValue("AddUserDetails_lbl_first_name")}} <span class="redStick">*</span>
+          </ion-text>
+          <div class="fieldWrapper">
+            <ion-input 
+            formControlName="firstName"
+              mode="ios"
+              name="firstName" 
+              placeholder="Enter user name"
+              style="height: 20px; min-height: 20px"
+              class="blackColor15Medium" 
+              autocapitalize="off" 
+              spellcheck="false"
+            />
+          </div>
+          <ion-text color="danger" *ngIf="userForm.get('firstName').errors && userForm.get('firstName').touched">
+            <p  *ngIf="userForm.get('firstName').errors['required']" class="marTop5">
+              {{resourceKeyValue("AddUserDetails_error_msg_req_first_name")}}
+            </p>
+          </ion-text>
+        </div>
+
+        <div style="margin: 20px 20px">
+          <ion-text
+            class="blackColor16Medium"
+            style="margin-bottom: 10px; display: flex"
+          >
+          {{resourceKeyValue("AddUserDetails_lbl_last_name")}} <span class="redStick">*</span>
+          </ion-text>
+          <div class="fieldWrapper">
+            <ion-input 
+            formControlName="lastName"
+              mode="ios"
+              name="lastName" 
+              placeholder="Enter last name"
+              style="height: 20px; min-height: 20px"
+              class="blackColor15Medium" 
+              autocapitalize="off" 
+              spellcheck="false"
+            />
+          </div>
+          <ion-text color="danger" *ngIf="userForm.get('lastName').errors && userForm.get('lastName').touched">
+            <p  *ngIf="userForm.get('lastName').errors['required']"  class="marTop5">
+              {{resourceKeyValue("AddUserDetails_error_msg_req_last_name")}}
+            </p>
+          </ion-text>
+        </div>
+
+        <div style="margin: 20px 20px">
+          <ion-text
+            class="blackColor16Medium"
+            style="margin-bottom: 10px; display: flex"
+          >
+          {{resourceKeyValue("AddUserDetails_lbl_email_address")}} <span class="redStick">*</span>
+          </ion-text>
+          <div class="fieldWrapper">
+            <ion-input 
+            formControlName="emailAddress" type="email" spellcheck="false"
+              mode="ios"
+              name="emailAddress"
+              placeholder="Enter Email Address"
+              style="height: 20px; min-height: 20px"
+              class="blackColor15Medium" 
+              autocapitalize="off"
+            />
+          </div>
+          <ion-text color="danger" *ngIf="userForm.get('emailAddress').errors && userForm.get('emailAddress').touched">
+            <p  *ngIf="userForm.get('emailAddress').errors['required']" class="marTop5">
+              {{resourceKeyValue("AddUserDetails_error_msg_req_email_address")}}
+            </p>
+            <p  *ngIf="userForm.get('emailAddress').errors['pattern']" class="marTop5">
+              {{resourceKeyValue("AddUserDetails_error_msg_pattern_email_address")}}
+            </p>
+          </ion-text>
+        </div>
+
+        <div style="margin: 20px 20px">
+          <ion-text
+            class="blackColor16Medium"
+            style="margin-bottom: 10px; display: flex"
+          >
+          {{resourceKeyValue("AddUserDetails_lbl_address")}} <span class="redStick">*</span>
+          </ion-text>
+          <div class="fieldWrapper">
+            <ion-input 
+            formControlName="address" type="text" spellcheck="false"
+              mode="ios"
+              name="address"
+              placeholder="Enter Address"
+              style="height: 20px; min-height: 20px"
+              class="blackColor15Medium" 
+              autocapitalize="off"
+            />
+          </div>
+          <ion-text color="danger" *ngIf="userForm.get('address').errors && userForm.get('address').touched">
+            <p  *ngIf="userForm.get('address').errors['required']"  class="marTop5">
+              {{resourceKeyValue("AddUserDetails_error_msg_req_address")}}
+            </p>
+          </ion-text>
+        </div>
+
+        <!-- <div style="margin: 20px 20px">
+          <ion-text
+            class="blackColor16Medium"
+            style="margin-bottom: 10px; display: flex"
+          >
+          {{resourceKeyValue("AddUserDetails_lbl_country")}} <span class="redStick">*</span>
+          </ion-text>
+          <div class="fieldWrapper">
+            <ion-select multiple="false" interface="popover" mode="ios" formControlName="country"
+            [placeholder]="resourceKeyValue('AddUserDetails_select_country')" id="country">
+            <ion-select-option [value]="country.EncyptID" *ngFor="let country of countryList">{{country.Name}} </ion-select-option>
+          </ion-select>
+          </div>
+          <ion-text color="danger" *ngIf="userForm.get('country').errors && userForm.get('country').touched">
+            <p  *ngIf="userForm.get('country').errors['required']"  class="marTop5">
+              {{resourceKeyValue("AddUserDetails_error_msg_req_country")}}
+            </p>
+          </ion-text>
+        </div> -->
+        <div style="margin: 20px 20px">
+          <ion-text class="blackColor16Medium" style="margin-bottom: 10px; display: flex">
+            Select country
+          </ion-text>
+        
+          <!-- Trigger for popover with formControlName="country" -->
+          <div id="countryOptions" class="fieldWrapper rowAlignCenter">
+            <ion-text
+              [class]="userForm.get('country')?.value ? 'blackColor15Medium' : 'grayColor15Medium'"
+              class="ellipseText"
+              style="flex: 1; -webkit-line-clamp: 1; margin-right: 10px"
+            >
+              {{ selectedCountryName ? selectedCountryName : 'Select country' }}
+            </ion-text>
+            <ion-icon name="chevron-down" color="grayColor" style="font-size: 20px"></ion-icon>
+          </div>
+        
+          <!-- Popover for country selection -->
+          <ion-popover
+            #countryOptionsPopover
+            mode="md"
+            trigger="countryOptions"
+            side="right"
+            alignment="end"
+          >
+            <ng-template>
+              <ion-content class="ion-no-padding" style="max-height: 400px;"> <!-- Set max-height for scrollable area -->
+                <div class="column" style="padding: 10px; overflow-y: auto; max-height: 100%;"> <!-- Ensure content is scrollable -->
+                  <!-- Loop through countriesList and display Name -->
+                  <ion-text
+                    *ngFor="let country of countryList"
+                    class="blackColor16Medium"
+                    style="margin: 10px 0"
+                    (click)="onSelectCountry(country.EncyptID); countryOptionsPopover.dismiss();"
+                  >
+                    {{ country.Name }}
+                  </ion-text>
+                </div>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
+        
+          <!-- Validation Error Message -->
+          <ion-text color="danger" *ngIf="userForm.get('country')?.touched && userForm.get('country')?.invalid">
+            <p class="marTop5">Country selection is required</p>
+          </ion-text>
+        </div>
+        
+
+        <div style="margin: 20px 20px">
+          <ion-text
+          class="blackColor16Medium"
+          style="margin-bottom: 10px; display: flex"
+        >
+        Gender
+        </ion-text>
+        <div class="rowAlignCenter card" style="padding: 10px 15px; cursor: pointer">
+          <!-- Male Radio Button -->
+          <div class="rowAlignCenter" (click)="selectGender('male')" style="margin-right: 20px;">
+            <!-- Radio button style for Male -->
+            <div
+              class="center"
+              style="width: 24px; height: 24px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid var(--primaryColor);"
+              [style.background-color]="selectedGender === 'male' ? 'var(--primaryColor)' : 'var(--whiteColor)'"
+            >
+              <!-- Inner circle for selected Male radio button -->
+              <div
+                *ngIf="selectedGender === 'male'"
+                style="width: 12px; height: 12px; border-radius: 50%; background-color: var(--whiteColor);"
+              ></div>
+            </div>
+            <!-- Label for Male -->
+            <ion-text class="blackColor14Medium" style="margin-left: 8px;">
+              {{resourceKeyValue("AddUserDetails_lbl_gender_male")}}
+            </ion-text>
+          </div>
+        
+          <!-- Female Radio Button -->
+          <div class="rowAlignCenter" (click)="selectGender('female')">
+            <!-- Radio button style for Female -->
+            <div
+              class="center"
+              style="width: 24px; height: 24px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid var(--primaryColor);"
+              [style.background-color]="selectedGender === 'female' ? 'var(--primaryColor)' : 'var(--whiteColor)'"
+            >
+              <!-- Inner circle for selected Female radio button -->
+              <div
+                *ngIf="selectedGender === 'female'"
+                style="width: 12px; height: 12px; border-radius: 50%; background-color: var(--whiteColor);"
+              ></div>
+            </div>
+            <!-- Label for Female -->
+            <ion-text class="blackColor14Medium" style="margin-left: 8px;">
+              {{resourceKeyValue("AddUserDetails_lbl_gender_female")}}
+            </ion-text>
+          </div>
+        </div>
+      </div>
+        
+
+      <div style="margin: 20px 20px">
+        <div
+        class="rowAlignCenter card"
+        (click)="toggleTerms()" 
+        style="padding: 10px 15px; cursor: pointer"
+      >
+        <!-- Checkbox style box -->
+        <div
+          class="center"
+          style="width: 24px; height: 24px; border-radius: 5px; display: flex; justify-content: center; align-items: center;"
+          [style.background-color]="isTermCondition ? 'var(--primaryColor)' : 'var(--whiteColor)'"
+          [class]="isTermCondition ? '' : 'commonShadow'"
+        >
+          <!-- Check icon only visible when termsAccepted is true -->
+          <span
+            *ngIf="isTermCondition"
+            class="material-icons"
+            style="color: var(--whiteColor); font-size: 16px"
+          >
+            check
+          </span>
+        </div>
+        <!-- Divider (if needed) -->
+        <div class="subTaskDivider"></div>
+      
+        <!-- Terms & Conditions text -->
+        <div class="column" style="flex: 1; margin-left: 10px;">
+          <ion-text class="blackColor14Medium">
+            {{resourceKeyValue("AddUserDetails_accept_term_condition")}}
+          </ion-text>
+        </div>
+      </div>
+      </div>
+
+
+        <ion-button [disabled]="!isTermCondition || isLogin || !userForm.valid" (click)="submitForm()"   class="loginButton center commonButton"
+        style="margin-top: 50px; padding: 0px !important;" >
+        <ion-text class="whiteColor18SemiBold"> {{resourceKeyValue("AddUserDetails_btn_submit")}} </ion-text>
+        <ion-spinner name="circles" *ngIf="isLogin"></ion-spinner>
+        </ion-button>
+      </form>
+      </ion-content>
+    </div>
+  </div>
+
+  <div (click)="back()"
+    slot="fixed"
+    style="top: 0; height: 250px; align-items: flex-end; display: flex"
+  >
+    <span  class="material-icons backArrow">
+      arrow_back
+    </span>
+  </div>
+</ion-content>
+
+
+
+
+
+
+  
+<!-- <ion-content class="ion-padding" *ngIf="this.resourceData!=null">
+  <div class="register-screen">
+    <div class="logo_div">
+      <img src="../../assets/imgs/dhanvrikshIcon.png" onError="this.src='assets/delivery.png'" alt="">
+      <ion-label> {{util.appName}} </ion-label>
+    </div>
+    <div class="white_box">
+      <form [formGroup]="userForm" novalidate>
+        <ion-label class="welcome_lbl"> 
+          {{resourceKeyValue("AddUserDetails_lbl_user_details")}}</ion-label>
+        <ion-item>
+          <ion-label position="floating">{{resourceKeyValue("AddUserDetails_lbl_first_name")}} <span class="redStick">*</span></ion-label>
+          <ion-input formControlName="firstName" type="text" name="firstName" 
+            spellcheck="false" autocapitalize="off"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="userForm.get('firstName').errors && userForm.get('firstName').touched">
+          <p  *ngIf="userForm.get('firstName').errors['required']">
+            {{resourceKeyValue("AddUserDetails_error_msg_req_first_name")}}
+          </p>
+        </ion-text>
+
+        <ion-item>
+          <ion-label position="floating">{{resourceKeyValue("AddUserDetails_lbl_last_name")}} <span class="redStick">*</span></ion-label>
+          <ion-input formControlName="lastName" type="text" name="lastName" spellcheck="false"
+            autocapitalize="off"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="userForm.get('lastName').errors && userForm.get('lastName').touched">
+          <p  *ngIf="userForm.get('lastName').errors['required']">
+            {{resourceKeyValue("AddUserDetails_error_msg_req_last_name")}}
+          </p>
+        </ion-text>
+
+        <ion-item>
+          <ion-label position="floating">{{resourceKeyValue("AddUserDetails_lbl_email_address")}} <span class="redStick">*</span></ion-label>
+          <ion-input formControlName="emailAddress" type="email" name="emailAddress" spellcheck="false"
+            autocapitalize="off"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="userForm.get('emailAddress').errors && userForm.get('emailAddress').touched">
+          <p  *ngIf="userForm.get('emailAddress').errors['required']">
+            {{resourceKeyValue("AddUserDetails_error_msg_req_email_address")}}
+          </p>
+          <p  *ngIf="userForm.get('emailAddress').errors['pattern']">
+            {{resourceKeyValue("AddUserDetails_error_msg_pattern_email_address")}}
+          </p>
+        </ion-text>
+
+        <ion-item>
+          <ion-label position="floating">{{resourceKeyValue("AddUserDetails_lbl_address")}} <span class="redStick">*</span></ion-label>
+          <ion-input formControlName="address" type="text" name="address" spellcheck="false"
+            autocapitalize="off"></ion-input>
+        </ion-item>
+        <ion-text color="danger" *ngIf="userForm.get('address').errors && userForm.get('address').touched">
+          <p  *ngIf="userForm.get('address').errors['required']">
+            {{resourceKeyValue("AddUserDetails_error_msg_req_address")}}
+          </p>
+        </ion-text>
+
+        <ion-item>
+          <ion-label position="floating">{{resourceKeyValue("AddUserDetails_lbl_country")}} <span class="redStick">*</span></ion-label>
+          <ion-select multiple="false" interface="popover" mode="ios" formControlName="country"
+          [placeholder]="resourceKeyValue('AddUserDetails_select_country')" id="country">
+          <ion-select-option [value]="country.EncyptID" *ngFor="let country of countryList">{{country.Name}} </ion-select-option>
+        </ion-select>
+      </ion-item>
+        <ion-text color="danger" *ngIf="userForm.get('country').errors && userForm.get('country').touched">
+          <p  *ngIf="userForm.get('country').errors['required']">
+            {{resourceKeyValue("AddUserDetails_error_msg_req_country")}}
+          </p>
+        </ion-text>
+
+
+        <ion-list>
+          <ion-radio-group  formControlName="gender">
+            <ion-item>
+              <ion-label>{{resourceKeyValue("AddUserDetails_lbl_gender_male")}} </ion-label>
+              <ion-radio value="male"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>{{resourceKeyValue("AddUserDetails_lbl_gender_female")}} </ion-label>
+              <ion-radio value="female"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+      </ion-list>
+        <ion-text color="danger" *ngIf="userForm.get('gender').errors && userForm.get('gender').touched">
+          <p  *ngIf="userForm.get('gender').errors['required']">
+            {{resourceKeyValue("AddUserDetails_error_msg_req_gender")}}
+          </p>
+        </ion-text>
+
+
+        <ion-list>
+    <ion-item>
+      <ion-label>{{resourceKeyValue("AddUserDetails_accept_term_condition")}} </ion-label>
+      <ion-checkbox slot="start" [checked]="isTermCondition" (ionChange)="onAccepTermCondition()"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+        
+        <div style="text-align: center;margin: 30px 0px;">
+          <ion-button  class="block_btn" [disabled]="isLogin || !userForm.valid" (click)="submitForm()">
+            <span *ngIf="!isLogin"> {{resourceKeyValue("AddUserDetails_btn_submit")}}</span>
+            <ion-spinner name="circles" *ngIf="isLogin"></ion-spinner>
+          </ion-button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</ion-content> -->

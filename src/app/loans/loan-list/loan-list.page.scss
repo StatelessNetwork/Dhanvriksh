@@ -1,0 +1,100 @@
+.loan-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .loan-card-subtitle {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ff5722; /* Highlight color for the price */
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .price-icon {
+    font-size: 1.5em;
+    margin-right: 5px;
+    color: #ff5722; /* Same color as the price for consistency */
+  }
+  
+  .loan-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Space between each item */
+  }
+  
+  .loan-info-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0; /* Separator line between items */
+  }
+  
+  .loan-info-item:last-child {
+    border-bottom: none; /* Remove the last separator */
+  }
+  
+  .info-icon {
+    font-size: 1.5em;
+    color: #3880ff; /* Primary color for icons */
+    margin-right: 10px; /* Space between icon and text */
+  }
+  
+  .loan-info-item p {
+    margin: 0;
+    font-size: 1.1em;
+  }
+  
+  ion-badge {
+    margin-left: 10px;
+    font-size: 0.9em;
+    padding: 4px 8px;
+    border-radius: 5px;
+  }
+  
+  .no-loans {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #999;
+  }
+  
+  .no-loans p {
+    margin-top: 10px;
+    font-size: 1.2em;
+  }
+  
+  .loan-card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .loan-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .loan-card-title {
+    font-size: 1.4em;
+    font-weight: bold;
+  }
+  
+  
+  .loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .loader-container p {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: #666;
+  }
+  

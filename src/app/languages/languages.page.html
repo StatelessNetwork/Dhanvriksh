@@ -1,0 +1,106 @@
+<ion-content style="--background: var(--primaryColor)" scrollY="false">
+  <div class="column" style="height: 100%">
+    <div class="column" style="height: 160px">
+      <div class="authBackImage center"></div>
+
+      <div
+        class="column center"
+        style="position: absolute; height: 160px; margin: 0 0px; width: 100%;"
+      >
+        <ion-text class="whiteColor22SemiBold" style="text-align: center">
+          App Lanauage
+        </ion-text>
+
+      </div>
+    </div>
+
+    <div class="infoContentWrapper">
+      <ion-content
+        style="--background: var(--whiteColor)"
+        [style.--keyboard-offset]="platform.is('ios')?'0px': keyboardShow?keyboardHeight+'px': '0px'"
+      >
+      <div class="center" style="margin: 40px">
+        <img
+          src="../../../../assets/images/auth_girl.png"
+          style="width: 120px; height: 120px; object-fit: contain"
+        />
+      </div>
+        <div class="margin20">
+          <ion-list  class="language-list">
+            <ion-radio-group [(ngModel)]="selected">
+              <ion-item *ngFor="let item of list" class="list" lines="none">
+                <ion-thumbnail slot="start" class="thums">
+                </ion-thumbnail>
+                <ion-label class="title">{{item.name}}</ion-label>
+                <ion-radio [value]="item.id" slot="end" mode="md"></ion-radio>
+              </ion-item>
+        
+            </ion-radio-group>
+        
+          </ion-list>
+        </div>
+
+        
+      
+
+        <ion-button (click)="changed()"  class="loginButton center commonButton"
+        style="margin-top: 50px; padding: 0px !important;" >
+        <ion-text class="whiteColor18SemiBold"> Apply </ion-text>
+        <!-- <ion-spinner name="circles" *ngIf="isLogin"></ion-spinner> -->
+        </ion-button>
+
+      </ion-content>
+    </div>
+  </div>
+
+  <div  (click)="back()" 
+  slot="fixed"
+  style="top: 0px;height: 50px;align-items: flex-end;display: flex;margin-left: 15px;color: #fff;">
+  <span  class="material-icons backArrow">
+    arrow_back
+  </span>
+</div>
+</ion-content>
+
+
+<!-- 
+
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title> {{util.translate('Languages')}} </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="util.openMenu()">
+        <img class="menuIcon" src="assets/sidemenu/menu_light.png" alt="">
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <p *ngIf="!dummy?.length && !list?.length" class="ion-text-center"> {{util.translate('No Languages Found')}} </p>
+  <ion-item *ngFor="let item of dummy">
+    <ion-thumbnail slot="start">
+      <ion-skeleton-text animated style="width: 100%;height: 100px;"></ion-skeleton-text>
+    </ion-thumbnail>
+    <ion-label>
+      <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+    </ion-label>
+  </ion-item>
+  <ion-list>
+    <ion-radio-group [(ngModel)]="selected" (ionChange)="changed()">
+      <ion-item *ngFor="let item of list" class="list" lines="none">
+        <ion-thumbnail slot="start" class="thums">
+        </ion-thumbnail>
+        <ion-label class="title">{{item.name}}</ion-label>
+        <ion-radio [value]="item.id" slot="end" mode="md"></ion-radio>
+      </ion-item>
+
+    </ion-radio-group>
+
+  </ion-list>
+</ion-content> -->
